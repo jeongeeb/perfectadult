@@ -154,7 +154,6 @@ body[data-page="manual"] .footer-handle {
   column-gap: var(--manual-gap);
   align-items: start;
   padding-top: calc(10px * var(--stage-scale, 1));
-  border-top: calc(1px * var(--stage-scale, 1)) solid currentColor;
 }
 
 .manual-editorial-row {
@@ -278,7 +277,6 @@ body[data-page="manual"] .footer-handle {
   align-items: start;
   margin-top: calc(42px * var(--stage-scale, 1));
   padding-top: calc(10px * var(--stage-scale, 1));
-  border-top: calc(1px * var(--stage-scale, 1)) solid currentColor;
 }
 
 .manual-chapter:first-child {
@@ -317,7 +315,6 @@ body[data-page="manual"] .footer-handle {
   column-gap: var(--manual-gap);
   min-width: 0;
   padding-bottom: calc(18px * var(--stage-scale, 1));
-  border-bottom: calc(1px * var(--stage-scale, 1)) solid currentColor;
 }
 
 .manual-subsection + .manual-subsection {

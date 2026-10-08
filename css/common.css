@@ -194,11 +194,18 @@ textarea,
 .side-nav a {
   display: block;
   margin: 0;
+  color: #9a9a9a;
   white-space: nowrap;
+  transition: color 140ms ease;
 }
 
 .side-nav a.active {
   font-weight: inherit;
+}
+
+.side-nav a:hover,
+.side-nav a:focus-visible {
+  color: #000;
 }
 
 .collection-index {
