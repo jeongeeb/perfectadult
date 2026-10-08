@@ -2,6 +2,7 @@
   [메뉴얼 페이지 수정 지도]
   - 전체 바깥 여백과 열 기준값: .manual-page
   - 왼쪽 큰 제목 영역: .manual-rail, .manual-intro > h2
+  - 참고 사이트형 행 구조: .manual-chapter
   - 오른쪽 첫 소개 3열: .manual-intro-grid
   - 강령 본문 3열: .manual-chapter-copy
   - 한국어/영어 큰 구역 사이: .manual-section
@@ -39,14 +40,18 @@ body[data-page="manual"] .footer-handle {
 }
 
 .manual-page {
-  /* 왼쪽 제목 칸 너비입니다. 숫자를 키우면 제목 칸이 넓어집니다. */
-  --manual-rail: calc(250px * var(--stage-scale, 1));
+  /* 장 제목 칸 너비입니다. 숫자를 키우면 제목 칸이 넓어집니다. */
+  --manual-rail: calc(240px * var(--stage-scale, 1));
+  /* 장 번호 칸 너비입니다. */
+  --manual-number: calc(86px * var(--stage-scale, 1));
+  /* 장 안의 소제목 칸 너비입니다. */
+  --manual-subtitle: calc(170px * var(--stage-scale, 1));
   --manual-sidebar: calc(270px * var(--stage-scale, 1));
   /* 모든 본문 열 사이의 가로 간격입니다. */
-  --manual-gap: calc(24px * var(--stage-scale, 1));
+  --manual-gap: calc(20px * var(--stage-scale, 1));
   /* 메뉴얼 본문 자간/행간은 여기서 바꾸면 전체에 적용됩니다. */
-  --manual-body-line-height: 1.32;
-  --manual-body-letter-spacing: -0.018em;
+  --manual-body-line-height: 1.34;
+  --manual-body-letter-spacing: -0.014em;
   /* 왼쪽 부제목 자간/행간입니다. */
   --manual-title-line-height: 1.16;
   --manual-title-letter-spacing: -0.018em;
@@ -142,13 +147,14 @@ body[data-page="manual"] .footer-handle {
   object-position: var(--manual-hero-right-position);
 }
 
-/* 왼쪽 제목 1칸 + 오른쪽 본문 3칸 */
+/* 왼쪽 제목 1칸 + 오른쪽 소개 3칸 */
 .manual-intro {
   display: grid;
-  /* 왼쪽 제목 1칸 + 오른쪽 본문 3칸입니다. */
-  grid-template-columns: var(--manual-rail) repeat(3, minmax(0, 1fr));
+  grid-template-columns: var(--manual-number) var(--manual-rail) repeat(3, minmax(0, 1fr));
   column-gap: var(--manual-gap);
   align-items: start;
+  padding-top: calc(10px * var(--stage-scale, 1));
+  border-top: calc(1px * var(--stage-scale, 1)) solid currentColor;
 }
 
 .manual-editorial-row {
@@ -157,8 +163,18 @@ body[data-page="manual"] .footer-handle {
 
 .manual-rail,
 .manual-intro > h2 {
-  grid-column: 1;
+  grid-column: 2;
   min-width: 0;
+}
+
+.manual-intro::before {
+  grid-column: 1;
+  content: "INFO";
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: calc(12px * var(--stage-scale, 1));
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .manual-rail h2,
@@ -180,7 +196,7 @@ body[data-page="manual"] .footer-handle {
 }
 
 .manual-intro-grid {
-  grid-column: 2 / -1;
+  grid-column: 3 / -1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--manual-gap);
@@ -242,20 +258,27 @@ body[data-page="manual"] .footer-handle {
 
 .manual-section {
   /* 첫 번째 KOREAN/ENGLISH 문서 구역이 시작되는 위 간격입니다. */
-  margin-top: calc(180px * var(--stage-scale, 1));
+  margin-top: calc(150px * var(--stage-scale, 1));
   padding: 0;
   border: 0;
   background: transparent;
+  counter-reset: manual-chapter;
 }
 
 .manual-section + .manual-section {
   /* KOREAN 구역과 ENGLISH 구역 사이 간격입니다. */
-  margin-top: calc(230px * var(--stage-scale, 1));
+  margin-top: calc(170px * var(--stage-scale, 1));
 }
 
 .manual-chapter {
   /* 각 강령 장 사이의 세로 간격입니다. */
-  margin-top: calc(100px * var(--stage-scale, 1));
+  display: grid;
+  grid-template-columns: var(--manual-number) var(--manual-rail) minmax(0, 1fr);
+  column-gap: var(--manual-gap);
+  align-items: start;
+  margin-top: calc(42px * var(--stage-scale, 1));
+  padding-top: calc(10px * var(--stage-scale, 1));
+  border-top: calc(1px * var(--stage-scale, 1)) solid currentColor;
 }
 
 .manual-chapter:first-child {
@@ -263,41 +286,63 @@ body[data-page="manual"] .footer-handle {
 }
 
 .manual-chapter .manual-rail {
-  margin-bottom: calc(14px * var(--stage-scale, 1));
+  grid-column: 2;
+  margin-bottom: 0;
+}
+
+.manual-chapter::before {
+  grid-column: 1;
+  counter-increment: manual-chapter;
+  content: "KR / 0" counter(manual-chapter);
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: calc(12px * var(--stage-scale, 1));
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+#manual-en .manual-chapter::before {
+  content: "EN / 0" counter(manual-chapter);
 }
 
 .manual-chapter-copy {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  /* 오른쪽 본문 세 칸 사이 간격은 위의 --manual-gap을 사용합니다. */
-  gap: var(--manual-gap);
-}
-
-.manual-subsection {
-  min-width: 0;
-}
-
-.manual-chapter-copy[data-columns="1"] {
+  grid-column: 3;
   display: block;
 }
 
-.manual-subsection--flow {
-  column-count: 3;
+.manual-subsection {
+  display: grid;
+  grid-template-columns: var(--manual-subtitle) minmax(0, 1fr);
   column-gap: var(--manual-gap);
+  min-width: 0;
+  padding-bottom: calc(18px * var(--stage-scale, 1));
+  border-bottom: calc(1px * var(--stage-scale, 1)) solid currentColor;
+}
+
+.manual-subsection + .manual-subsection {
+  padding-top: calc(10px * var(--stage-scale, 1));
+}
+
+.manual-subsection--flow {
+  display: block;
+  columns: 2;
+  column-gap: calc(var(--manual-gap) * 1.4);
 }
 
 .manual-chapter-copy h4 {
-  break-after: avoid-column;
-  margin: 0 0 calc(6px * var(--stage-scale, 1));
+  grid-column: 1;
+  margin: 0;
   font-size: inherit;
-  font-weight: 600;
+  font-weight: 700;
   line-height: var(--manual-title-line-height);
   letter-spacing: inherit;
 }
 
 .manual-chapter-copy p {
   display: block;
-  margin: 0;
+  grid-column: 2;
+  margin: 0 0 calc(7px * var(--stage-scale, 1));
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
@@ -310,7 +355,8 @@ body[data-page="manual"] .footer-handle {
 
 .manual-chapter-copy ol,
 .manual-chapter-copy ul {
-  margin: calc(4px * var(--stage-scale, 1)) 0 calc(10px * var(--stage-scale, 1));
+  grid-column: 2;
+  margin: 0 0 calc(10px * var(--stage-scale, 1));
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
@@ -319,7 +365,7 @@ body[data-page="manual"] .footer-handle {
 
 .manual-chapter-copy p,
 .manual-chapter-copy li {
-  break-inside: avoid-column;
+  break-inside: avoid;
 }
 
 .manual-chapter-copy ol,
@@ -342,11 +388,13 @@ body[data-page="manual"] .footer-handle {
 }
 
 @media (max-width: 980px) {
-  /* 태블릿에서는 본문을 3열에서 2열로 줄입니다. */
+  /* 태블릿에서는 번호 / 제목 / 본문 행 구조를 조금 좁힙니다. */
   .manual-page {
-    --manual-rail: 220px;
+    --manual-number: 66px;
+    --manual-rail: 180px;
+    --manual-subtitle: 132px;
     --manual-sidebar: 220px;
-    --manual-gap: 28px;
+    --manual-gap: 18px;
   }
 
   .manual-hero,
@@ -364,33 +412,30 @@ body[data-page="manual"] .footer-handle {
     grid-template-columns: 1fr;
   }
 
-  .manual-editorial-row,
   .manual-intro {
-    grid-template-columns: var(--manual-rail) repeat(2, minmax(0, 1fr));
+    grid-template-columns: var(--manual-number) var(--manual-rail) minmax(0, 1fr);
   }
 
-  .manual-intro-grid,
+  .manual-intro-grid {
+    grid-column: 3;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .manual-chapter {
+    grid-template-columns: var(--manual-number) var(--manual-rail) minmax(0, 1fr);
+  }
+
   .manual-chapter-copy {
-    grid-column: 2 / -1;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column: 3;
   }
 
-  .manual-intro-grid > :last-child,
-  .manual-chapter-copy[data-columns="3"] > :last-child {
-    grid-column: 2;
-  }
-
-  .manual-chapter-copy[data-columns="2"] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .manual-chapter-copy[data-columns="2"] .manual-subsection:last-child {
-    grid-column: auto;
-    column-count: 1;
+  .manual-subsection {
+    grid-template-columns: var(--manual-subtitle) minmax(0, 1fr);
   }
 
   .manual-subsection--flow {
-    column-count: 2;
+    columns: 1;
   }
 }
 
@@ -446,6 +491,12 @@ body[data-page="manual"] .footer-handle {
     display: block;
   }
 
+  .manual-intro::before,
+  .manual-chapter::before {
+    display: block;
+    margin-bottom: 10px;
+  }
+
   .manual-rail h2,
   .manual-intro > h2 {
     max-width: 100%;
@@ -464,9 +515,7 @@ body[data-page="manual"] .footer-handle {
   .manual-chapter-copy[data-columns="1"],
   .manual-chapter-copy[data-columns="2"],
   .manual-chapter-copy[data-columns="3"] {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 28px;
+    display: block;
     margin-top: 44px;
     padding: 0;
     font-size: 15px;
@@ -480,11 +529,21 @@ body[data-page="manual"] .footer-handle {
     letter-spacing: var(--manual-body-letter-spacing);
   }
 
-  .manual-intro-grid > :last-child,
-  .manual-chapter-copy[data-columns="2"] .manual-subsection:last-child,
-  .manual-chapter-copy[data-columns="3"] > :last-child {
-    grid-column: auto;
-    column-count: 1;
+  .manual-intro-column + .manual-intro-column {
+    margin-top: 24px;
+  }
+
+  .manual-subsection {
+    display: block;
+    padding-top: 16px;
+  }
+
+  .manual-subsection:first-child {
+    padding-top: 0;
+  }
+
+  .manual-chapter-copy h4 {
+    margin-bottom: 10px;
   }
 
   .manual-section {
@@ -504,6 +563,6 @@ body[data-page="manual"] .footer-handle {
   }
 
   .manual-subsection--flow {
-    column-count: 1;
+    columns: 1;
   }
 }

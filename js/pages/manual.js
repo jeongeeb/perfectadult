@@ -52,7 +52,7 @@ function renderManual() {
         </div>
       </section>
 
-      <section class="manual-section" id="manual-kr" lang="ko">
+      <section class="manual-section manual-language-section" id="manual-kr" lang="ko">
         <p class="manual-language">KOREAN</p>
         <article class="manual-copy manual-document">
           <h3>완벽한 어른 수행을 위한 표준 행동 지침서</h3>
@@ -119,7 +119,7 @@ function renderManual() {
         </article>
       </section>
 
-      <section class="manual-section" id="manual-en" lang="en">
+      <section class="manual-section manual-language-section" id="manual-en" lang="en">
         <p class="manual-language">ENGLISH</p>
         <article class="manual-copy manual-document">
           <h3>A STANDARD CODE OF CONDUCT FOR PERFORMING THE PERFECT ADULT</h3>
