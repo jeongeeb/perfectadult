@@ -3,10 +3,9 @@
   - 왼쪽 스크롤 메뉴: .archive-filter, .archive-section-nav
   - 전체 오른쪽 영역: .archive-index
   - 상단 설명: .archive-index-header
-  - 각 제품 행: .archive-project
-  - 큰 대표 이미지: .archive-main-image
-  - 이미지 아래 설명: .archive-project-caption
-  - 우측 세로 이미지 열: .archive-project-side
+  - 이미지 나열 목록: .archive-grid-list
+  - 개별 제품 이미지: .archive-image-wrap, .archive-main-image
+  - 이미지 아래 정보 행: .archive-project-info
 */
 body[data-page="archive"],
 body[data-page="archive"] .site-frame {
@@ -70,7 +69,7 @@ body[data-page="archive"] .footer-handle {
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto;
   column-gap: calc(24px * var(--stage-scale, 1));
   align-items: start;
-  margin-bottom: calc(74px * var(--stage-scale, 1));
+  margin-bottom: calc(58px * var(--stage-scale, 1));
   color: #262626;
   font-size: calc(15px * var(--stage-scale, 1));
   font-weight: 500;
@@ -84,91 +83,85 @@ body[data-page="archive"] .footer-handle {
   font: inherit;
 }
 
-.archive-projects {
+.archive-grid-list {
   display: grid;
-  gap: calc(118px * var(--stage-scale, 1));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: calc(22px * var(--stage-scale, 1));
+  row-gap: calc(74px * var(--stage-scale, 1));
 }
 
 .archive-project {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) calc(230px * var(--stage-scale, 1));
-  column-gap: calc(32px * var(--stage-scale, 1));
-  align-items: start;
-  min-height: calc(690px * var(--stage-scale, 1));
+  min-width: 0;
   scroll-margin-top: calc(128px * var(--stage-scale, 1));
 }
 
-.archive-project-main {
-  min-width: 0;
+.archive-project-link {
+  display: block;
 }
 
-.archive-main-image-link {
+.archive-image-wrap {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   width: 100%;
-  min-height: calc(540px * var(--stage-scale, 1));
+  height: calc(330px * var(--stage-scale, 1));
+  margin: 0 0 calc(18px * var(--stage-scale, 1));
+  overflow: hidden;
   background: #fff;
 }
 
 .archive-main-image {
   display: block;
   max-width: 100%;
-  max-height: calc(540px * var(--stage-scale, 1));
+  max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
 }
 
-.archive-project-caption {
+.archive-project-info {
   display: grid;
-  grid-template-columns:
-    calc(74px * var(--stage-scale, 1)) minmax(0, 0.85fr)
-    calc(128px * var(--stage-scale, 1)) minmax(0, 1.35fr);
+  grid-template-columns: calc(64px * var(--stage-scale, 1)) minmax(0, 1fr);
   column-gap: calc(18px * var(--stage-scale, 1));
+  row-gap: calc(8px * var(--stage-scale, 1));
   align-items: start;
-  margin-top: calc(18px * var(--stage-scale, 1));
+  min-height: calc(138px * var(--stage-scale, 1));
   font-size: calc(14px * var(--stage-scale, 1));
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.12;
   letter-spacing: -0.03em;
 }
 
-.archive-project-caption p,
-.archive-project-caption h2 {
+.archive-project-info p,
+.archive-project-info h2 {
   margin: 0;
   font: inherit;
 }
 
-.archive-project-title h2 {
+.archive-project-number {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+}
+
+.archive-project-name,
+.archive-project-price,
+.archive-project-summary {
+  grid-column: 2;
+}
+
+.archive-project-name h2 {
   margin-bottom: calc(2px * var(--stage-scale, 1));
 }
 
 .archive-project-summary {
+  max-width: calc(430px * var(--stage-scale, 1));
   word-break: keep-all;
 }
 
-.archive-project-side {
-  display: grid;
-  gap: calc(18px * var(--stage-scale, 1));
-}
-
-.archive-side-image-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: calc(168px * var(--stage-scale, 1));
-  background: #fff;
-}
-
-.archive-side-image {
-  display: block;
-  max-width: 100%;
-  max-height: calc(168px * var(--stage-scale, 1));
-  width: auto;
-  height: auto;
-  object-fit: contain;
+@media (max-width: 1180px) {
+  .archive-grid-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 900px) {
@@ -190,41 +183,30 @@ body[data-page="archive"] .footer-handle {
     font-size: 13px;
   }
 
-  .archive-projects {
-    gap: 86px;
+  .archive-grid-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 14px;
+    row-gap: 54px;
   }
 
-  .archive-project {
-    display: block;
-    min-height: 0;
+  .archive-image-wrap {
+    height: 42vw;
+    margin-bottom: 14px;
   }
 
-  .archive-main-image-link {
-    min-height: 58vw;
-  }
-
-  .archive-main-image {
-    max-height: 58vw;
-  }
-
-  .archive-project-caption {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    margin-top: 14px;
+  .archive-project-info {
+    grid-template-columns: 48px minmax(0, 1fr);
+    column-gap: 10px;
     font-size: 13px;
   }
+}
 
-  .archive-project-side {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 24px;
+@media (max-width: 560px) {
+  .archive-grid-list {
+    grid-template-columns: 1fr;
   }
 
-  .archive-side-image-link {
-    min-height: 30vw;
-  }
-
-  .archive-side-image {
-    max-height: 30vw;
+  .archive-image-wrap {
+    height: 64vw;
   }
 }

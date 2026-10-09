@@ -1,51 +1,30 @@
 /*
   [아카이브 페이지 구조]
-  - Contemporary Art Daily처럼 대표 이미지, 하단 설명, 우측 세로 이미지 열로 구성합니다.
+  - 컬렉션 목록처럼 이미지를 나열하고, 이미지 아래에 제품 정보를 행으로 구성합니다.
   - 기존 큰 이미지 아카이브는 about.html로 이동했습니다.
 */
-function archiveProjectEntry(product, projectIndex) {
+function archiveProjectEntry(product) {
   const projectLooks = archiveLooks.filter((look) => look.product.id === product.id);
   const mainLook = projectLooks[0];
   const mainImage = versionMainImage(mainLook ? mainLook.src : product.image);
-  const sideImages = [
-    ...projectLooks.slice(1).map((look) => ({
-      src: versionMainImage(look.src),
-      alt: `${productDisplayName(product)} worn view`,
-    })),
-    {
-      src: versionMainImage(product.image),
-      alt: `${productDisplayName(product)} product image`,
-    },
-  ];
   const productIndex = products.indexOf(product);
-  const sideMarkup = sideImages
-    .map(
-      (image) => `
-        <a class="archive-side-image-link" href="product.html?id=${product.id}" aria-label="${image.alt} 상세페이지">
-          <img class="archive-side-image" src="${image.src}" alt="${image.alt}">
-        </a>`,
-    )
-    .join("");
 
   return `
     <article class="archive-project" id="archive-project-${productIndex + 1}">
-      <div class="archive-project-main">
-        <a class="archive-main-image-link" href="product.html?id=${product.id}" aria-label="${productDisplayName(product)} 상세페이지">
+      <a class="archive-project-link" href="product.html?id=${product.id}" aria-label="${productDisplayName(product)} 상세페이지">
+        <figure class="archive-image-wrap">
           <img class="archive-main-image" src="${mainImage}" alt="${productDisplayName(product)} archive image">
-        </a>
-        <div class="archive-project-caption">
+        </figure>
+        <div class="archive-project-info">
           <p class="archive-project-number">${formatProductNumber(product, productIndex)}</p>
-          <div class="archive-project-title">
+          <div class="archive-project-name">
             <h2>${productDisplayName(product)}</h2>
             <p>${product.name}</p>
           </div>
           <p class="archive-project-price">${product.price}</p>
           <p class="archive-project-summary">${product.summary}</p>
         </div>
-      </div>
-      <aside class="archive-project-side" aria-label="${productDisplayName(product)} related images">
-        ${sideMarkup}
-      </aside>
+      </a>
     </article>`;
 }
 
@@ -56,7 +35,7 @@ function renderArchive() {
     archiveLooks.some((look) => look.product.id === product.id),
   );
   const projects = archiveProducts
-    .map((product, index) => archiveProjectEntry(product, index))
+    .map((product) => archiveProjectEntry(product))
     .join("");
   const navItems = archiveProducts
     .map((product) => {
@@ -75,10 +54,10 @@ function renderArchive() {
       <section class="archive-index" aria-labelledby="archive-title">
         <header class="archive-index-header">
           <h1 id="archive-title">Perfect Adult Product Archive</h1>
-          <p>Worn product images and product systems arranged as an exhibition index.</p>
+          <p>Worn product images and product systems arranged as a collection list.</p>
           <p>01—${String(archiveProducts.length).padStart(2, "0")}</p>
         </header>
-        <div class="archive-projects">${projects}</div>
+        <div class="archive-grid-list">${projects}</div>
       </section>
     </main>`);
 
