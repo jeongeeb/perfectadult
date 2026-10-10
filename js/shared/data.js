@@ -221,7 +221,7 @@ const products = [
     id: "adult-tool-16",
     number: "#No.16",
     name: "總綱統合 | 총강통합",
-    title: "No.16 완벽한 어른 풀 착장 시스템",
+    title: "No.16 완벽한 어른 풀 착장",
     price: "1,000,000 KRW",
     image: "assets/product_mein/product_16.png",
     summary:
