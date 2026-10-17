@@ -12,7 +12,6 @@ function aboutThumbnailMarkup(look, index) {
       aria-pressed="${index === 0}" aria-controls="about-viewer">
       <img src="${versionMainImage(`assets/lookbook-thumbnails/${filename}`)}" alt="${productDisplayName(look.product)} 착용 이미지"
         ${index < 6 ? 'loading="eager"' : 'loading="lazy"'} decoding="async">
-      <span class="about-look-number" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
     </button>`;
 }
 
@@ -56,7 +55,7 @@ function renderAbout() {
 
 function bindAboutLookbook() {
   const viewer = document.querySelector(".about-viewer");
-  const list = document.querySelector(".about-look-list");
+  const list = document.querySelector(".about-thumbnail-grid");
   const image = viewer.querySelector(".about-main-image");
   const figure = viewer.querySelector(".about-main-figure");
   const productLink = viewer.querySelector(".about-product-cut");
@@ -76,7 +75,7 @@ function bindAboutLookbook() {
     const listRect = list.getBoundingClientRect();
     const itemRect = thumbnail.getBoundingClientRect();
     if (itemRect.top < listRect.top || itemRect.bottom > listRect.bottom) {
-      list.scrollTop += itemRect.top - listRect.top - 48;
+      list.scrollTop += itemRect.top - listRect.top;
     }
   };
 
