@@ -2,6 +2,7 @@
   [About 룩북 이미지 위치 수정 지도]
   1. 오른쪽 큰 이미지: 아래 .about-page의 --about-main-x / y / scale
   2. 우측 하단 제품 정면 컷: --about-cut-right / bottom / width / height
+     제품별 크기: .about-product-cut[data-product-id="..."]의 --about-cut-item-scale
   3. 왼쪽 목록 전체 위치: .about-look-list의 padding
   4. 목록의 열 수와 이미지 간격: .about-thumbnail-grid
   5. 오른쪽 뷰어 전체 여백: .about-viewer의 padding
@@ -15,8 +16,12 @@ body[data-page="about"] .site-frame {
   min-height: 100%;
   background: #fff;
 }
-body[data-page="about"] .footer-handle { display: none; }
-body[data-page="about"] .top-bar { background: #fff; }
+body[data-page="about"] .footer-handle {
+  display: none;
+}
+body[data-page="about"] .top-bar {
+  background: #fff;
+}
 
 .about-page {
   /* [큰 착용 이미지] x: 양수는 오른쪽, 음수는 왼쪽으로 이동합니다. */
@@ -31,7 +36,7 @@ body[data-page="about"] .top-bar { background: #fff; }
   /* 아래 가장자리와의 거리: 커질수록 위로. 작은 화면 설정은 아래 @media 참조 */
   --about-cut-bottom: 96px;
   /* 제품 컷 크기: clamp(최소 크기, 화면에 비례한 크기, 최대 크기) */
-  --about-cut-width: clamp(90px, 10vw, 160px);
+  --about-cut-width: clamp(50px, 10vw, 120px);
   --about-cut-height: clamp(110px, 13vw, 190px);
 
   display: grid;
@@ -61,7 +66,8 @@ body[data-page="about"] .top-bar { background: #fff; }
   gap: 16px;
   margin-bottom: 24px;
 }
-.about-list-heading h2, .about-list-heading p {
+.about-list-heading h2,
+.about-list-heading p {
   margin: 0;
   font: inherit;
 }
@@ -85,6 +91,9 @@ body[data-page="about"] .top-bar { background: #fff; }
 .about-look-thumbnail {
   display: block;
   min-width: 0;
+  /* 모든 칸을 3:4로 고정하고 넘치는 부분은 잘라 위아래 정렬을 맞춥니다. */
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
   padding: 0;
   border: 0;
   background: transparent;
@@ -94,13 +103,17 @@ body[data-page="about"] .top-bar { background: #fff; }
   opacity: 0.55;
   transition: opacity 160ms ease;
 }
-.about-look-thumbnail:hover, .about-look-thumbnail.is-active { opacity: 1; }
+.about-look-thumbnail:hover,
+.about-look-thumbnail.is-active {
+  opacity: 1;
+}
 .about-look-thumbnail img {
   display: block;
   width: 100%;
-  /* 썸네일 상자 비율과 맞춤 방식. contain은 이미지를 자르지 않고 전부 표시 */
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
+  height: 100%;
+  /* 왼쪽 목록만 꽉 차게 크롭합니다. 오른쪽 큰 이미지에는 영향을 주지 않습니다. */
+  object-fit: cover;
+  object-position: center;
 }
 .about-viewer {
   position: relative;
@@ -127,13 +140,16 @@ body[data-page="about"] .top-bar { background: #fff; }
   height: 100%;
   object-fit: contain;
   /* 큰 이미지의 위치·크기는 파일 상단 --about-main-* 변수로 조정합니다. */
-  transform: translate(var(--about-main-x), var(--about-main-y)) scale(var(--about-main-scale));
+  transform: translate(var(--about-main-x), var(--about-main-y))
+    scale(var(--about-main-scale));
   transform-origin: center;
   pointer-events: none;
   user-select: none;
   transition: opacity 160ms ease;
 }
-.about-viewer.is-loading .about-main-image { opacity: 0.45; }
+.about-viewer.is-loading .about-main-image {
+  opacity: 0.45;
+}
 .about-product-cut {
   position: absolute;
   /* 제품 컷의 위치·크기는 파일 상단 --about-cut-* 변수로 조정합니다. */
@@ -144,7 +160,51 @@ body[data-page="about"] .top-bar { background: #fff; }
   justify-content: center;
   width: var(--about-cut-width);
   height: var(--about-cut-height);
+  /* 기본 상자 크기 위에 제품별 배율 적용. 우측 하단 위치를 기준으로 확대·축소 */
+  transform: scale(var(--about-cut-item-scale, 1));
+  transform-origin: right bottom;
 }
+
+/*
+  [제품별 우측 하단 컷 크기]
+  아래 각 제품의 숫자 하나만 수정합니다. 1 = 기본, 1.2 = 20% 확대, 0.8 = 20% 축소.
+  같은 제품을 착용한 다른 사진에도 자동 적용되며, PC·모바일에서 동일한 배율을 씁니다.
+  모든 제품의 기본 상자 크기는 파일 상단 --about-cut-width / height에서 조정합니다.
+*/
+
+/* No.1 평정심 유지용 안구 장치 */
+.about-product-cut[data-product-id="stoic-monocle"] { --about-cut-item-scale: 1; }
+/* No.2 사회적 미소 유지용 입 장치 */
+.about-product-cut[data-product-id="gentle-jaw-clamp"] { --about-cut-item-scale: 1; }
+/* No.3 경청반응 유지용 귀 장치 */
+.about-product-cut[data-product-id="patience-ear-cuffs"] { --about-cut-item-scale: 1; }
+/* No.4 시간 낭비 방지용 교정 신발 */
+.about-product-cut[data-product-id="silent-helmet"] { --about-cut-item-scale: 1; }
+/* No.5 기능 지속용 책임감 웨이트 */
+.about-product-cut[data-product-id="balance-struts"] { --about-cut-item-scale: 1; }
+/* No.6 번아웃 억제용 회복 패치 */
+.about-product-cut[data-product-id="calm-capsule"] { --about-cut-item-scale: 1; }
+/* No.7 자립 점수 스캐너 */
+.about-product-cut[data-product-id="clear-collar"] { --about-cut-item-scale: 1; }
+/* No.8 감정 보관용 부착형 캡슐 */
+.about-product-cut[data-product-id="comfort-cartridge"] { --about-cut-item-scale: 1; }
+/* No.9 자립 자세 유지용 척추 하네스 */
+.about-product-cut[data-product-id="adult-tool-09"] { --about-cut-item-scale: 1; }
+/* No.10 일정 우선순위 시한폭탄 타이머 */
+.about-product-cut[data-product-id="adult-tool-10"] { --about-cut-item-scale: 1; }
+/* No.11 품위 보정용 외형 교정기 */
+.about-product-cut[data-product-id="adult-tool-11"] { --about-cut-item-scale: 1; }
+/* No.12 취향 중립화 장치 */
+.about-product-cut[data-product-id="adult-tool-12"] { --about-cut-item-scale: 1; }
+/* No.13 말실수 방지용 혀 보정 장치 */
+.about-product-cut[data-product-id="adult-tool-13"] { --about-cut-item-scale: 1; }
+/* No.14 수긍자세 유지용 목 보호대 */
+.about-product-cut[data-product-id="adult-tool-14"] { --about-cut-item-scale: 1; }
+/* No.15 사과 자세 자동 보정 장갑 */
+.about-product-cut[data-product-id="adult-tool-15"] { --about-cut-item-scale: 1; }
+/* No.16 완벽한 어른 풀 착장 */
+.about-product-cut[data-product-id="adult-tool-16"] { --about-cut-item-scale: 1; }
+
 .about-product-cut img {
   display: block;
   width: 100%;
@@ -158,10 +218,24 @@ body[data-page="about"] .top-bar { background: #fff; }
   gap: 16px;
   min-height: 44px;
 }
-.about-current-product { min-width: 0; word-break: keep-all; }
-.about-current-product p, .about-current-product h2 { margin: 0; font: inherit; }
-.about-current-product h2 { margin-top: 3px; }
-.about-viewer-controls { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.about-current-product {
+  min-width: 0;
+  word-break: keep-all;
+}
+.about-current-product p,
+.about-current-product h2 {
+  margin: 0;
+  font: inherit;
+}
+.about-current-product h2 {
+  margin-top: 3px;
+}
+.about-viewer-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
 .about-viewer-controls button {
   width: 44px;
   height: 44px;
@@ -172,21 +246,47 @@ body[data-page="about"] .top-bar { background: #fff; }
   font: inherit;
   font-size: 22px;
 }
-.about-look-position { min-width: 46px; margin: 0; text-align: center; font-variant-numeric: tabular-nums; }
-.about-load-status { position: absolute; bottom: 72px; left: 18px; right: 30px; margin: 0; }
-.about-look-thumbnail:focus-visible, .about-product-cut:focus-visible, .about-viewer-controls button:focus-visible {
+.about-look-position {
+  min-width: 46px;
+  margin: 0;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.about-load-status {
+  position: absolute;
+  bottom: 72px;
+  left: 18px;
+  right: 30px;
+  margin: 0;
+}
+.about-look-thumbnail:focus-visible,
+.about-product-cut:focus-visible,
+.about-viewer-controls button:focus-visible {
   outline: 1px solid #111;
   outline-offset: 4px;
 }
 
 @media (max-width: 1000px) {
   /* [태블릿 / 좁은 창] 하단 버튼이 두 줄이 되어 제품 컷을 조금 올립니다. */
-  .about-page { --about-cut-bottom: 140px; }
-  .about-thumbnail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .about-list-heading { display: block; }
-  .about-list-heading p { margin-top: 4px; }
-  .about-viewer-footer { display: grid; gap: 8px; }
-  .about-viewer-controls { justify-content: center; }
+  .about-page {
+    --about-cut-bottom: 140px;
+  }
+  .about-thumbnail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .about-list-heading {
+    display: block;
+  }
+  .about-list-heading p {
+    margin-top: 4px;
+  }
+  .about-viewer-footer {
+    display: grid;
+    gap: 8px;
+  }
+  .about-viewer-controls {
+    justify-content: center;
+  }
 }
 @media (max-width: 760px) {
   /* [모바일 전용 제품 컷] 이 값들은 파일 상단의 기본값보다 우선합니다. */
@@ -196,20 +296,50 @@ body[data-page="about"] .top-bar { background: #fff; }
     --about-cut-width: 70px;
     --about-cut-height: 90px;
   }
-  body[data-page="about"] .brand-title { top: 20px; left: 16px; }
-  body[data-page="about"] .brand-logo { width: 140px; }
-  body[data-page="about"] .menu-panel { top: 66px; right: 16px; height: 24px; }
+  body[data-page="about"] .brand-title {
+    top: 20px;
+    left: 16px;
+  }
+  body[data-page="about"] .brand-logo {
+    width: 140px;
+  }
+  body[data-page="about"] .menu-panel {
+    top: 66px;
+    right: 16px;
+    height: 24px;
+  }
   /* 모바일 목록 위치와 간격: 위 / 오른쪽 / 아래 / 왼쪽 */
-  .about-look-list { padding: 16px 8px 20px 16px; }
-  .about-list-heading { margin-bottom: 16px; }
+  .about-look-list {
+    padding: 16px 8px 20px 16px;
+  }
+  .about-list-heading {
+    margin-bottom: 16px;
+  }
   /* 모바일 오른쪽 뷰어 전체 여백 */
-  .about-viewer { padding: 16px 16px 16px 8px; }
-  .about-main-figure { margin-bottom: 12px; }
-  .about-viewer-controls { gap: 2px; }
-  .about-viewer-controls button { width: 36px; }
-  .about-look-position { min-width: 42px; }
-  .about-load-status { bottom: 114px; left: 8px; right: 16px; }
+  .about-viewer {
+    padding: 16px 16px 16px 8px;
+  }
+  .about-main-figure {
+    margin-bottom: 12px;
+  }
+  .about-viewer-controls {
+    gap: 2px;
+  }
+  .about-viewer-controls button {
+    width: 36px;
+  }
+  .about-look-position {
+    min-width: 42px;
+  }
+  .about-load-status {
+    bottom: 114px;
+    left: 8px;
+    right: 16px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .about-look-thumbnail, .about-main-image { transition: none; }
+  .about-look-thumbnail,
+  .about-main-image {
+    transition: none;
+  }
 }

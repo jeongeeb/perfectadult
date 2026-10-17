@@ -33,6 +33,7 @@
 | 오른쪽 큰 이미지 확대·축소 | `--about-main-scale` (1: 기본, 1.1: 10% 확대) |
 | 제품 정면 컷 위치 | `--about-cut-right`, `--about-cut-bottom` (커질수록 왼쪽·위) |
 | 제품 정면 컷 크기 | `--about-cut-width`, `--about-cut-height` |
+| 제품별 정면 컷 크기 | `.about-product-cut[data-product-id="제품 ID"]`의 `--about-cut-item-scale` |
 | 왼쪽 목록 전체 위치 | `.about-look-list`의 `padding` |
 | 목록의 열 수·이미지 간격 | `.about-thumbnail-grid`의 `grid-template-columns`, `gap` |
 
@@ -40,3 +41,8 @@
 왼쪽 목록은 스크롤바를 숨기며 마우스 휠·터치 스크롤은 유지합니다.
 왼쪽 제목은 고정하고 `.about-thumbnail-grid` 안의 이미지만 스크롤합니다.
 썸네일 번호는 표시하지 않으며, 이미지 사이 간격은 모든 화면에서 `gap: 0`입니다.
+왼쪽 썸네일은 360×480px(3:4)로 크롭하며, 원본과 오른쪽 큰 이미지는 유지합니다.
+
+제품별 크기는 `pages/about.css`의 `[제품별 우측 하단 컷 크기]` 주석 아래에서 수정합니다.
+제품 번호·이름을 붙인 16개 설정이 있으며 `1`은 기본, `1.2`는 20% 확대, `0.8`은 20% 축소입니다.
+같은 제품을 착용한 여러 사진에도 해당 배율이 적용됩니다.

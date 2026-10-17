@@ -10,7 +10,7 @@ function aboutThumbnailMarkup(look, index) {
     <button class="about-look-thumbnail${index === 0 ? " is-active" : ""}" type="button"
       data-look-index="${index}" aria-label="LOOK ${String(index + 1).padStart(2, "0")} ${productDisplayName(look.product)} 크게 보기"
       aria-pressed="${index === 0}" aria-controls="about-viewer">
-      <img src="${versionMainImage(`assets/lookbook-thumbnails/${filename}`)}" alt="${productDisplayName(look.product)} 착용 이미지"
+      <img src="${versionMainImage(`assets/lookbook-thumbnails/${filename}`)}&crop=20261017-1" alt="${productDisplayName(look.product)} 착용 이미지"
         ${index < 6 ? 'loading="eager"' : 'loading="lazy"'} decoding="async">
     </button>`;
 }
@@ -33,7 +33,7 @@ function renderAbout() {
           <img class="about-main-image" src="${versionMainImage(firstLook.src)}" alt="${productDisplayName(product)} 착용 이미지"
             fetchpriority="high" decoding="async" draggable="false">
         </figure>
-        <a class="about-product-cut" href="product.html?id=${product.id}" aria-label="${productDisplayName(product)} 제품 상세보기">
+        <a class="about-product-cut" data-product-id="${product.id}" href="product.html?id=${product.id}" aria-label="${productDisplayName(product)} 제품 상세보기">
           <img src="${versionMainImage(product.image)}" alt="${productDisplayName(product)} 제품 정면 컷" decoding="async">
         </a>
         <footer class="about-viewer-footer">
@@ -105,6 +105,8 @@ function bindAboutLookbook() {
       productImage.src = pendingProduct.src;
       productImage.alt = `${productDisplayName(product)} 제품 정면 컷`;
       productLink.href = `product.html?id=${product.id}`;
+      // 제품이 바뀌면 CSS에 지정한 해당 제품의 크기 설정도 함께 적용합니다.
+      productLink.setAttribute("data-product-id", product.id);
       productLink.setAttribute("aria-label", `${productDisplayName(product)} 제품 상세보기`);
       productNumber.textContent = formatProductNumber(product, products.indexOf(product));
       productName.textContent = productDisplayName(product);

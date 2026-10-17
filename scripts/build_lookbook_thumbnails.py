@@ -1,9 +1,9 @@
-"""Build small WebP thumbnails for the About lookbook, preserving originals."""
+"""Build cropped 3:4 WebP thumbnails for About, preserving full-size originals."""
 
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 DESTINATION = ROOT / "assets" / "lookbook-thumbnails"
@@ -12,8 +12,9 @@ DESTINATION = ROOT / "assets" / "lookbook-thumbnails"
 def build(source):
     target = DESTINATION / source.name
     with Image.open(source) as image:
-        image.thumbnail((360, 480), Image.Resampling.LANCZOS)
-        image.save(target, "WEBP", quality=82, method=6)
+        # Crop only the list thumbnail; all cells have identical top/bottom edges.
+        thumbnail = ImageOps.fit(image, (360, 480), Image.Resampling.LANCZOS)
+        thumbnail.save(target, "WEBP", quality=82, method=6)
     return target.stat().st_size
 
 
