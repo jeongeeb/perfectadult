@@ -42,9 +42,9 @@ function renderAbout() {
             <h2 class="about-product-name">${productDisplayName(product)}</h2>
           </div>
           <nav class="about-viewer-controls" aria-label="룩북 이미지 탐색">
-            <button class="about-previous" type="button" aria-label="이전 착용 이미지">←</button>
+            <button class="about-previous" type="button" aria-label="이전 착용 이미지"><img src="assets/graphics/gallery-chevron.svg" alt="" aria-hidden="true"></button>
             <p class="about-look-position" aria-live="polite" aria-atomic="true">01 / ${String(archiveLooks.length).padStart(2, "0")}</p>
-            <button class="about-next" type="button" aria-label="다음 착용 이미지">→</button>
+            <button class="about-next" type="button" aria-label="다음 착용 이미지"><img src="assets/graphics/gallery-chevron.svg" alt="" aria-hidden="true"></button>
           </nav>
         </footer>
         <p class="about-load-status" role="status"></p>

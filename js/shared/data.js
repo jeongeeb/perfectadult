@@ -225,7 +225,8 @@ const products = [
     name: "總綱統合 | 총강통합",
     title: "No.16 완벽한 어른 풀 착장",
     price: "1,000,000 KRW",
-    image: "assets/product_mein/product_16.webp",
+    // 새 이미지 교체 시 rev 값을 변경하면 이전 파일 캐시를 갱신합니다.
+    image: "assets/product_mein/product_16.webp?rev=20261017-hq-1",
     summary:
       "수행 규약 : 모든 강령을 준수하고 각 교정 제품의 착용을 완료하라. 감정, 태도, 책임, 외형, 발화와 행동을 사회적 기준에 맞게 최종 정렬한다.",
     body: [

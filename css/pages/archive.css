@@ -119,97 +119,97 @@ body[data-page="archive"] {
 .archive-project[data-product-id="stoic-monocle"] {
   --archive-item-scale: 1;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 70px;
 }
 /* No.2 사회적 미소 유지용 입 장치 */
 .archive-project[data-product-id="gentle-jaw-clamp"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.8;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 50px;
 }
 /* No.3 경청반응 유지용 귀 장치 */
 .archive-project[data-product-id="patience-ear-cuffs"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.8;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 30px;
 }
 /* No.4 시간 낭비 방지용 교정 신발 */
 .archive-project[data-product-id="silent-helmet"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.8;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 30px;
 }
 /* No.5 기능 지속용 책임감 웨이트 */
 .archive-project[data-product-id="balance-struts"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.9;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 50px;
 }
 /* No.6 번아웃 억제용 회복 패치 */
 .archive-project[data-product-id="calm-capsule"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.9;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 30px;
 }
 /* No.7 자립 점수 스캐너 */
 .archive-project[data-product-id="clear-collar"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.9;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 30px;
 }
 /* No.8 감정 보관용 부착형 캡슐 */
 .archive-project[data-product-id="comfort-cartridge"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.8;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 50px;
 }
 /* No.9 자립 자세 유지용 척추 하네스 */
 .archive-project[data-product-id="adult-tool-09"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.85;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 30px;
 }
 /* No.10 일정 우선순위 시한폭탄 타이머 */
 .archive-project[data-product-id="adult-tool-10"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.9;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 50px;
 }
 /* No.11 품위 보정용 외형 교정기 */
 .archive-project[data-product-id="adult-tool-11"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.8;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 50px;
 }
 /* No.12 취향 중립화 장치 */
 .archive-project[data-product-id="adult-tool-12"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.8;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 50px;
 }
 /* No.13 말실수 방지용 혀 보정 장치 */
 .archive-project[data-product-id="adult-tool-13"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.9;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 70px;
 }
 /* No.14 수긍자세 유지용 목 보호대 */
 .archive-project[data-product-id="adult-tool-14"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.8;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 50px;
 }
 /* No.15 사과 자세 자동 보정 장갑 */
 .archive-project[data-product-id="adult-tool-15"] {
-  --archive-item-scale: 1;
-  --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-scale: 0.9;
+  --archive-item-x: -25px;
+  --archive-item-y: 30px;
 }
 /* No.16 완벽한 어른 풀 착장 */
 .archive-project[data-product-id="adult-tool-16"] {
-  --archive-item-scale: 1;
+  --archive-item-scale: 0.9;
   --archive-item-x: 0px;
-  --archive-item-y: 0px;
+  --archive-item-y: 70px;
 }
 
 .archive-project-info {
@@ -245,24 +245,29 @@ body[data-page="archive"] {
 }
 .archive-controls {
   position: absolute;
-  bottom: 24px;
-  left: 50%;
+  inset: 0;
   z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  transform: translateX(-50%);
+  pointer-events: none;
 }
 .archive-controls button {
+  /* [화살표 위치] 화면 세로 중앙, 좌우 가장자리에서 30px. */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
-  height: 44px;
+  height: 64px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: #222;
-  font: inherit;
-  font-size: 23px;
+  pointer-events: auto;
 }
+.archive-previous { left: 30px; }
+.archive-next { right: 30px; }
+.archive-controls button img { display: block; width: 36px; height: 54px; pointer-events: none; }
+.archive-previous img { transform: rotate(180deg); }
 .archive-controls button:disabled {
   opacity: 0.2;
 }
@@ -272,6 +277,10 @@ body[data-page="archive"] {
   outline-offset: 5px;
 }
 .archive-position {
+  position: absolute;
+  bottom: 39px;
+  left: 50%;
+  transform: translateX(-50%);
   min-width: 64px;
   margin: 0;
   text-align: center;
@@ -328,8 +337,8 @@ body[data-page="archive"] {
   .archive-project-summary {
     margin-top: 8px !important;
   }
-  .archive-controls {
-    bottom: 12px;
+  .archive-position {
+    bottom: 25px;
   }
   .archive-scroll-hint {
     display: none;

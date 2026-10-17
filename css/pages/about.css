@@ -240,15 +240,25 @@ body[data-page="about"] .top-bar {
   flex-shrink: 0;
 }
 .about-viewer-controls button {
+  /* [화살표 위치] 오른쪽 뷰어 양 끝에서 30px.
+     뷰어 시작 위치 108px을 빼 화면 세로 중앙(50svh)에 맞춥니다. */
+  position: absolute;
+  top: calc(50svh - 108px);
+  z-index: 2;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
-  height: 44px;
+  height: 64px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: inherit;
-  font: inherit;
-  font-size: 22px;
 }
+.about-previous { left: 30px; }
+.about-next { right: 30px; }
+.about-viewer-controls button img { display: block; width: 36px; height: 54px; pointer-events: none; }
+.about-previous img { transform: rotate(180deg); }
 .about-look-position {
   min-width: 46px;
   margin: 0;
@@ -327,9 +337,6 @@ body[data-page="about"] .top-bar {
   }
   .about-viewer-controls {
     gap: 2px;
-  }
-  .about-viewer-controls button {
-    width: 36px;
   }
   .about-look-position {
     min-width: 42px;

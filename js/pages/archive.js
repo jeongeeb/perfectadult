@@ -32,9 +32,9 @@ function renderArchive() {
       <section class="archive-stage" aria-labelledby="archive-title" aria-roledescription="carousel" tabindex="0">
         <div class="archive-gallery">${archiveProducts.map(archiveProjectEntry).join("")}</div>
         <nav class="archive-controls" aria-label="아카이브 이미지 탐색">
-          <button class="archive-previous" type="button" aria-label="이전 이미지">←</button>
+          <button class="archive-previous" type="button" aria-label="이전 이미지"><img src="assets/graphics/gallery-chevron.svg" alt="" aria-hidden="true"></button>
           <p class="archive-position" aria-live="polite" aria-atomic="true">01 / ${String(archiveProducts.length).padStart(2, "0")}</p>
-          <button class="archive-next" type="button" aria-label="다음 이미지">→</button>
+          <button class="archive-next" type="button" aria-label="다음 이미지"><img src="assets/graphics/gallery-chevron.svg" alt="" aria-hidden="true"></button>
         </nav>
         <p class="archive-scroll-hint">Scroll to explore</p>
       </section>
