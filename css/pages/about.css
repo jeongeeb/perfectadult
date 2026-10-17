@@ -1,4 +1,15 @@
-/* 비교용 룩북: 왼쪽 50% 이미지 목록 / 오른쪽 50% 뷰어와 제품 정면 컷 */
+/*
+  [About 룩북 이미지 위치 수정 지도]
+  1. 오른쪽 큰 이미지: 아래 .about-page의 --about-main-x / y / scale
+  2. 우측 하단 제품 정면 컷: --about-cut-right / bottom / width / height
+  3. 왼쪽 목록 전체 위치: .about-look-list의 padding
+  4. 목록의 열 수와 이미지 간격: .about-thumbnail-grid
+  5. 오른쪽 뷰어 전체 여백: .about-viewer의 padding
+  6. 화면 너비 1000px / 760px 이하 설정은 파일 아래 @media에서 조정
+
+  padding의 숫자 순서: 위 / 오른쪽 / 아래 / 왼쪽.
+  이미지 파일과 목록 순서는 js/shared/data.js의 archiveLooks에서 관리합니다.
+*/
 body[data-page="about"],
 body[data-page="about"] .site-frame {
   min-height: 100%;
@@ -8,7 +19,23 @@ body[data-page="about"] .footer-handle { display: none; }
 body[data-page="about"] .top-bar { background: #fff; }
 
 .about-page {
+  /* [큰 착용 이미지] x: 양수는 오른쪽, 음수는 왼쪽으로 이동합니다. */
+  --about-main-x: 0px;
+  /* y: 양수는 아래, 음수는 위로 이동합니다. 예: -20px = 20px 위로 */
+  --about-main-y: 0px;
+  /* 크기: 1은 현재 크기, 1.1은 10% 확대, 0.9는 10% 축소 */
+  --about-main-scale: 1;
+
+  /* [우측 하단 제품 컷] 오른쪽 가장자리와의 거리: 커질수록 왼쪽으로 */
+  --about-cut-right: 30px;
+  /* 아래 가장자리와의 거리: 커질수록 위로. 작은 화면 설정은 아래 @media 참조 */
+  --about-cut-bottom: 96px;
+  /* 제품 컷 크기: clamp(최소 크기, 화면에 비례한 크기, 최대 크기) */
+  --about-cut-width: clamp(90px, 10vw, 160px);
+  --about-cut-height: clamp(110px, 13vw, 190px);
+
   display: grid;
+  /* 좌우 화면 비율: 현재 50:50. 예: 2fr 3fr = 왼쪽 40%, 오른쪽 60% */
   grid-template-columns: repeat(2, minmax(0, 1fr));
   height: calc(100svh - 108px);
   min-height: 440px;
@@ -21,10 +48,17 @@ body[data-page="about"] .top-bar { background: #fff; }
 }
 .about-look-list {
   min-height: 0;
+  /* [왼쪽 목록 위치] 위 20 / 오른쪽 18 / 아래 30 / 왼쪽 30px 여백 */
   padding: 20px 18px 30px 30px;
+  /* 스크롤 기능은 유지하고 스크롤바만 숨깁니다. */
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+.about-look-list::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 .about-list-heading {
   display: flex;
@@ -38,7 +72,9 @@ body[data-page="about"] .top-bar { background: #fff; }
 }
 .about-thumbnail-grid {
   display: grid;
+  /* [목록 열 수] 3 = 한 줄에 3장. 작은 화면에서는 아래 @media가 2장으로 변경 */
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* 이미지 사이 간격: 세로 20px / 가로 14px */
   gap: 20px 14px;
 }
 .about-look-thumbnail {
@@ -57,6 +93,7 @@ body[data-page="about"] .top-bar { background: #fff; }
 .about-look-thumbnail img {
   display: block;
   width: 100%;
+  /* 썸네일 상자 비율과 맞춤 방식. contain은 이미지를 자르지 않고 전부 표시 */
   aspect-ratio: 3 / 4;
   object-fit: contain;
 }
@@ -68,6 +105,7 @@ body[data-page="about"] .top-bar { background: #fff; }
   grid-template-rows: minmax(0, 1fr) auto;
   min-width: 0;
   min-height: 0;
+  /* [오른쪽 뷰어 전체 여백] 큰 이미지와 하단 정보 영역을 함께 이동할 때 조정 */
   padding: 20px 30px 24px 18px;
   outline: none;
 }
@@ -76,6 +114,7 @@ body[data-page="about"] .top-bar { background: #fff; }
   align-items: center;
   justify-content: center;
   min-height: 0;
+  /* 큰 이미지와 하단 제품명·이동 버튼 사이 간격: 마지막 20px */
   margin: 0 0 20px;
   touch-action: pan-y pinch-zoom;
 }
@@ -84,6 +123,9 @@ body[data-page="about"] .top-bar { background: #fff; }
   width: 100%;
   height: 100%;
   object-fit: contain;
+  /* 큰 이미지의 위치·크기는 파일 상단 --about-main-* 변수로 조정합니다. */
+  transform: translate(var(--about-main-x), var(--about-main-y)) scale(var(--about-main-scale));
+  transform-origin: center;
   pointer-events: none;
   user-select: none;
   transition: opacity 160ms ease;
@@ -91,13 +133,14 @@ body[data-page="about"] .top-bar { background: #fff; }
 .about-viewer.is-loading .about-main-image { opacity: 0.45; }
 .about-product-cut {
   position: absolute;
-  right: 30px;
-  bottom: 96px;
+  /* 제품 컷의 위치·크기는 파일 상단 --about-cut-* 변수로 조정합니다. */
+  right: var(--about-cut-right);
+  bottom: var(--about-cut-bottom);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(90px, 10vw, 160px);
-  height: clamp(110px, 13vw, 190px);
+  width: var(--about-cut-width);
+  height: var(--about-cut-height);
 }
 .about-product-cut img {
   display: block;
@@ -134,23 +177,32 @@ body[data-page="about"] .top-bar { background: #fff; }
 }
 
 @media (max-width: 1000px) {
+  /* [태블릿 / 좁은 창] 하단 버튼이 두 줄이 되어 제품 컷을 조금 올립니다. */
+  .about-page { --about-cut-bottom: 140px; }
   .about-thumbnail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about-list-heading { display: block; }
   .about-list-heading p { margin-top: 4px; }
   .about-viewer-footer { display: grid; gap: 8px; }
   .about-viewer-controls { justify-content: center; }
-  .about-product-cut { bottom: 140px; }
 }
 @media (max-width: 760px) {
+  /* [모바일 전용 제품 컷] 이 값들은 파일 상단의 기본값보다 우선합니다. */
+  .about-page {
+    --about-cut-right: 16px;
+    --about-cut-bottom: 150px;
+    --about-cut-width: 70px;
+    --about-cut-height: 90px;
+  }
   body[data-page="about"] .brand-title { top: 20px; left: 16px; }
   body[data-page="about"] .brand-logo { width: 140px; }
   body[data-page="about"] .menu-panel { top: 66px; right: 16px; height: 24px; }
+  /* 모바일 목록 위치와 간격: 위 / 오른쪽 / 아래 / 왼쪽 */
   .about-look-list { padding: 16px 8px 20px 16px; }
   .about-list-heading { margin-bottom: 16px; }
   .about-thumbnail-grid { gap: 14px 8px; }
+  /* 모바일 오른쪽 뷰어 전체 여백 */
   .about-viewer { padding: 16px 16px 16px 8px; }
   .about-main-figure { margin-bottom: 12px; }
-  .about-product-cut { right: 16px; bottom: 150px; width: 70px; height: 90px; }
   .about-viewer-controls { gap: 2px; }
   .about-viewer-controls button { width: 36px; }
   .about-look-position { min-width: 42px; }

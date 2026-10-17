@@ -22,3 +22,19 @@
 메뉴얼 설명 본문은 일반 굵기(400)를 유지하며 문장 중간에 강조용 볼드를 넣지 않습니다.
 장 제목·소제목과 `.manual-label`만 볼드(700)를 사용합니다.
 문단 안의 소제목은 `.manual-label` 뒤에 `<br>`을 넣어 바로 다음 줄에 설명을 배치합니다.
+
+## About 이미지 위치 조정
+
+`pages/about.css` 상단의 `.about-page`에서 큰 이미지와 제품 컷을 조정합니다.
+
+| 조정할 부분 | 수정할 값 |
+| --- | --- |
+| 오른쪽 큰 이미지 좌우·상하 | `--about-main-x`, `--about-main-y` (양수: 오른쪽·아래) |
+| 오른쪽 큰 이미지 확대·축소 | `--about-main-scale` (1: 기본, 1.1: 10% 확대) |
+| 제품 정면 컷 위치 | `--about-cut-right`, `--about-cut-bottom` (커질수록 왼쪽·위) |
+| 제품 정면 컷 크기 | `--about-cut-width`, `--about-cut-height` |
+| 왼쪽 목록 전체 위치 | `.about-look-list`의 `padding` |
+| 목록의 열 수·이미지 간격 | `.about-thumbnail-grid`의 `grid-template-columns`, `gap` |
+
+태블릿·모바일 제품 컷은 같은 파일 아래 `@media`의 변수를 수정합니다.
+왼쪽 목록은 스크롤바를 숨기며 마우스 휠·터치 스크롤은 유지합니다.
