@@ -1,12 +1,11 @@
-/* 제품마다 첫 archiveLooks 착용컷을 사용하며, 스크롤 위치로 크기와 투명도를 보간합니다. */
+/* 제품 메인 이미지 갤러리. 화살표·휠·터치로 한 제품씩 중앙에 맞춰 이동합니다. */
 function archiveProjectEntry(product, index) {
-  const look = archiveLooks.find((item) => item.product.id === product.id);
   const productIndex = products.indexOf(product);
   return `
     <article class="archive-project" id="archive-project-${productIndex + 1}" aria-label="${index + 1}. ${productDisplayName(product)}">
       <a class="archive-project-link" href="product.html?id=${product.id}" aria-label="${productDisplayName(product)} 상세페이지">
         <figure class="archive-image-wrap">
-          <img class="archive-main-image" src="${versionMainImage(look ? look.src : product.image)}" alt="${productDisplayName(product)} 착용 이미지" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
+          <img class="archive-main-image" src="${versionMainImage(product.image)}" alt="${productDisplayName(product)} 제품 메인 이미지" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
         </figure>
         <div class="archive-project-info">
           <p class="archive-project-number">${formatProductNumber(product, productIndex)} / ${product.name}</p>
@@ -19,9 +18,7 @@ function archiveProjectEntry(product, index) {
 }
 
 function renderArchive() {
-  const archiveProducts = products.filter((product) =>
-    archiveLooks.some((look) => look.product.id === product.id),
-  );
+  const archiveProducts = products;
   renderShell(`
     <aside class="page-side-index archive-filter" aria-label="Archive contents">
       <nav class="page-side-nav archive-section-nav">
@@ -58,6 +55,19 @@ function bindArchiveGallery() {
   page.classList.add("is-enhanced");
   let activeIndex = -1;
   let frame = 0;
+  let targetIndex = 0;
+  let isNavigating = false;
+  let scrollTarget = 0;
+  let navigationTimer;
+  let settleTimer;
+  let wheelTimer;
+  let wheelDistance = 0;
+  let wheelConsumed = false;
+  let touch = null;
+
+  // 작은 트랙패드 움직임은 모아 판단하고, 관성 중에는 다음 제품으로 재이동하지 않습니다.
+  const WHEEL_THRESHOLD = 36;
+  const GESTURE_PAUSE = 180;
 
   const metrics = () => ({
     top: page.getBoundingClientRect().top + window.scrollY,
@@ -78,6 +88,7 @@ function bindArchiveGallery() {
     const { top, step } = metrics();
     const progress = Math.max(0, Math.min(cards.length - 1, (window.scrollY - top) / step));
     const current = Math.round(progress);
+    if (!isNavigating) targetIndex = current;
     const visualProgress = reducedMotion.matches ? current : progress;
     const spacing = window.innerWidth * (window.innerWidth <= 760 ? 0.60 : 0.37);
 
@@ -113,13 +124,84 @@ function bindArchiveGallery() {
   const requestUpdate = () => {
     if (!frame) frame = window.requestAnimationFrame(update);
   };
+  const finishNavigation = () => {
+    window.clearTimeout(navigationTimer);
+    isNavigating = false;
+    requestUpdate();
+  };
   const goTo = (index) => {
     const target = Math.max(0, Math.min(cards.length - 1, index));
     const { top, step } = metrics();
-    window.scrollTo({ top: top + target * step, behavior: reducedMotion.matches ? "instant" : "smooth" });
+    targetIndex = target;
+    scrollTarget = top + target * step;
+    window.clearTimeout(navigationTimer);
+    isNavigating = true;
+    window.scrollTo({ top: scrollTarget, behavior: reducedMotion.matches ? "instant" : "smooth" });
+    if (Math.abs(window.scrollY - scrollTarget) < 1) finishNavigation();
+    else navigationTimer = window.setTimeout(finishNavigation, 1200);
   };
-  previous.addEventListener("click", () => goTo(activeIndex - 1));
-  next.addEventListener("click", () => goTo(activeIndex + 1));
+  const inGallery = () => {
+    const { top, step } = metrics();
+    return window.scrollY >= top - 1 && window.scrollY <= top + step * (cards.length - 1) + 1;
+  };
+
+  // 휠과 트랙패드 한 제스처 = 화살표 한 번. 첫/마지막 제품 밖으로는 일반 스크롤 허용.
+  window.addEventListener("wheel", (event) => {
+    if (compact.matches || event.defaultPrevented || event.ctrlKey || event.metaKey ||
+        Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY || !inGallery()) return;
+    const element = event.target instanceof Element ? event.target : null;
+    if (element?.closest("input, textarea, select, [contenteditable='true']")) return;
+    const sidebar = element?.closest(".page-side-index");
+    if (sidebar && sidebar.scrollHeight > sidebar.clientHeight) return;
+
+    window.clearTimeout(wheelTimer);
+    wheelTimer = window.setTimeout(() => {
+      wheelConsumed = false;
+      wheelDistance = 0;
+    }, GESTURE_PAUSE);
+    if (wheelConsumed || isNavigating) {
+      event.preventDefault();
+      wheelConsumed = true;
+      return;
+    }
+    const direction = Math.sign(event.deltaY);
+    if ((targetIndex === 0 && direction < 0) ||
+        (targetIndex === cards.length - 1 && direction > 0)) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+    const delta = event.deltaY * unit;
+    wheelDistance = Math.sign(wheelDistance) === direction ? wheelDistance + delta : delta;
+    if (Math.abs(wheelDistance) < WHEEL_THRESHOLD) return;
+    wheelConsumed = true;
+    wheelDistance = 0;
+    goTo(targetIndex + direction);
+  }, { passive: false, capture: true });
+
+  // 세로 스와이프 한 번에 한 제품씩 이동하며, 확대 제스처와 양 끝의 일반 스크롤은 유지합니다.
+  stage.addEventListener("touchstart", (event) => {
+    if (compact.matches || event.touches.length !== 1 || !inGallery()) { touch = null; return; }
+    touch = { x: event.touches[0].clientX, y: event.touches[0].clientY, index: targetIndex, consumed: false };
+  }, { passive: true });
+  stage.addEventListener("touchmove", (event) => {
+    if (!touch || event.touches.length !== 1) { touch = null; return; }
+    if (touch.consumed) { event.preventDefault(); return; }
+    const dx = event.touches[0].clientX - touch.x;
+    const dy = touch.y - event.touches[0].clientY;
+    if (Math.abs(dy) < 10 || Math.abs(dx) > Math.abs(dy)) return;
+    const direction = Math.sign(dy);
+    const target = Math.max(0, Math.min(cards.length - 1, touch.index + direction));
+    if (target === touch.index) return;
+    event.preventDefault();
+    if (Math.abs(dy) < 48) return;
+    touch.consumed = true;
+    goTo(target);
+  }, { passive: false });
+  const endTouch = () => { touch = null; };
+  stage.addEventListener("touchend", endTouch);
+  stage.addEventListener("touchcancel", endTouch);
+
+  previous.addEventListener("click", () => goTo(targetIndex - 1));
+  next.addEventListener("click", () => goTo(targetIndex + 1));
   cards.forEach((card, index) => {
     card.addEventListener("click", (event) => {
       if (compact.matches || index === activeIndex) return;
@@ -129,16 +211,27 @@ function bindArchiveGallery() {
   });
   stage.addEventListener("keydown", (event) => {
     if (compact.matches || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    const directions = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+    const directions = { ArrowRight: 1, ArrowDown: 1, PageDown: 1, ArrowLeft: -1, ArrowUp: -1, PageUp: -1 };
     if (event.key in directions) {
       event.preventDefault();
-      goTo(activeIndex + directions[event.key]);
+      goTo(targetIndex + directions[event.key]);
     } else if (event.key === "Home" || event.key === "End") {
       event.preventDefault();
       goTo(event.key === "Home" ? 0 : cards.length - 1);
     }
   });
-  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("scroll", () => {
+    if (isNavigating && Math.abs(window.scrollY - scrollTarget) < 1) finishNavigation();
+    requestUpdate();
+    window.clearTimeout(settleTimer);
+    // 스크롤바 조작이나 뒤로 가기로 이동한 경우에도 정지 후 가장 가까운 제품에 맞춥니다.
+    settleTimer = window.setTimeout(() => {
+      if (compact.matches || isNavigating || !inGallery()) return;
+      const { top, step } = metrics();
+      const nearest = Math.round((window.scrollY - top) / step);
+      if (Math.abs(window.scrollY - (top + nearest * step)) > 1) goTo(nearest);
+    }, GESTURE_PAUSE);
+  }, { passive: true });
   window.addEventListener("resize", requestUpdate);
   window.addEventListener("pageshow", requestUpdate);
   reducedMotion.addEventListener("change", requestUpdate);
