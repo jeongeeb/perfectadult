@@ -13,7 +13,7 @@ const products = [
     name: "面安維持 | 면안유지",
     title: "No.1 평정심 유지용 안구 장치",
     price: "72,000 KRW",
-    image: "assets/product_mein/product_1.png",
+    image: "assets/product_mein/product_1.webp",
     summary:
       "수행 규약 : 평온한 얼굴을 유지하라. 불쾌함은 외부로 노출하지 않는다. 표정은 항상 안정적으로 유지한다. 사회적 공간에서 감정을 직접 보여주는 것은 타인에게 피로를 유발할 수 있다.",
     body: [
@@ -27,7 +27,7 @@ const products = [
     name: "葛藤封合 | 갈등봉합",
     title: "No.2 사회적 미소 유지용 입 장치",
     price: "64,000 KRW",
-    image: "assets/product_mein/product_2.png",
+    image: "assets/product_mein/product_2.webp",
     summary:
       "수행 규약 : 충돌을 외부로 확장하지 말 것. 갈등 상황 발생 시 감정을 우선 정리한다. 논리적 승리보다 분위기 안정 유지가 우선된다. 관계 지속 가능성을 해치는 언행은 지양한다.",
     body: [
@@ -41,7 +41,7 @@ const products = [
     name: "聽應遂行 | 청응수행",
     title: "No.3 경청반응 유지용 귀 장치",
     price: "132,000 KRW",
-    image: "assets/product_mein/product_3.png",
+    image: "assets/product_mein/product_3.webp",
     summary:
       "수행 규약 : 경청 반응을 수행하라. 타인의 말을 즉시 수정하거나 교정하지 않는다. 즉각적인 공감 반응을 제공한다. 충고보다 수용이 우선된다.",
     body: [
@@ -55,7 +55,7 @@ const products = [
     name: "時律管理 | 시율관리",
     title: "No.4 시간 낭비 방지용 교정 신발",
     price: "196,000 KRW",
-    image: "assets/product_mein/product_4.png",
+    image: "assets/product_mein/product_4.webp",
     summary:
       "수행 규약 : 시간을 낭비하지 말 것. 모든 시간은 생산 가능 상태로 유지한다. 휴식 또한 신체 기능 회복 목적 아래 수행한다. 기록되지 않는 노력은 존재하지 않는 노력으로 간주된다.",
     body: [
@@ -69,7 +69,7 @@ const products = [
     name: "機能持續 | 기능지속",
     title: "No.5 기능 지속용 책임감 웨이트",
     price: "214,000 KRW",
-    image: "assets/product_mein/product_5.png",
+    image: "assets/product_mein/product_5.webp",
     summary:
       "수행 규약 : 체력 소진 상태에서도 움직여라. 피로는 기능 중단의 사유가 될 수 없다. 완벽한 어른은 최소 수준 이상의 사회적 수행 능력을 유지해야 한다.",
     body: [
@@ -83,7 +83,7 @@ const products = [
     name: "苦痛隱匿 | 고통은닉",
     title: "No.6 번아웃 억제용 회복 패치",
     price: "108,000 KRW",
-    image: "assets/product_mein/product_6.png",
+    image: "assets/product_mein/product_6.webp",
     summary:
       "수행 규약 : 붕괴 상태를 외부에 노출하지 말 것. 불안, 무기력, 번아웃은 사적 공간에서 처리한다. 공적 공간에서는 안정적 상태를 유지한다.",
     body: [
@@ -97,7 +97,7 @@ const products = [
     name: "生存自立 | 생존자립",
     title: "No.7 자립 점수 스캐너",
     price: "124,000 KRW",
-    image: "assets/product_mein/product_7.png",
+    image: "assets/product_mein/product_7.webp",
     summary:
       "수행 규약 : 자신의 생계를 스스로 유지하라. 주거, 식사, 노동, 세금 처리를 독립적으로 수행한다. 경제적 의존 상태가 장기화될 경우 완벽한 어른 판정이 유예될 수 있다.",
     body: [
@@ -111,7 +111,7 @@ const products = [
     name: "感情絶緣 | 감정절연",
     title: "No.8 감정 보관용 부착형 캡슐",
     price: "54,000 KRW",
-    image: "assets/product_mein/product_8.png",
+    image: "assets/product_mein/product_8.webp",
     summary:
       "수행 규약 : 타인에게 과도하게 기대지 말 것. 완벽한 어른은 불안과 슬픔을 스스로 처리한다. 지속적인 감정 의존은 관계 피로를 유발할 수 있다.",
     body: [
@@ -125,7 +125,7 @@ const products = [
     name: "家族分離 | 가족절연",
     title: "No.9 자립 자세 유지용 척추 하네스",
     price: "248,000 KRW",
-    image: "assets/product_mein/product_9.png",
+    image: "assets/product_mein/product_9.webp",
     summary:
       "수행 규약 : 태어난 가족으로부터 독립하라. 완벽한 어른은 본인만의 독립적 생활 단위를 형성해야 한다. 혼인 및 가족 구성은 완전한 사회 통합의 기준으로 간주될 수 있다.",
     body: [
@@ -139,7 +139,7 @@ const products = [
     name: "先照顧 | 돌봄선행",
     title: "No.10 일정 우선순위 시한폭탄 타이머",
     price: "156,000 KRW",
-    image: "assets/product_mein/product_10.png",
+    image: "assets/product_mein/product_10.webp",
     summary:
       "수행 규약 : 하고 싶은 일보다 해야 하는 일을 먼저 하라. 사고 싶은 것보다 갚아야 할 것을 먼저 계산하라. 쉬고 싶은 마음보다 돌봐야 할 사람의 시간을 먼저 배치하라.",
     body: [
@@ -153,7 +153,7 @@ const products = [
     name: "外形整頓 | 외형정돈",
     title: "No.11 품위 보정용 외형 교정기",
     price: "236,000 KRW",
-    image: "assets/product_mein/product_11.png",
+    image: "assets/product_mein/product_11.webp",
     summary:
       "수행 규약 : 너의 외형은 개인 취향이 아니라 사회적 신호다. 너무 어려 보여도 안 되고, 너무 늙어 보여도 안 된다. 너무 튀어도 안 되고, 너무 방치되어 보여도 안 된다.",
     body: [
@@ -167,7 +167,7 @@ const products = [
     name: "趣向中立 | 취향중립",
     title: "No.12 취향 중립화 장치",
     price: "72,000 KRW",
-    image: "assets/product_mein/product_12.png",
+    image: "assets/product_mein/product_12.webp",
     summary:
       "수행 규약 : 취향은 설명 가능해야 한다. 너무 과한 애정, 너무 선명한 분노, 너무 뚜렷한 호불호는 사회적 피로를 만든다.",
     body: [
@@ -181,7 +181,7 @@ const products = [
     name: "語調緩衝 | 발화검열",
     title: "No.13 말실수 방지용 혀 보정 장치",
     price: "180,000 KRW",
-    image: "assets/product_mein/product_13.png",
+    image: "assets/product_mein/product_13.webp",
     summary:
       "수행 규약 : 말하기 전에 삼켜라. 네가 옳다는 사실보다 분위기가 깨지지 않는 것이 중요하다. 발화는 가능하지만, 발화 이후의 관계 비용은 본인이 감당해야 한다.",
     body: [
@@ -195,7 +195,7 @@ const products = [
     name: "首肯角度 | 수긍각도",
     title: "No.14 수긍자세 유지용 목 보호대",
     price: "179,000 KRW",
-    image: "assets/product_mein/product_14.png",
+    image: "assets/product_mein/product_14.webp",
     summary:
       "수행 규약 : 동의하지 않아도 동의 가능한 얼굴을 유지하라. 고개는 적정 각도로 기울이고, 반박 전 최소 3초간 정지한다.",
     body: [
@@ -209,7 +209,7 @@ const products = [
     name: "謝過待機 | 사과대기",
     title: "No.15 사과 자세 자동 보정 장갑",
     price: "84,000 KRW",
-    image: "assets/product_mein/product_15.png",
+    image: "assets/product_mein/product_15.webp",
     summary:
       "수행 규약 : 갈등이 발생하면 먼저 손을 펴라. 잘못의 크기와 관계없이 수습의 제스처는 성숙의 증거로 기록된다.",
     body: [
@@ -223,7 +223,7 @@ const products = [
     name: "總綱統合 | 총강통합",
     title: "No.16 완벽한 어른 풀 착장",
     price: "1,000,000 KRW",
-    image: "assets/product_mein/product_16.png",
+    image: "assets/product_mein/product_16.webp",
     summary:
       "수행 규약 : 모든 강령을 준수하고 각 교정 제품의 착용을 완료하라. 감정, 태도, 책임, 외형, 발화와 행동을 사회적 기준에 맞게 최종 정렬한다.",
     body: [
@@ -399,27 +399,25 @@ const collectionGroups = {
 
 const archiveLooks = [
   ["stoic-monocle", "1.webp"],
-  ["gentle-jaw-clamp", "2.png"],
-  ["gentle-jaw-clamp", "2-1.png"],
-  ["patience-ear-cuffs", "3.png"],
-  ["silent-helmet", "4.png"],
-  ["balance-struts", "5.png"],
-  ["balance-struts", "5-2.png"],
-  ["calm-capsule", "6.png"],
-  ["clear-collar", "7.png"],
-  ["comfort-cartridge", "8.png"],
-  ["adult-tool-09", "9.png"],
-  ["adult-tool-09", "9-1.png"],
-  ["adult-tool-10", "10.png"],
-  ["adult-tool-11", "11.png"],
-  ["adult-tool-12", "12.png"],
-  ["adult-tool-13", "13.png"],
-  ["adult-tool-13", "13-1.png"],
-  ["adult-tool-13", "13-2.png"],
-  ["adult-tool-14", "14.png"],
-  ["adult-tool-15", "15.png"],
-  ["adult-tool-15", "15-1.png"],
-  ["adult-tool-16", "16.png"],
+  ["gentle-jaw-clamp", "2.webp"],
+  ["gentle-jaw-clamp", "2-1.webp"],
+  ["patience-ear-cuffs", "3.webp"],
+  ["silent-helmet", "4.webp"],
+  ["balance-struts", "5.webp"],
+  ["calm-capsule", "6.webp"],
+  ["clear-collar", "7.webp"],
+  ["comfort-cartridge", "8.webp"],
+  ["adult-tool-09", "9.webp"],
+  ["adult-tool-09", "9-1.webp"],
+  ["adult-tool-10", "10.webp"],
+  ["adult-tool-11", "11.webp"],
+  ["adult-tool-12", "12.webp"],
+  ["adult-tool-13", "13.webp"],
+  ["adult-tool-13", "13-1.webp"],
+  ["adult-tool-14", "14.webp"],
+  ["adult-tool-15", "15.webp"],
+  ["adult-tool-15", "15-1.webp"],
+  ["adult-tool-16", "16.webp"],
 ].map(([productId, file], index) => {
   const product = products.find((item) => item.id === productId);
   return {
@@ -445,9 +443,9 @@ const homeIntro = {
     "당신도 이 남성처럼 완벽한 어른이 될 수 있습니다.",
     "<em>[사회적으로 완벽해 지세요.]</em>",
   ],
-  heroFrontImage: "assets/graphics/16_gray_front.png",
-  heroBackImage: "assets/graphics/16_gray_back.png",
-  heroFrontColorImage: "assets/graphics/16_color_front_aligned.png",
-  heroBackColorImage: "assets/graphics/16_color_back_aligned.png",
-  peopleImage: "assets/basic person/all_person.png",
+  heroFrontImage: "assets/graphics/16_gray_front.webp",
+  heroBackImage: "assets/graphics/16_gray_back.webp",
+  heroFrontColorImage: "assets/graphics/16_color_front_aligned.webp",
+  heroBackColorImage: "assets/graphics/16_color_back_aligned.webp",
+  peopleImage: "assets/basic person/all_person.webp",
 };

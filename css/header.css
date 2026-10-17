@@ -24,7 +24,7 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 전체 사이트 마우스 커서: 원본은 assets/Mouse cursor.png 입니다. */
+/* 전체 사이트 마우스 커서: 원본은 assets/Mouse cursor.webp 입니다. */
 html,
 body,
 body *,
@@ -35,7 +35,7 @@ select,
 textarea,
 [role="button"] {
   cursor:
-    url("../assets/graphics/mouse-cursor-large.png") 16 10,
+    url("../assets/graphics/mouse-cursor-large.webp") 16 10,
     auto !important;
 }
 

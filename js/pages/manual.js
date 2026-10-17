@@ -1,6 +1,6 @@
 /*
   [메뉴얼 내용 수정]
-  - 첫 화면 소개문: manual-intro 안의 세 manual-intro-column
+  - 첫 화면 소개문: manual-intro 안의 manual-subsection
   - 한국어 지침서: lang="ko"인 manual-section
   - 영어 지침서: lang="en"인 manual-section
   - 화면 배치와 폰트: css/pages/manual-reference.css
@@ -10,9 +10,8 @@ function renderManual() {
   document.body.classList.add("menus-hidden");
 
   renderShell(`
-    <main class="manual-page">
-      <aside class="manual-side-index" aria-label="Manual contents">
-        <nav class="manual-side-nav">
+      <aside class="page-side-index manual-side-index" aria-label="Manual contents">
+        <nav class="page-side-nav manual-side-nav">
           <a href="#manual-intro-title">Introduction</a>
           <a href="#manual-kr-1">Standard code</a>
           <a href="#manual-kr-2">Core proposition</a>
@@ -21,29 +20,35 @@ function renderManual() {
           <a href="#project-footer">Project info</a>
         </nav>
       </aside>
+    <main class="manual-page">
       <section class="manual-hero" aria-label="Manual visual overview">
         <figure class="manual-hero-panel manual-hero-panel-wide">
-          <img src="${versionMainImage("assets/manual/1.png")}" alt="Manual top visual">
+          <img src="${versionMainImage("assets/manual/1.webp")}" alt="Manual top visual">
         </figure>
         <figure class="manual-hero-panel">
-          <img src="${versionMainImage("assets/manual/2.png")}" alt="Manual product visual">
+          <img src="${versionMainImage("assets/manual/2.webp")}" alt="Manual product visual">
         </figure>
       </section>
-      <section class="manual-intro" aria-labelledby="manual-intro-title">
-        <h2 id="manual-intro-title">완벽한 어른을 사회적 기준에서 설계하다</h2>
-        <div class="manual-intro-grid">
-          <div class="manual-intro-column">
-            <p>이 브랜드는 완벽한 어른이 된다는 것이 단순히 나이를 먹는 일이 아니라, 사회가 요구하는 수많은 기준을 충족하는 과정이라는 질문에서 출발했습니다.<br>침착함, 책임감, 자립, 절제, 배려, 생산성을 모두 갖춘 태도를 유지해야 합니다. 사회는 어른이 갖추어야 할 수많은 조건을 제시하고, 우리는 그것을 자연스럽게 따라야 할 기준으로 받아들입니다.<br><strong>聖人用品 指針</strong>은 이러한 사회적 기준을 하나의 제품 시스템으로 번역합니다.</p>
+      <section class="manual-intro manual-editorial-row" aria-labelledby="manual-intro-title">
+        <header class="manual-rail">
+          <h2 id="manual-intro-title">완벽한 어른을 사회적 기준에서 설계하다</h2>
+        </header>
+        <div class="manual-chapter-copy">
+          <div class="manual-subsection">
+            <h4>기획 배경</h4>
+            <p>이 브랜드는 완벽한 어른이 된다는 것이 단순히 나이를 먹는 일이 아니라, 사회가 요구하는 수많은 기준을 충족하는 과정이라는 질문에서 출발했습니다.<br>침착함, 책임감, 자립, 절제, 배려, 생산성을 모두 갖춘 태도를 유지해야 합니다. 사회는 어른이 갖추어야 할 수많은 조건을 제시하고, 우리는 그것을 자연스럽게 따라야 할 기준으로 받아들입니다.<br>聖人用品 指針은 이러한 사회적 기준을 하나의 제품 시스템으로 번역합니다.</p>
           </div>
-          <div class="manual-intro-column">
+          <div class="manual-subsection">
+            <h4>브랜드와 제품</h4>
             <p>사회가 이상적인 어른에게 요구하는 행동과 태도를 관찰하고, 이를 지침서와 제품의 형태로 구체화한 가상의 성인용품 브랜드입니다.<br>각 제품은 자립, 책임, 절제, 경청, 감정 통제, 품위와 같은 사회적 덕목을 하나씩 수행하도록 설계되었습니다.<br>완벽한 어른이 되는 일은 생각보다 간단합니다. 지침서를 따라 제품을 당신의 몸에 착용하면 됩니다. 그리고 모든 장치를 착용한 순간 당신은 완벽한 어른처럼 보이게 됩니다. 당신은 이제 완벽한 어른을 말하는 사회의 기준 그 자체입니다.</p>
           </div>
-          <div class="manual-intro-column manual-intro-conclusion">
+          <div class="manual-subsection">
+            <h4>프로젝트의 관점</h4>
             <p>이 브랜드는 사용자를 완벽하게 만들어주지 않습니다. 다만, 완벽한 어른처럼 보이게는 만들어줍니다.</p>
           </div>
         </div>
         <div class="manual-intro-brand">
-          <img src="assets/graphics/bottom_logo.png" alt="聖人用品 指針">
+          <img src="assets/graphics/bottom_logo.webp" alt="聖人用品 指針">
           <div class="manual-intro-brand-copy">
             <p>聖人用品: 완벽한어른</p>
             <p>The more you wear our products, the closer you become to the adult society expects. Wearing every piece, you look like a perfect adult, but you gradually lose yourself. [Become socially optimized]</p>
@@ -53,17 +58,17 @@ function renderManual() {
       </section>
 
       <section class="manual-section manual-language-section" id="manual-kr" lang="ko">
-        <p class="manual-language">KOREAN</p>
         <article class="manual-copy manual-document">
           <h3>완벽한 어른 수행을 위한 표준 행동 지침서</h3>
+          <h4>지침서의 성격</h4>
           <p>이 책은 완벽한 어른이 되는 법을 알려주는 자기계발서가 아니다. 이 책은 2030세대에게 “법적으로는 성인이나 사회적으로는 아직 부족한 사람”이라는 판정을 반복해서 부여하는 사회적 기준을 과장된 지침서 형식으로 드러내는 비판적 규범서다.</p>
 
           <h4>편집 방향</h4>
           <p>본문은 세 층위로 구성한다.</p>
           <ol>
-            <li><strong>근거:</strong> 법, 조사, 연구, 전통 규범 등 실제로 확인 가능한 자료.</li>
-            <li><strong>강령:</strong> 사회가 개인에게 요구하는 행동을 명령문으로 번역한 풍자적 문장.</li>
-            <li><strong>제품:</strong> 강령을 수행하게 만드는 물리적 장치. 제품은 친절해 보이지만 실제로는 신체와 감정을 교정, 고정, 억제한다.</li>
+            <li><span class="manual-label">근거:</span><br>법, 조사, 연구, 전통 규범 등 실제로 확인 가능한 자료.</li>
+            <li><span class="manual-label">강령:</span><br>사회가 개인에게 요구하는 행동을 명령문으로 번역한 풍자적 문장.</li>
+            <li><span class="manual-label">제품:</span><br>강령을 수행하게 만드는 물리적 장치. 제품은 친절해 보이지만 실제로는 신체와 감정을 교정, 고정, 억제한다.</li>
           </ol>
 
           <h4>근거 사용 원칙</h4>
@@ -80,7 +85,7 @@ function renderManual() {
           <h4>완벽한 어른은 없다.</h4>
           <p>어른의 기준은 시대마다 변했다. 전통 사회의 어른은 질서와 가문을 지키는 사람이었고, 근대의 어른은 가족을 굶기지 않는 사람이었으며, 현대의 어른은 타인을 존중하고 감정을 조절하며 자기 삶을 관리하는 사람으로 요구된다.</p>
           <p>문제는 과거의 기준이 사라지지 않았다는 점이다. 현대 사회는 권위, 책임, 인내, 경제력, 희생, 성실을 제거한 뒤 공감과 자립을 요구하는 것이 아니다. 기존 요구 위에 감정관리, 자기계발, 사회성, 배려, SNS상의 자기 연출까지 계속 추가한다.</p>
-          <p>즉 현대의 어른은 <strong>“삭제 없는 업데이트”를 반복하는 고사양 인간</strong>이다. 인간의 신체와 감정은 그대로인데, 사회가 요구하는 어른의 사양만 계속 높아진다.</p>
+          <p>즉 현대의 어른은 “삭제 없는 업데이트”를 반복하는 고사양 인간이다. 인간의 신체와 감정은 그대로인데, 사회가 요구하는 어른의 사양만 계속 높아진다.</p>
           <p>2030세대는 반드시 완벽한 어른이 되고 싶어서 이 기준을 따르기보다는 사회적 시선, 가족의 기대, 직장의 평가, 또래 비교, 경제적 불안 때문에 “어른처럼 보이는 수행”을 강요받는다. 이 지침서는 그 수행이 얼마나 불가능하고 기괴한지를 보여주기 위해 작성되었다.</p>
 
           <h4>구조적 모순: 왜 아무도 이 지침서를 달성할 수 없는가</h4>
@@ -93,44 +98,47 @@ function renderManual() {
           <h3>시대에 따라 변화한 어른의 기준</h3>
           <h4>전통시대</h4>
           <p>전통 사회의 어른은 공동체의 윤리적 기준이자 의사결정권자였다. 나이, 가문, 신분, 학식, 도덕성이 결합해 권위가 부여되었다. 어른은 개인으로 존재하기보다 가문과 공동체 질서의 대표자로 기능했다.</p>
-          <p><strong>표준 어른의 기준</strong> 사서삼경을 비롯한 유교적 교양, 엄격한 도덕성, 가문의 명예를 지키는 책임, 아랫세대를 가르칠 권위.</p>
-          <p><strong>역할과 행동</strong> 장유유서에 따라 아랫세대를 훈육한다. 희로애락을 함부로 드러내지 않는 진중함을 미덕으로 삼는다. 제사와 가문 유지, 공동체 질서 보존을 평생의 책임으로 여긴다.</p>
-          <p><strong>현대 지침서로 번역하면</strong> “감정을 함부로 드러내지 말 것.” “아랫세대에게 모범으로 보일 것.” “가문의 체면을 손상시키지 말 것.”</p>
+          <p><span class="manual-label">표준 어른의 기준</span><br>사서삼경을 비롯한 유교적 교양, 엄격한 도덕성, 가문의 명예를 지키는 책임, 아랫세대를 가르칠 권위.</p>
+          <p><span class="manual-label">역할과 행동</span><br>장유유서에 따라 아랫세대를 훈육한다. 희로애락을 함부로 드러내지 않는 진중함을 미덕으로 삼는다. 제사와 가문 유지, 공동체 질서 보존을 평생의 책임으로 여긴다.</p>
+          <p><span class="manual-label">현대 지침서로 번역하면</span><br>“감정을 함부로 드러내지 말 것.” “아랫세대에게 모범으로 보일 것.” “가문의 체면을 손상시키지 말 것.”</p>
 
           <h4>근대</h4>
           <p>식민지, 전쟁, 산업화 시기를 거치며 어른의 기준은 도덕적 권위에서 생존 능력과 경제적 부양 능력으로 이동했다.</p>
-          <p><strong>표준 어른의 기준</strong> 가족을 부양할 경제력, 조직 안에서의 성과, 자신의 감정보다 생존과 결과를 우선하는 태도.</p>
-          <p><strong>역할과 행동</strong> 개인의 행복이나 감정적 요구보다 가족의 생계를 우선한다. 자녀에게 가난을 물려주지 않는 것을 사랑의 방식으로 여긴다. 말보다 행동과 결과로 책임감을 증명한다.</p>
-          <p><strong>현대 지침서로 번역하면</strong> “피곤해도 기능할 것.” “가족과 조직을 위해 감정을 미룰 것.” “결과로 증명할 것.”</p>
+          <p><span class="manual-label">표준 어른의 기준</span><br>가족을 부양할 경제력, 조직 안에서의 성과, 자신의 감정보다 생존과 결과를 우선하는 태도.</p>
+          <p><span class="manual-label">역할과 행동</span><br>개인의 행복이나 감정적 요구보다 가족의 생계를 우선한다. 자녀에게 가난을 물려주지 않는 것을 사랑의 방식으로 여긴다. 말보다 행동과 결과로 책임감을 증명한다.</p>
+          <p><span class="manual-label">현대 지침서로 번역하면</span><br>“피곤해도 기능할 것.” “가족과 조직을 위해 감정을 미룰 것.” “결과로 증명할 것.”</p>
 
           <h4>현대</h4>
           <p>현대 사회에서 어른은 더 이상 나이만으로 인정받지 않는다. 표준 어른은 타인을 존중하고, 강요보다 권유를 선택하며, 자신의 잘못을 인정하고 사과할 수 있는 사람으로 재정의된다.</p>
-          <p><strong>표준 어른의 기준</strong> 정서적 성숙, 소통 능력, 자기관리, 경제적 자립, 타인의 경계를 침범하지 않는 태도, 사회적 약자와 공동체 문제에 대한 시민의식.</p>
-          <p><strong>현대 지침서로 번역하면</strong> “강요하지 말 것.” “공감할 것.” “사과할 것.” “민폐가 되지 말 것.” “계속 자기관리할 것.”</p>
+          <p><span class="manual-label">표준 어른의 기준</span><br>정서적 성숙, 소통 능력, 자기관리, 경제적 자립, 타인의 경계를 침범하지 않는 태도, 사회적 약자와 공동체 문제에 대한 시민의식.</p>
+          <p><span class="manual-label">현대 지침서로 번역하면</span><br>“강요하지 말 것.” “공감할 것.” “사과할 것.” “민폐가 되지 말 것.” “계속 자기관리할 것.”</p>
 
           <hr>
           <h3>삼강행실도에서 「聖人用品 指針」로</h3>
+          <h4>구조의 차용</h4>
           <p>삼강행실도는 충, 효, 열과 같은 유교적 덕목을 그림과 글로 교육한 조선시대의 생활 규범서다.</p>
-          <p><strong>聖人用品 指針</strong>은 이 구조를 현대적으로 차용한다. 과거의 행실도가 충효열을 교육했다면, 이 지침서는 <strong>호감, 성실, 자립, 책임, 품위, 침묵</strong>을 교육한다.</p>
-          <p><strong>강령:</strong> 사회가 개인에게 요구하는 표준을 행동 강령의 형태로 명문화한다.</p>
-          <p><strong>제품:</strong> 그 강령을 일상에서 수행하기 위한 사회적 장비를 판매한다.</p>
+          <p>聖人用品 指針은 이 구조를 현대적으로 차용한다. 과거의 행실도가 충효열을 교육했다면, 이 지침서는 호감, 성실, 자립, 책임, 품위, 침묵을 교육한다.</p>
+          <h4>강령과 제품</h4>
+          <p><span class="manual-label">강령:</span><br>사회가 개인에게 요구하는 표준을 행동 강령의 형태로 명문화한다.</p>
+          <p><span class="manual-label">제품:</span><br>그 강령을 일상에서 수행하기 위한 사회적 장비를 판매한다.</p>
+          <h4>인물과 세계관</h4>
           <p>인물은 항상 웃고 있는 마네킹에 가깝다. 표정은 친절하지만 감정은 비어 있다. 제품은 부드럽고 깨끗한 웰니스 상품처럼 보이지만 실제 기능은 사용자의 눈, 입, 목, 손, 자세, 감정 반응을 고정한다.</p>
           <p>각 강령의 한자명은 역사적 용어가 아니라 프로젝트의 세계관을 위해 만든 조어다.</p>
         </article>
       </section>
 
       <section class="manual-section manual-language-section" id="manual-en" lang="en">
-        <p class="manual-language">ENGLISH</p>
         <article class="manual-copy manual-document">
           <h3>A STANDARD CODE OF CONDUCT FOR PERFORMING THE PERFECT ADULT</h3>
+          <h4>About This Manual</h4>
           <p>This book is not a self-help guide that teaches readers how to become perfect adults. It is a critical book of norms that exposes, through the exaggerated form of a manual, the social standards that repeatedly judge people in their twenties and thirties as “legally adult, yet still socially inadequate.”</p>
 
           <h4>Editorial Direction</h4>
           <p>The text is organized into three layers.</p>
           <ol>
-            <li><strong>Evidence:</strong> Verifiable materials such as laws, surveys, research, and traditional norms.</li>
-            <li><strong>Codes:</strong> Satirical commands that translate the behavior society demands from individuals.</li>
-            <li><strong>Products:</strong> Physical devices that make users perform the codes. The products appear friendly, but in practice they correct, fix, and suppress the body and emotions.</li>
+            <li><span class="manual-label">Evidence:</span><br>Verifiable materials such as laws, surveys, research, and traditional norms.</li>
+            <li><span class="manual-label">Codes:</span><br>Satirical commands that translate the behavior society demands from individuals.</li>
+            <li><span class="manual-label">Products:</span><br>Physical devices that make users perform the codes. The products appear friendly, but in practice they correct, fix, and suppress the body and emotions.</li>
           </ol>
 
           <h4>Principles for Using Evidence</h4>
@@ -147,7 +155,7 @@ function renderManual() {
           <h4>The perfect adult does not exist.</h4>
           <p>The standard of adulthood has changed across time. In traditional society, an adult protected order and family lineage. During modernization, an adult kept the family from going hungry. Today, an adult is expected to respect others, regulate emotions, and manage an independent life.</p>
           <p>The problem is that earlier standards never disappeared. Contemporary society did not remove authority, responsibility, endurance, financial capacity, sacrifice, and diligence before asking for empathy and independence. Emotional management, self-improvement, sociability, consideration, and self-presentation on social media have simply been added on top.</p>
-          <p>The contemporary adult is therefore a <strong>high-specification human subjected to “updates without deletion.”</strong> The human body and emotions remain the same while society continuously raises the required specifications of adulthood.</p>
+          <p>The contemporary adult is therefore a high-specification human subjected to “updates without deletion.” The human body and emotions remain the same while society continuously raises the required specifications of adulthood.</p>
           <p>People in their twenties and thirties do not necessarily follow these standards because they wish to become perfect adults. Social scrutiny, family expectations, workplace evaluation, peer comparison, and economic insecurity compel them to perform the appearance of adulthood. This manual was written to reveal how impossible and strange that performance has become.</p>
 
           <h4>Structural Contradiction: Why No One Can Complete This Manual</h4>
@@ -160,27 +168,30 @@ function renderManual() {
           <h3>Changing Standards of Adulthood</h3>
           <h4>Traditional Era</h4>
           <p>In traditional society, an adult served as both the ethical standard and a decision-maker for the community. Authority arose from a combination of age, lineage, status, education, and morality. Adults functioned less as individuals than as representatives of family and communal order.</p>
-          <p><strong>Standard of Adulthood</strong> Confucian learning, including the Four Books and Five Classics; strict morality; responsibility for family honor; and authority to instruct younger generations.</p>
-          <p><strong>Roles and Behavior</strong> Discipline younger generations according to age hierarchy. Regard the restraint of joy, anger, sorrow, and pleasure as a virtue of seriousness. Treat ancestral rites, family continuity, and communal order as lifelong responsibilities.</p>
-          <p><strong>Translated into a Contemporary Manual</strong> “Do not reveal emotion carelessly.” “Appear exemplary to younger generations.” “Do not damage the family’s dignity.”</p>
+          <p><span class="manual-label">Standard of Adulthood</span><br>Confucian learning, including the Four Books and Five Classics; strict morality; responsibility for family honor; and authority to instruct younger generations.</p>
+          <p><span class="manual-label">Roles and Behavior</span><br>Discipline younger generations according to age hierarchy. Regard the restraint of joy, anger, sorrow, and pleasure as a virtue of seriousness. Treat ancestral rites, family continuity, and communal order as lifelong responsibilities.</p>
+          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Do not reveal emotion carelessly.” “Appear exemplary to younger generations.” “Do not damage the family’s dignity.”</p>
 
           <h4>Modernization Era</h4>
           <p>Through colonization, war, and industrialization, the standard of adulthood shifted from moral authority toward survival and the economic capacity to support a family.</p>
-          <p><strong>Standard of Adulthood</strong> The financial ability to support a family, performance within an organization, and a willingness to prioritize survival and results over personal feelings.</p>
-          <p><strong>Roles and Behavior</strong> Place the family’s livelihood before personal happiness or emotional needs. Understand the refusal to pass poverty to one’s children as a form of love. Prove responsibility through action and results rather than words.</p>
-          <p><strong>Translated into a Contemporary Manual</strong> “Continue functioning while exhausted.” “Postpone emotion for family and organization.” “Prove yourself through results.”</p>
+          <p><span class="manual-label">Standard of Adulthood</span><br>The financial ability to support a family, performance within an organization, and a willingness to prioritize survival and results over personal feelings.</p>
+          <p><span class="manual-label">Roles and Behavior</span><br>Place the family’s livelihood before personal happiness or emotional needs. Understand the refusal to pass poverty to one’s children as a form of love. Prove responsibility through action and results rather than words.</p>
+          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Continue functioning while exhausted.” “Postpone emotion for family and organization.” “Prove yourself through results.”</p>
 
           <h4>Contemporary Era</h4>
           <p>In contemporary society, age alone no longer grants recognition as an adult. The standard adult is redefined as someone who respects others, chooses persuasion over coercion, acknowledges mistakes, and knows how to apologize.</p>
-          <p><strong>Standard of Adulthood</strong> Emotional maturity, communication skills, self-management, financial independence, respect for others’ boundaries, and civic awareness of vulnerable groups and communal issues.</p>
-          <p><strong>Translated into a Contemporary Manual</strong> “Do not coerce.” “Empathize.” “Apologize.” “Do not inconvenience others.” “Continue managing yourself.”</p>
+          <p><span class="manual-label">Standard of Adulthood</span><br>Emotional maturity, communication skills, self-management, financial independence, respect for others’ boundaries, and civic awareness of vulnerable groups and communal issues.</p>
+          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Do not coerce.” “Empathize.” “Apologize.” “Do not inconvenience others.” “Continue managing yourself.”</p>
 
           <hr>
           <h3>From Samgang Haengsildo to 「聖人用品 指針」</h3>
+          <h4>Adapting the Structure</h4>
           <p><em>Samgang Haengsildo</em> was a Joseon-era manual that used images and text to teach Confucian virtues such as loyalty, filial piety, and fidelity.</p>
-          <p><strong>聖人用品 指針</strong> reworks this structure for the present. Where the earlier conduct manual taught loyalty, filial piety, and fidelity, this manual teaches <strong>likability, diligence, independence, responsibility, dignity, and silence.</strong></p>
-          <p><strong>Codes:</strong> The social standards demanded from individuals are formalized as behavioral directives.</p>
-          <p><strong>Products:</strong> Social equipment is sold to help users perform those directives in everyday life.</p>
+          <p>聖人用品 指針 reworks this structure for the present. Where the earlier conduct manual taught loyalty, filial piety, and fidelity, this manual teaches likability, diligence, independence, responsibility, dignity, and silence.</p>
+          <h4>Codes and Products</h4>
+          <p><span class="manual-label">Codes:</span><br>The social standards demanded from individuals are formalized as behavioral directives.</p>
+          <p><span class="manual-label">Products:</span><br>Social equipment is sold to help users perform those directives in everyday life.</p>
+          <h4>The Figure and Fictional World</h4>
           <p>The figure resembles a mannequin that is always smiling. Its expression is friendly, yet emotionally empty. The products resemble soft, clean wellness goods, while their actual function is to fix the user’s eyes, mouth, neck, hands, posture, and emotional responses.</p>
           <p>The Chinese-character names of the codes are not historical terms. They are coined expressions created for the project’s fictional world.</p>
         </article>
@@ -191,7 +202,7 @@ function renderManual() {
   bindManualSideNav();
 }
 
-// h3를 장 제목으로 사용해 왼쪽 제목 / 오른쪽 본문 구조를 자동 생성합니다.
+// h3를 장 제목으로 사용해 제목 아래 다단 본문 구조를 자동 생성합니다.
 function buildManualEditorialGrid() {
   document.querySelectorAll(".manual-section").forEach((section) => {
     const article = section.querySelector(".manual-document");
@@ -231,7 +242,6 @@ function buildManualEditorialGrid() {
     });
 
     article.remove();
-    section.querySelector(".manual-language")?.remove();
     section.append(chapters);
 
     section.querySelectorAll(".manual-chapter-copy").forEach((body) => {
@@ -248,9 +258,6 @@ function buildManualEditorialGrid() {
       });
 
       body.replaceChildren(groups);
-      const count = body.children.length;
-      body.dataset.columns = String(Math.min(count, 3));
-      if (count === 1) body.firstElementChild?.classList.add("manual-subsection--flow");
     });
   });
 }

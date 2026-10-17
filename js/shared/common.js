@@ -15,7 +15,7 @@ const DETAIL_OPENING_VISIBLE_TIME = 1200;
 const DETAIL_OPENING_FADE_TIME = 500;
 
 // 메인 이미지를 같은 파일명으로 교체했는데 이전 이미지가 보이면 이 숫자를 1씩 올리세요.
-const MAIN_IMAGE_VERSION = "20260927-2";
+const MAIN_IMAGE_VERSION = "20261017-webp-1";
 
 function versionMainImage(src) {
   const separator = src.includes("?") ? "&" : "?";
@@ -52,57 +52,35 @@ function formatProductTitle(product, fallbackIndex = 0) {
 function hoverImageCandidates(index) {
   const number = index + 1;
   return [
-    `assets/product_model/${number}.png`,
     `assets/product_model/${number}.webp`,
-    `assets/product_model/${number}-1.png`,
-    `assets/product_model/${number}-2.png`,
-    `assets/product_hover/product_${number}.png`,
-    `assets/product_hover/wear_${number}.png`,
-    `assets/product_mein/product_${number}_hover.png`,
-    `assets/product_mein/wear_${number}.png`,
+    `assets/product_model/${number}-1.webp`,
+    `assets/product_model/${number}-2.webp`,
+    `assets/product_hover/product_${number}.webp`,
+    `assets/product_hover/wear_${number}.webp`,
+    `assets/product_mein/product_${number}_hover.webp`,
+    `assets/product_mein/wear_${number}.webp`,
   ];
 }
 
 function detailOpeningImageCandidates(product, index) {
   const number = index + 1;
   return [
-    `assets/product details/${number}-intro.png`,
-    `assets/product details/${product.id}-intro.png`,
-    `assets/product_mein/product_${number}_intro.png`,
-    `assets/product_mein/${product.id}_intro.png`,
+    `assets/product details/${number}-intro.webp`,
+    `assets/product details/${product.id}-intro.webp`,
+    `assets/product_mein/product_${number}_intro.webp`,
+    `assets/product_mein/${product.id}_intro.webp`,
   ];
 }
 
 function detailPageImageCandidates(product, index) {
   const number = index + 1;
   return [
-    `assets/Product Detail Page/${number}.png`,
-    `assets/Product Detail Page/${number}.jpg`,
-    `assets/Product Detail Page/${number}.jpeg`,
     `assets/Product Detail Page/${number}.webp`,
-    `assets/Product Detail Page/${number}-detail.png`,
-    `assets/Product Detail Page/${number}-detail.jpg`,
-    `assets/Product Detail Page/${number}-detail.jpeg`,
     `assets/Product Detail Page/${number}-detail.webp`,
-    `assets/Product Detail Page/${product.id}.png`,
-    `assets/Product Detail Page/${product.id}.jpg`,
-    `assets/Product Detail Page/${product.id}.jpeg`,
     `assets/Product Detail Page/${product.id}.webp`,
-    `Product Detail Page/${number}.png`,
-    `Product Detail Page/${number}.jpg`,
-    `Product Detail Page/${number}.jpeg`,
     `Product Detail Page/${number}.webp`,
-    `Product Detail Page/${number}-detail.png`,
-    `Product Detail Page/${number}-detail.jpg`,
-    `Product Detail Page/${number}-detail.jpeg`,
     `Product Detail Page/${number}-detail.webp`,
-    `Product Detail Page/${product.id}.png`,
-    `Product Detail Page/${product.id}.jpg`,
-    `Product Detail Page/${product.id}.jpeg`,
     `Product Detail Page/${product.id}.webp`,
-    `assets/product details/${number}-detail.png`,
-    `assets/product details/${number}-detail.jpg`,
-    `assets/product details/${number}-detail.jpeg`,
     `assets/product details/${number}-detail.webp`,
   ];
 }
@@ -213,11 +191,11 @@ function headerMarkup() {
     <header class="top-bar">
       <h1 class="brand-title">
         <a class="brand-home" href="index.html" aria-label="Go to main page">
-          <img class="brand-logo" src="assets/graphics/top-logo.png" alt="聖人用品指針">
+          <img class="brand-logo" src="assets/graphics/top-logo.webp" alt="聖人用品指針">
         </a>
       </h1>
       <button class="brand-toggle" type="button" aria-label="Toggle menu" aria-controls="site-navigation" aria-expanded="true">
-        <img class="brand-mark" src="assets/product_mein/Menu bar.png" alt="">
+        <img class="brand-mark" src="assets/product_mein/Menu bar.webp" alt="">
       </button>
     </header>`;
 }
@@ -225,7 +203,7 @@ function headerMarkup() {
 function siteEndMarkup() {
   return `
     <footer class="site-end" id="project-footer" aria-label="Project information">
-      <img class="site-end-logo" src="assets/graphics/bottom_logo.png" alt="聖人用品 指針">
+      <img class="site-end-logo" src="assets/graphics/bottom_logo.webp" alt="聖人用品 指針">
       <div class="site-end-copy">
         <p>聖人用品: 완벽한어른</p>
         <p>The more you wear our products, the closer you become to the adult society expects. Wearing every piece, you look like a perfect adult, but you gradually lose yourself. [Become socially optimized]</p>

@@ -341,8 +341,8 @@ function renderDetail() {
       </section>
       ${fallbackGallery}
       <button class="detail-info-toggle" type="button" aria-label="강령 문구 보기" aria-controls="detail-info-overlay" aria-expanded="false">
-        <img class="detail-info-stamp detail-info-stamp-red" src="assets/graphics/stamp_red.png" alt="">
-        <img class="detail-info-stamp detail-info-stamp-gray" src="assets/graphics/stamp_gray.png" alt="">
+        <img class="detail-info-stamp detail-info-stamp-red" src="assets/graphics/stamp_red.webp" alt="">
+        <img class="detail-info-stamp detail-info-stamp-gray" src="assets/graphics/stamp_gray.webp" alt="">
       </button>
       ${productQuoteMarkup(product, productIndex)}
       <div class="detail-actions">

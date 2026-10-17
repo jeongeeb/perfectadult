@@ -26,7 +26,7 @@ function renderShop() {
 
   renderShell(`
     <a class="home-scroll-logo" href="index.html" aria-label="Go to main page">
-      <img src="assets/graphics/top-logo.png" alt="聖人用品指針">
+      <img src="assets/graphics/top-logo.webp" alt="聖人用品指針">
     </a>
     <main class="shop-page">
       <section class="home-intro" id="brand-intro" aria-label="Brand introduction">

@@ -7,6 +7,7 @@
   - 좌측 한자 로고: .brand-title, .brand-logo
   - Shop/Manual/Archive/About 메뉴: .menu-panel, .side-nav
   - 메뉴 항목 사이 간격: .nav-primary-group
+  - 메뉴얼·아카이브 공통 왼쪽 메뉴: .page-side-index, .page-side-nav
   - 왼쪽 아래 계정명: .footer-handle
   - 모든 페이지 마지막 큰 로고: .site-end, .site-end-logo
   - 마지막 설명 글: .site-end-copy
@@ -73,7 +74,7 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 전체 사이트 마우스 커서: 원본은 assets/Mouse cursor.png 입니다. */
+/* 전체 사이트 마우스 커서: 원본은 assets/Mouse cursor.webp 입니다. */
 html,
 body,
 body *,
@@ -84,7 +85,7 @@ select,
 textarea,
 [role="button"] {
   cursor:
-    url("../assets/graphics/mouse-cursor-large.png") 16 10,
+    url("../assets/graphics/mouse-cursor-large.webp") 16 10,
     auto !important;
 }
 
@@ -169,9 +170,10 @@ textarea,
 }
 
 .side-nav {
-  font-family: "Arial Narrow", Arial, sans-serif;
+  font-family: var(--en-font);
   font-size: 16px;
   font-weight: 700;
+  font-style: normal;
   line-height: 1;
 }
 
@@ -191,21 +193,65 @@ textarea,
   margin: 0;
 }
 
-.side-nav a {
+/* 메뉴얼·아카이브 왼쪽 메뉴는 항상 여기서 함께 조정합니다. */
+.page-side-index {
+  position: fixed;
+  top: 128px;
+  left: 30px;
+  z-index: 21;
+  width: clamp(150px, 11vw, 210px);
+  max-height: calc(100svh - 152px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+  color: #000;
+  font-family: var(--en-font);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.page-side-nav {
+  display: grid;
+  justify-items: start;
+  gap: 3px;
+}
+
+.site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a {
   display: block;
   margin: 0;
-  color: #9a9a9a;
+  color: #000;
+  opacity: 1;
   white-space: nowrap;
-  transition: color 140ms ease;
+  transition: opacity 180ms ease;
+}
+
+.site-frame .page-side-nav a {
+  white-space: normal;
+  word-break: keep-all;
 }
 
 .side-nav a.active {
   font-weight: inherit;
 }
 
-.side-nav a:hover,
-.side-nav a:focus-visible {
-  color: #000;
+/* 투명하게 사라져 모든 페이지의 실제 배경색에 자연스럽게 섞입니다. */
+@media (hover: hover) and (pointer: fine) {
+  .site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a:hover {
+    opacity: 0;
+  }
+}
+
+.site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a:focus-visible {
+  opacity: 1;
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a {
+    transition: none;
+  }
 }
 
 .collection-index {
@@ -249,7 +295,7 @@ textarea,
   height: auto;
 }
 
-/* 하단 프로젝트 정보: Arial Narrow / 14px / 행간 18px / 자간 -2% */
+/* 하단 프로젝트 정보: 공통 영문 폰트 / 14px / 행간 18px / 자간 -2% */
 .site-end-copy {
   margin-top: calc(30px * var(--stage-scale, 1));
   font-family: var(--en-font);
@@ -264,6 +310,22 @@ textarea,
 }
 
 @media (max-width: 760px) {
+  .page-side-index {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    max-height: none;
+    overflow: visible;
+    margin: 128px 16px 48px;
+  }
+
+  .page-side-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+
   html {
     scroll-snap-type: y proximity;
   }

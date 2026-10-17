@@ -51,6 +51,6 @@
   --ink: #050505;
   --muted: #b8b8b8;
   --page: #ffffff;
-  --en-font: "Arial Narrow", "Arial Condensed", Arial, sans-serif;
+  --en-font: "Arial Narrow", Arial, var(--kr-font), sans-serif;
   --kr-font: Pretendard, "Noto Sans KR", "Helvetica Neue", Arial, sans-serif;
 }

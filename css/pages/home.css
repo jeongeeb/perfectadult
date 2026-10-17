@@ -27,7 +27,7 @@ body[data-page="shop"] .site-frame {
 }
 
 body[data-page="shop"] .top-bar {
-  background: #FFFF00;
+  background: #ffff00;
 }
 
 body[data-page="shop"].shop-products-visible .top-bar {
@@ -92,7 +92,7 @@ body[data-page="shop"] .footer-handle {
   padding: calc(520px * var(--stage-scale, 1)) 0
     calc(56px * var(--stage-scale, 1));
   overflow: visible;
-  background: #FFFF00;
+  background: #ffff00;
 }
 
 .intro-hero-figure {

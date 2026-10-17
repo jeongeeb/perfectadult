@@ -1,38 +1,17 @@
 /*
-  [메뉴얼 페이지 수정 지도]
-  - 전체 바깥 여백과 열 기준값: .manual-page
-  - 왼쪽 큰 제목 영역: .manual-rail, .manual-intro > h2
-  - 참고 사이트형 행 구조: .manual-chapter
-  - 오른쪽 첫 소개 3열: .manual-intro-grid
-  - 강령 본문 3열: .manual-chapter-copy
-  - 한국어/영어 큰 구역 사이: .manual-section
-  - 강령과 강령 사이: .manual-chapter
-  - 소제목: .manual-chapter-copy h4
-  - 본문: .manual-intro-column, .manual-chapter-copy
-  - 태블릿: @media (max-width: 980px)
-  - 모바일: @media (max-width: 760px)
-
-  CSS 간격 값은 보통 위 오른쪽 아래 왼쪽 순서입니다.
-  예: padding: 100px 30px 80px 30px;
+  메뉴얼 편집 레이아웃
+  - 공통 왼쪽 목차 / 왼쪽 볼드 제목 / 2열 본문
+  - 소제목과 해당 본문을 한 묶음으로 배치, 모바일 1열
+  - 본문 최소 12px, 단어 단위 줄바꿈
+  - 메뉴 색상과 마우스 오버 효과는 css/common.css에서 공통 관리
 */
 body[data-page="manual"],
 body[data-page="manual"] .site-frame {
-  --manual-page-bg: #fff;
-  background: var(--manual-page-bg);
+  background: #fff;
 }
 
 body[data-page="manual"] .top-bar {
-  background: var(--manual-page-bg);
-}
-
-body[data-page="manual"] .menu-panel,
-body[data-page="manual"] .side-nav,
-body[data-page="manual"] .side-nav a {
-  color: #000;
-}
-
-body[data-page="manual"] .brand-logo {
-  filter: none;
+  background: #fff;
 }
 
 body[data-page="manual"] .footer-handle {
@@ -40,93 +19,41 @@ body[data-page="manual"] .footer-handle {
 }
 
 .manual-page {
-  /* 장 제목 칸 너비입니다. 숫자를 키우면 제목 칸이 넓어집니다. */
-  --manual-rail: calc(240px * var(--stage-scale, 1));
-  /* 장 번호 칸 너비입니다. */
-  --manual-number: calc(86px * var(--stage-scale, 1));
-  /* 장 안의 소제목 칸 너비입니다. */
-  --manual-subtitle: calc(170px * var(--stage-scale, 1));
-  --manual-sidebar: calc(270px * var(--stage-scale, 1));
-  /* 모든 본문 열 사이의 가로 간격입니다. */
-  --manual-gap: calc(20px * var(--stage-scale, 1));
-  /* 메뉴얼 본문 자간/행간은 여기서 바꾸면 전체에 적용됩니다. */
-  --manual-body-line-height: 1.34;
-  --manual-body-letter-spacing: -0.014em;
-  /* 왼쪽 부제목 자간/행간입니다. */
-  --manual-title-line-height: 1.16;
-  --manual-title-letter-spacing: -0.018em;
-  /* 메뉴얼 상단 이미지 박스 조정 */
-  --manual-hero-left-bg: #000;
-  --manual-hero-right-bg: #000;
-  --manual-hero-left-padding: calc(40px * var(--stage-scale, 1));
-  --manual-hero-left-position: center 50%;
-  --manual-hero-right-fit: center 40%;
-  --manual-hero-right-position: center 100%;
-  width: 100%;
-  min-height: 100vh;
-  /* 페이지 전체 안쪽 여백: 위 / 오른쪽 / 아래 / 왼쪽 */
-  padding: calc(120px * var(--stage-scale, 1))
-    calc(200px * var(--stage-scale, 1)) calc(200px * var(--stage-scale, 1))
-    calc(50px * var(--stage-scale, 1));
+  --manual-sidebar-offset: clamp(210px, 15vw, 290px);
+  --manual-column-gap: clamp(24px, 1.8vw, 36px);
+  --manual-body-size: clamp(12px, 0.73vw, 14px);
+  padding: 128px 30px 150px;
+  background: #fff;
   color: #000;
-  background: var(--manual-page-bg);
-}
-
-.manual-side-index {
-  position: fixed;
-  top: calc(120px * var(--stage-scale, 1));
-  left: calc(30px * var(--stage-scale, 1));
-  z-index: 12;
-  width: calc(210px * var(--stage-scale, 1));
-  color: #4b4b4b;
-  font-family: "Arial Narrow", Arial, sans-serif;
-  font-size: calc(16px * var(--stage-scale, 1));
-  font-weight: 600;
-  line-height: 1.04;
-  letter-spacing: -0.03em;
-}
-
-.manual-side-nav {
-  display: grid;
-  gap: calc(10px * var(--stage-scale, 1));
-}
-
-.manual-side-nav {
-  margin-bottom: calc(34px * var(--stage-scale, 1));
-}
-
-.manual-side-nav a {
-  color: #9a9a9a;
-  transition: color 140ms ease;
-}
-
-.manual-side-nav a:hover,
-.manual-side-nav a.is-active {
-  color: #111;
+  font-family: var(--en-font);
+  font-size: var(--manual-body-size);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .manual-hero,
 .manual-intro,
 .manual-section {
-  margin-left: calc(var(--manual-sidebar) + calc(32px * var(--stage-scale, 1)));
-}
-/* 이미지 박스 사이즈 */
-.manual-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: calc(30px * var(--stage-scale, 1));
-  margin-bottom: calc(130px * var(--stage-scale, 1));
-}
-/* 이미지 높이 */
-.manual-hero-panel {
-  height: calc(300px * var(--stage-scale, 1));
-  margin: 0;
-  overflow: hidden;
-  background: var(--manual-hero-right-bg);
+  margin-left: var(--manual-sidebar-offset);
 }
 
-.manual-hero-panel-wide {
-  background: var(--manual-hero-left-bg);
+/* 상단 이미지는 본문 시작선에 맞춰 유지합니다. */
+.manual-hero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--manual-column-gap);
+  margin-bottom: 72px;
+}
+
+.manual-hero-panel {
+  height: clamp(220px, 22vw, 400px);
+  margin: 0;
+  overflow: hidden;
+  background: #000;
 }
 
 .manual-hero-panel img {
@@ -134,332 +61,160 @@ body[data-page="manual"] .footer-handle {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center bottom;
 }
-/* 이미지 안쪽 여백 */
+
 .manual-hero-panel-wide img {
-  padding: var(--manual-hero-left-padding);
+  padding: clamp(24px, 2vw, 40px);
   object-fit: contain;
-  object-position: var(--manual-hero-left-position);
+  object-position: center;
 }
 
-.manual-hero-panel:not(.manual-hero-panel-wide) img {
-  object-fit: var(--manual-hero-right-fit);
-  object-position: var(--manual-hero-right-position);
-}
-
-/* 왼쪽 제목 1칸 + 오른쪽 소개 3칸 */
-.manual-intro {
-  display: grid;
-  grid-template-columns: var(--manual-number) var(--manual-rail) repeat(3, minmax(0, 1fr));
-  column-gap: var(--manual-gap);
-  align-items: start;
-  padding-top: calc(10px * var(--stage-scale, 1));
-}
-
-.manual-editorial-row {
+/* 장 제목과 소제목은 본문 왼쪽 시작선에 맞춰 볼드체로 표시합니다. */
+.manual-intro,
+.manual-chapter {
   display: block;
-}
-
-.manual-rail,
-.manual-intro > h2 {
-  grid-column: 2;
-  min-width: 0;
+  padding: 32px 0 56px;
+  scroll-margin-top: 128px;
 }
 
 .manual-intro::before {
-  grid-column: 1;
-  content: "INFO";
-  font-family: "Arial Narrow", Arial, sans-serif;
-  font-size: calc(12px * var(--stage-scale, 1));
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.manual-rail h2,
-.manual-intro > h2 {
-  margin: 0;
-  padding-right: calc(28px * var(--stage-scale, 1));
-  font-family: "Arial Narrow", var(--kr-font);
-  /* 왼쪽의 큰 장 제목 크기와 굵기입니다. */
-  font-size: calc(15px * var(--stage-scale, 1));
-  font-weight: 500;
-  line-height: var(--manual-title-line-height);
-  letter-spacing: var(--manual-title-letter-spacing);
-  word-break: keep-all;
-}
-
-/* 첫 소개는 한 화면 가까이 머물고, 텍스트는 오른쪽에 작게 정렬됩니다. */
-.manual-intro {
-  min-height: 0;
-}
-
-.manual-intro-grid {
-  grid-column: 3 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--manual-gap);
-  padding-top: 0;
-}
-/* 왼쪽 부제목 */
-.manual-intro-column,
-.manual-chapter-copy {
-  min-width: 0;
-  font-family: var(--kr-font);
-  /* 메뉴얼 본문의 공통 글자 크기, 굵기, 행간, 자간입니다. */
-  font-size: calc(12px * var(--stage-scale, 1));
-  font-weight: 400;
-  line-height: var(--manual-body-line-height);
-  letter-spacing: var(--manual-body-letter-spacing);
-  text-align: left;
-  word-break: keep-all;
-}
-
-.manual-intro-column p {
   display: block;
+  margin-bottom: 8px;
+  font-size: inherit;
+  font-weight: 400;
+  line-height: inherit;
+  text-align: left;
+}
+
+.manual-intro::before {
+  content: "INTRODUCTION";
+}
+
+.manual-rail {
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.manual-rail h2 {
+  max-width: 100%;
   margin: 0;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.4;
+  word-break: keep-all;
 }
 
-.manual-intro-column p + p::before {
-  content: none;
+#manual-intro-title {
+  scroll-margin-top: 128px;
 }
 
-.manual-intro-conclusion {
-  font-weight: 500;
-}
-
-/* 큰 한자 워드마크는 페이지 마지막 공통 영역에서만 표시합니다. */
 .manual-intro-brand {
   display: none;
 }
 
-/* 메뉴얼 수정 */
-.manual-intro-brand img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.manual-intro-brand-copy {
-  margin-top: calc(10px * var(--stage-scale, 1));
-  font-family: "Arial Narrow", Arial, sans-serif;
-  font-size: calc(12px * var(--stage-scale, 1));
-  font-weight: 400;
-  /* 행간 */
-  line-height: 2;
-  /* 자간 */
-  letter-spacing: -0.01em;
-}
-
-.manual-intro-brand-copy p {
-  margin: 0;
-}
-
 .manual-section {
-  /* 첫 번째 KOREAN/ENGLISH 문서 구역이 시작되는 위 간격입니다. */
-  margin-top: calc(150px * var(--stage-scale, 1));
+  margin-top: 0;
   padding: 0;
-  border: 0;
-  background: transparent;
-  counter-reset: manual-chapter;
 }
 
 .manual-section + .manual-section {
-  /* KOREAN 구역과 ENGLISH 구역 사이 간격입니다. */
-  margin-top: calc(170px * var(--stage-scale, 1));
-}
-
-.manual-chapter {
-  /* 각 강령 장 사이의 세로 간격입니다. */
-  display: grid;
-  grid-template-columns: var(--manual-number) var(--manual-rail) minmax(0, 1fr);
-  column-gap: var(--manual-gap);
-  align-items: start;
-  margin-top: calc(42px * var(--stage-scale, 1));
-  padding-top: calc(10px * var(--stage-scale, 1));
-}
-
-.manual-chapter:first-child {
   margin-top: 0;
 }
 
-.manual-chapter .manual-rail {
-  grid-column: 2;
-  margin-bottom: 0;
-}
-
-.manual-chapter::before {
-  grid-column: 1;
-  counter-increment: manual-chapter;
-  content: "KR / 0" counter(manual-chapter);
-  font-family: "Arial Narrow", Arial, sans-serif;
-  font-size: calc(12px * var(--stage-scale, 1));
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-
-#manual-en .manual-chapter::before {
-  content: "EN / 0" counter(manual-chapter);
+.manual-chapter + .manual-chapter {
+  margin-top: 0;
 }
 
 .manual-chapter-copy {
-  grid-column: 3;
-  display: block;
+  min-width: 0;
+  column-count: 2;
+  column-gap: var(--manual-column-gap);
+  column-fill: balance;
+  text-align: left;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 .manual-subsection {
-  display: grid;
-  grid-template-columns: var(--manual-subtitle) minmax(0, 1fr);
-  column-gap: var(--manual-gap);
-  min-width: 0;
-  padding-bottom: calc(18px * var(--stage-scale, 1));
+  /* 열 균형은 내용 분량에 맞추되 소제목과 본문 사이에서는 나누지 않습니다. */
+  break-inside: avoid-column;
+  margin-bottom: 24px;
 }
 
-.manual-subsection + .manual-subsection {
-  padding-top: calc(10px * var(--stage-scale, 1));
-}
-
-.manual-subsection--flow {
-  display: block;
-  columns: 2;
-  column-gap: calc(var(--manual-gap) * 1.4);
+.manual-subsection:last-child {
+  margin-bottom: 0;
 }
 
 .manual-chapter-copy h4 {
-  grid-column: 1;
+  break-after: avoid;
   margin: 0;
-  font-size: inherit;
+  font: inherit;
   font-weight: 700;
-  line-height: var(--manual-title-line-height);
-  letter-spacing: inherit;
+  text-align: left;
 }
 
-.manual-chapter-copy p {
-  display: block;
-  grid-column: 2;
-  margin: 0 0 calc(7px * var(--stage-scale, 1));
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-}
-
-.manual-chapter-copy p + p::before {
-  content: none;
-}
-
-.manual-chapter-copy ol,
-.manual-chapter-copy ul {
-  grid-column: 2;
-  margin: 0 0 calc(10px * var(--stage-scale, 1));
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-}
-
-.manual-chapter-copy p,
-.manual-chapter-copy li {
-  break-inside: avoid;
-}
-
-.manual-chapter-copy ol,
-.manual-chapter-copy ul {
-  padding-left: calc(19px * var(--stage-scale, 1));
-}
-
-.manual-chapter-copy li {
-  margin-bottom: calc(6px * var(--stage-scale, 1));
+.manual-label {
+  font-weight: 700;
 }
 
 .manual-language-section[lang="en"] .manual-rail h2,
-.manual-language-section[lang="en"] .manual-chapter-copy {
-  font-family: "Arial Narrow", Arial, sans-serif;
+.manual-language-section[lang="en"] .manual-chapter-copy h4,
+.manual-language-section[lang="en"] .manual-label {
+  text-transform: uppercase;
 }
 
-.manual-language-section[lang="en"] .manual-rail h2 {
-  font-weight: 500;
-  letter-spacing: -0.03em;
+.manual-chapter-copy p,
+.manual-chapter-copy ol,
+.manual-chapter-copy ul {
+  margin: 0 0 12px;
+  font: inherit;
+  orphans: 3;
+  widows: 3;
 }
 
-@media (max-width: 980px) {
-  /* 태블릿에서는 번호 / 제목 / 본문 행 구조를 조금 좁힙니다. */
+.manual-chapter-copy ol,
+.manual-chapter-copy ul {
+  padding-left: 1.4em;
+}
+
+.manual-chapter-copy li {
+  margin-bottom: 6px;
+}
+
+/* 공통 푸터의 작은 글씨도 메뉴얼에서는 12px 아래로 줄어들지 않습니다. */
+body[data-page="manual"] .site-end-copy {
+  font-size: max(12px, calc(14px * var(--stage-scale, 1)));
+  line-height: 1.4;
+}
+
+@media (max-width: 1200px) {
   .manual-page {
-    --manual-number: 66px;
-    --manual-rail: 180px;
-    --manual-subtitle: 132px;
-    --manual-sidebar: 220px;
-    --manual-gap: 18px;
+    --manual-sidebar-offset: 190px;
+    padding-right: 30px;
   }
 
-  .manual-hero,
-  .manual-intro,
-  .manual-section {
-    margin-left: calc(var(--manual-sidebar) + 24px);
-  }
-
-  .manual-side-index {
-    width: 180px;
-    font-size: 12px;
-  }
-
-  .manual-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .manual-intro {
-    grid-template-columns: var(--manual-number) var(--manual-rail) minmax(0, 1fr);
-  }
-
-  .manual-intro-grid {
-    grid-column: 3;
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .manual-chapter {
-    grid-template-columns: var(--manual-number) var(--manual-rail) minmax(0, 1fr);
-  }
-
-  .manual-chapter-copy {
-    grid-column: 3;
-  }
-
-  .manual-subsection {
-    grid-template-columns: var(--manual-subtitle) minmax(0, 1fr);
-  }
-
-  .manual-subsection--flow {
-    columns: 1;
-  }
 }
 
 @media (max-width: 760px) {
-  /* 모바일에서는 모든 내용을 한 열로 쌓습니다. */
+  body[data-page="manual"] .brand-title {
+    top: 20px;
+    left: 16px;
+  }
+
+  body[data-page="manual"] .brand-logo {
+    width: 140px;
+  }
+
   body[data-page="manual"] .menu-panel {
-    height: 62px;
-    padding: 0 14px;
-  }
-
-  body[data-page="manual"] .side-nav {
-    font-size: 12px;
-  }
-
-  body[data-page="manual"] .nav-primary-group {
-    gap: 14px;
+    top: 66px;
+    right: 16px;
+    height: 24px;
   }
 
   .manual-page {
-    padding: 104px 16px 90px;
-  }
-
-  .manual-side-index {
-    position: static;
-    width: auto;
-    margin-bottom: 54px;
-    font-size: 13px;
+    --manual-body-size: 14px;
+    padding: 0 16px 90px;
   }
 
   .manual-hero,
@@ -470,96 +225,28 @@ body[data-page="manual"] .footer-handle {
 
   .manual-hero {
     grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 82px;
+    gap: 16px;
+    margin-bottom: 48px;
   }
 
   .manual-hero-panel {
-    height: 58vw;
-    min-height: 210px;
+    height: 65vw;
   }
 
-  .manual-hero-panel-wide img {
-    padding: 28px;
+  .manual-chapter-copy {
+    column-count: 1;
   }
 
-  .manual-editorial-row,
-  .manual-intro {
-    display: block;
-  }
-
-  .manual-intro::before,
-  .manual-chapter::before {
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .manual-rail h2,
-  .manual-intro > h2 {
-    max-width: 100%;
-    padding-right: 0;
-    font-size: 24px;
-    line-height: 1.1;
-    overflow-wrap: anywhere;
-  }
-
-  .manual-intro {
-    min-height: auto;
-  }
-
-  .manual-intro-grid,
-  .manual-chapter-copy,
-  .manual-chapter-copy[data-columns="1"],
-  .manual-chapter-copy[data-columns="2"],
-  .manual-chapter-copy[data-columns="3"] {
-    display: block;
-    margin-top: 44px;
-    padding: 0;
-    font-size: 15px;
-    line-height: var(--manual-body-line-height);
-    letter-spacing: var(--manual-body-letter-spacing);
-  }
-
-  .manual-intro-column {
-    font-size: 15px;
-    line-height: var(--manual-body-line-height);
-    letter-spacing: var(--manual-body-letter-spacing);
-  }
-
-  .manual-intro-column + .manual-intro-column {
-    margin-top: 24px;
-  }
-
-  .manual-subsection {
-    display: block;
-    padding-top: 16px;
-  }
-
-  .manual-subsection:first-child {
-    padding-top: 0;
-  }
-
-  .manual-chapter-copy h4 {
-    margin-bottom: 10px;
-  }
-
-  .manual-section {
-    margin-top: 130px;
-  }
-
-  .manual-section + .manual-section {
-    margin-top: 180px;
-  }
-
+  .manual-intro,
   .manual-chapter {
-    margin-top: 120px;
+    padding: 24px 0 40px;
   }
 
-  .manual-chapter .manual-rail {
-    position: static;
+  .manual-rail {
+    margin-bottom: 24px;
   }
 
-  .manual-subsection--flow {
-    columns: 1;
+  .manual-rail h2 {
+    max-width: 100%;
   }
 }
