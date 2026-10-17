@@ -257,7 +257,7 @@ body[data-page="about"] .top-bar {
 }
 .about-previous { left: 30px; }
 .about-next { right: 30px; }
-.about-viewer-controls button img { display: block; width: 36px; height: 54px; pointer-events: none; }
+.about-viewer-controls button img { display: block; width: 24px; height: 36px; pointer-events: none; }
 .about-previous img { transform: rotate(180deg); }
 .about-look-position {
   min-width: 46px;

@@ -266,7 +266,7 @@ body[data-page="archive"] {
 }
 .archive-previous { left: 30px; }
 .archive-next { right: 30px; }
-.archive-controls button img { display: block; width: 36px; height: 54px; pointer-events: none; }
+.archive-controls button img { display: block; width: 24px; height: 36px; pointer-events: none; }
 .archive-previous img { transform: rotate(180deg); }
 .archive-controls button:disabled {
   opacity: 0.2;
