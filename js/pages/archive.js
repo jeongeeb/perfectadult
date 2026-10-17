@@ -2,7 +2,7 @@
 function archiveProjectEntry(product, index) {
   const productIndex = products.indexOf(product);
   return `
-    <article class="archive-project" id="archive-project-${productIndex + 1}" aria-label="${index + 1}. ${productDisplayName(product)}">
+    <article class="archive-project" id="archive-project-${productIndex + 1}" data-product-id="${product.id}" aria-label="${index + 1}. ${productDisplayName(product)}">
       <a class="archive-project-link" href="product.html?id=${product.id}" aria-label="${productDisplayName(product)} 상세페이지">
         <figure class="archive-image-wrap">
           <img class="archive-main-image" src="${versionMainImage(product.image)}" alt="${productDisplayName(product)} 제품 메인 이미지" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
@@ -90,14 +90,17 @@ function bindArchiveGallery() {
     const current = Math.round(progress);
     if (!isNavigating) targetIndex = current;
     const visualProgress = reducedMotion.matches ? current : progress;
+    // [옆 이미지 간격] 아래 0.60은 모바일 너비의 60%, 0.37은 PC 너비의 37%.
     const spacing = window.innerWidth * (window.innerWidth <= 760 ? 0.60 : 0.37);
 
     cards.forEach((card, index) => {
       const distance = index - visualProgress;
       const depth = Math.min(Math.abs(distance), 1);
       const visible = Math.abs(distance) < 1.8;
-      // 중앙은 크게, 앞뒤 이미지는 46% 크기와 20% 불투명도로 배치합니다.
+      // [옆 이미지 크기] 아래 scale의 0.54는 54% 축소 = 중앙 크기의 46%.
+      // translate의 depth * 24는 옆 이미지를 중앙보다 24px 아래에 배치합니다.
       card.style.transform = `translate(-50%, -50%) translate(${distance * spacing}px, ${depth * 24}px) scale(${1 - depth * 0.54})`;
+      // [옆 이미지 투명도] 아래 0.80은 80% 투명 = 불투명도 20%. 키우면 더 흐려집니다.
       card.style.opacity = visible ? String((1 - depth * 0.80) * Math.min(1, (1.8 - Math.abs(distance)) / 0.8)) : "0";
       card.style.visibility = visible ? "visible" : "hidden";
       card.style.zIndex = String(10 - Math.min(9, Math.round(Math.abs(distance) * 3)));

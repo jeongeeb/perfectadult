@@ -1,23 +1,47 @@
-/* 중앙 이미지 높이: --archive-image-height / 한 장당 스크롤 거리: 85svh
-   이전·다음 이미지 크기와 투명도: js/pages/archive.js의 update */
+/*
+  [아카이브 이미지 수정 지도]
+  - 제품마다 따로 조절: 아래 [제품별 이미지 크기·위치]에서 해당 제품의 scale / x / y 수정
+  1. 이미지 높이: .archive-page의 --archive-image-height
+  2. 이미지 영역 너비: .archive-project의 width
+  3. 이미지·설명 묶음의 위치: .is-enhanced .archive-gallery의 inset
+  4. 이미지와 설명 사이 간격: .archive-image-wrap의 margin
+  5. 모바일 크기·위치: 아래 @media (max-width: 760px)
+  6. 높이가 낮은 화면의 크기: 아래 @media (max-height: 560px)
+  7. 옆 이미지 간격·크기·투명도: js/pages/archive.js의 update 함수
+  8. 이미지 교체: js/shared/data.js의 products에서 해당 제품의 image 경로
+     이 경로는 다른 페이지의 제품 메인 이미지에도 공통 적용됩니다.
+
+  단위: px = 고정 크기, vw = 화면 너비의 1%, svh = 작은 뷰포트 높이의 1%.
+*/
 body[data-page="archive"],
 body[data-page="archive"] .site-frame {
   min-height: 100%;
   background: #fff;
 }
-body[data-page="archive"] .footer-handle { display: none; }
+body[data-page="archive"] .footer-handle {
+  display: none;
+}
 /* body가 별도 스크롤 컨테이너가 되지 않게 하여 sticky를 뷰포트에 고정합니다. */
-body[data-page="archive"] { overflow: visible; }
+body[data-page="archive"] {
+  overflow: visible;
+}
 
 .archive-page {
+  /* [1. 이미지 높이 / PC] 아래 --archive-image-height를 수정합니다.
+     고정 크기 예: --archive-image-height: 500px; */
   --archive-image-height: max(160px, min(64svh, calc(100svh - 350px)));
   color: #262626;
   font-family: var(--en-font);
 }
 .archive-page.is-enhanced {
+  /* 한 제품당 스크롤 거리는 아래 height의 85svh. 이미지 크기는 위 변수에서 조절합니다. */
   height: calc(100svh + var(--archive-steps) * 85svh);
 }
-.archive-stage { position: relative; min-height: 100svh; outline: none; }
+.archive-stage {
+  position: relative;
+  min-height: 100svh;
+  outline: none;
+}
 .is-enhanced .archive-stage {
   position: sticky;
   top: 0;
@@ -26,12 +50,26 @@ body[data-page="archive"] { overflow: visible; }
   overflow: clip;
 }
 /* 제목과 컬렉션 정보는 공통 왼쪽 메뉴의 크기·위치를 그대로 따릅니다. */
-.archive-heading h2, .archive-heading p { margin: 0; font: inherit; }
-.archive-gallery { padding: 170px 20px 100px; }
-.is-enhanced .archive-gallery { position: absolute; inset: 170px 0 74px; padding: 0; }
+.archive-heading h2,
+.archive-heading p {
+  margin: 0;
+  font: inherit;
+}
+.archive-gallery {
+  padding: 170px 20px 100px;
+}
+.is-enhanced .archive-gallery {
+  /* [3. 이미지·설명 묶음 위치 / PC] inset 순서: 위 / 좌우 / 아래.
+     위 값을 키우면 아래로, 아래 값을 키우면 위로 이동합니다. */
+  position: absolute;
+  inset: 150px 0 74px;
+  padding: 0;
+}
 .archive-project {
+  /* [2. 이미지 영역 너비 / PC] width를 수정합니다. 예: min(60vw, 900px).
+     min(화면 비례 너비, 최대 너비)이며 원본 비율에 따라 높이 제한도 함께 영향을 줍니다. */
   width: min(54vw, 720px);
-  margin: 0 auto 70px;
+  margin: 0 auto 100px;
   text-align: center;
   scroll-snap-align: none;
   scroll-margin-top: 128px;
@@ -43,15 +81,137 @@ body[data-page="archive"] { overflow: visible; }
   margin: 0;
   will-change: transform, opacity;
 }
-.archive-project-link { display: block; }
+.archive-project-link {
+  display: block;
+}
 .archive-image-wrap {
+  /* [4. 이미지와 설명 사이 간격] 아래 margin의 마지막 숫자가 이미지 아래 여백입니다. */
   display: flex;
   align-items: center;
   justify-content: center;
   height: var(--archive-image-height);
-  margin: 0 0 18px;
+  margin: 0 0 50px;
 }
-.archive-main-image { display: block; width: 100%; height: 100%; object-fit: contain; }
+.archive-main-image {
+  /* object-fit: contain은 원본 비율을 유지하며 지정한 영역 안에 이미지 전체를 표시합니다. */
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* 제품별 크기와 위치. 설명 글은 제자리에 두고 이미지에만 적용합니다.
+     스크롤 전환은 바깥 .archive-project에서 처리하므로 이 설정과 함께 동작합니다. */
+  transform: translate(var(--archive-item-x, 0px), var(--archive-item-y, 0px))
+    scale(var(--archive-item-scale, 1));
+  transform-origin: center;
+}
+/*
+  [제품별 이미지 크기·위치 — 아래에서 각 제품을 따로 수정하세요]
+  --archive-item-scale: 1;   크기 배율. 1 = 기본, 1.2 = 20% 확대, 0.8 = 20% 축소.
+  --archive-item-x: 0px;     좌우 이동. 양수 = 오른쪽, 음수 = 왼쪽.
+  --archive-item-y: 0px;     상하 이동. 양수 = 아래, 음수 = 위.
+
+  예: scale을 1.2, x를 -20px, y를 10px로 바꾸면
+      해당 제품 이미지만 20% 확대하고 왼쪽 20px, 아래 10px로 옮깁니다.
+  PC·모바일과 양옆 미리보기에 같은 설정이 적용됩니다.
+  이미지의 중심을 기준으로 확대·축소하며 제품명·설명 글은 움직이지 않습니다.
+*/
+/* No.1 평정심 유지용 안구 장치 */
+.archive-project[data-product-id="stoic-monocle"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.2 사회적 미소 유지용 입 장치 */
+.archive-project[data-product-id="gentle-jaw-clamp"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.3 경청반응 유지용 귀 장치 */
+.archive-project[data-product-id="patience-ear-cuffs"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.4 시간 낭비 방지용 교정 신발 */
+.archive-project[data-product-id="silent-helmet"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.5 기능 지속용 책임감 웨이트 */
+.archive-project[data-product-id="balance-struts"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.6 번아웃 억제용 회복 패치 */
+.archive-project[data-product-id="calm-capsule"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.7 자립 점수 스캐너 */
+.archive-project[data-product-id="clear-collar"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.8 감정 보관용 부착형 캡슐 */
+.archive-project[data-product-id="comfort-cartridge"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.9 자립 자세 유지용 척추 하네스 */
+.archive-project[data-product-id="adult-tool-09"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.10 일정 우선순위 시한폭탄 타이머 */
+.archive-project[data-product-id="adult-tool-10"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.11 품위 보정용 외형 교정기 */
+.archive-project[data-product-id="adult-tool-11"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.12 취향 중립화 장치 */
+.archive-project[data-product-id="adult-tool-12"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.13 말실수 방지용 혀 보정 장치 */
+.archive-project[data-product-id="adult-tool-13"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.14 수긍자세 유지용 목 보호대 */
+.archive-project[data-product-id="adult-tool-14"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.15 사과 자세 자동 보정 장갑 */
+.archive-project[data-product-id="adult-tool-15"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+/* No.16 완벽한 어른 풀 착장 */
+.archive-project[data-product-id="adult-tool-16"] {
+  --archive-item-scale: 1;
+  --archive-item-x: 0px;
+  --archive-item-y: 0px;
+}
+
 .archive-project-info {
   width: min(100%, 520px);
   min-height: 118px;
@@ -60,12 +220,29 @@ body[data-page="archive"] { overflow: visible; }
   line-height: 1.4;
   word-break: keep-all;
 }
-.is-enhanced .archive-project-info { opacity: var(--caption-opacity, 0); }
-.archive-project-info p, .archive-project-info h2 { margin: 0; }
-.archive-project-number { margin-bottom: 5px !important; color: #777; font-size: 11px; }
-.archive-project-info h2 { font-size: 15px; font-weight: 600; }
-.archive-project-price { margin-top: 3px !important; }
-.archive-project-summary { margin-top: 10px !important; color: #666; }
+.is-enhanced .archive-project-info {
+  opacity: var(--caption-opacity, 0);
+}
+.archive-project-info p,
+.archive-project-info h2 {
+  margin: 0;
+}
+.archive-project-number {
+  margin-bottom: 5px !important;
+  color: #777;
+  font-size: 11px;
+}
+.archive-project-info h2 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.archive-project-price {
+  margin-top: 3px !important;
+}
+.archive-project-summary {
+  margin-top: 10px !important;
+  color: #666;
+}
 .archive-controls {
   position: absolute;
   bottom: 24px;
@@ -86,8 +263,11 @@ body[data-page="archive"] { overflow: visible; }
   font: inherit;
   font-size: 23px;
 }
-.archive-controls button:disabled { opacity: 0.2; }
-.archive-controls button:focus-visible, .archive-project-link:focus-visible {
+.archive-controls button:disabled {
+  opacity: 0.2;
+}
+.archive-controls button:focus-visible,
+.archive-project-link:focus-visible {
   outline: 1px solid #333;
   outline-offset: 5px;
 }
@@ -107,25 +287,69 @@ body[data-page="archive"] { overflow: visible; }
   font-size: 11px;
 }
 @media (max-width: 760px) {
-  body[data-page="archive"] .top-bar { height: 108px; }
-  body[data-page="archive"] .brand-title { top: 20px; left: 16px; }
-  body[data-page="archive"] .brand-logo { width: 140px; }
-  body[data-page="archive"] .menu-panel { top: 66px; right: 16px; height: 24px; }
-  .archive-page { --archive-image-height: max(120px, min(56svh, calc(100svh - 370px))); }
-  .is-enhanced .archive-gallery { inset: 154px 0 70px; }
-  .archive-project { width: 76vw; }
-  .archive-image-wrap { margin-bottom: 14px; }
-  .archive-project-info { min-height: 132px; font-size: 11px; }
-  .archive-project-info h2 { font-size: 14px; }
-  .archive-project-summary { margin-top: 8px !important; }
-  .archive-controls { bottom: 12px; }
-  .archive-scroll-hint { display: none; }
+  body[data-page="archive"] .top-bar {
+    height: 108px;
+  }
+  body[data-page="archive"] .brand-title {
+    top: 20px;
+    left: 16px;
+  }
+  body[data-page="archive"] .brand-logo {
+    width: 140px;
+  }
+  body[data-page="archive"] .menu-panel {
+    top: 66px;
+    right: 16px;
+    height: 24px;
+  }
+  .archive-page {
+    /* [5. 모바일 이미지 높이] 아래 변수는 PC 높이보다 우선합니다. 고정 예: 300px */
+    --archive-image-height: max(120px, min(56svh, calc(100svh - 370px)));
+  }
+  .is-enhanced .archive-gallery {
+    /* [모바일 위치] inset 순서: 위 / 좌우 / 아래. PC와 같은 방식으로 조절합니다. */
+    inset: 154px 0 70px;
+  }
+  .archive-project {
+    /* [모바일 이미지 영역 너비] width의 vw 숫자는 화면 너비에 대한 백분율입니다. */
+    width: 76vw;
+  }
+  .archive-image-wrap {
+    /* [모바일 이미지와 설명 사이 간격] margin-bottom을 수정합니다. */
+    margin-bottom: 14px;
+  }
+  .archive-project-info {
+    min-height: 132px;
+    font-size: 11px;
+  }
+  .archive-project-info h2 {
+    font-size: 14px;
+  }
+  .archive-project-summary {
+    margin-top: 8px !important;
+  }
+  .archive-controls {
+    bottom: 12px;
+  }
+  .archive-scroll-hint {
+    display: none;
+  }
 }
 /* 높이가 낮은 가로 화면은 설명이 잘리지 않도록 일반 목록으로 표시합니다. */
 @media (max-height: 560px) {
-  .archive-page.is-enhanced { height: auto; }
-  .is-enhanced .archive-stage { position: relative; height: auto; overflow: visible; }
-  .is-enhanced .archive-gallery { position: relative; inset: auto; padding: 170px 20px 80px; }
+  .archive-page.is-enhanced {
+    height: auto;
+  }
+  .is-enhanced .archive-stage {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+  .is-enhanced .archive-gallery {
+    position: relative;
+    inset: auto;
+    padding: 170px 20px 80px;
+  }
   .is-enhanced .archive-project {
     position: relative;
     top: auto;
@@ -137,10 +361,20 @@ body[data-page="archive"] { overflow: visible; }
     visibility: visible !important;
     will-change: auto;
   }
-  .archive-image-wrap { height: 65svh; }
-  .is-enhanced .archive-project-info { opacity: 1; }
-  .archive-controls, .archive-scroll-hint { display: none; }
+  .archive-image-wrap {
+    /* [6. 높이가 낮은 화면의 이미지 높이] 일반 목록에서는 아래 height가 우선합니다. */
+    height: 65svh;
+  }
+  .is-enhanced .archive-project-info {
+    opacity: 1;
+  }
+  .archive-controls,
+  .archive-scroll-hint {
+    display: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .is-enhanced .archive-project { will-change: auto; }
+  .is-enhanced .archive-project {
+    will-change: auto;
+  }
 }
