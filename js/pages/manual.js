@@ -229,11 +229,11 @@ function bindManualLogoBackground() {
   const updateTiles = () => {
     const style = getComputedStyle(background);
     const columns = style.gridTemplateColumns.trim().split(/\s+/).length;
-    const tileHeight = parseFloat(style.gridAutoRows);
-    const rowGap = parseFloat(style.rowGap) || 0;
-    if (!Number.isFinite(tileHeight) || tileHeight <= 0) return;
+    // 칸 높이는 로고 크기가 아니라, 음수 간격까지 반영한 반복 이동 거리입니다.
+    const rowStep = parseFloat(style.gridAutoRows);
+    if (!Number.isFinite(rowStep) || rowStep <= 0) return;
 
-    const rows = Math.ceil((background.clientHeight + rowGap) / (tileHeight + rowGap));
+    const rows = Math.ceil(background.clientHeight / rowStep);
     const count = rows * columns;
     if (background.childElementCount === count) return;
 

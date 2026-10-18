@@ -44,8 +44,8 @@
 | 목록 항목 사이 | `--manual-list-item-gap` (px) |
 | 자간 | `--manual-letter-spacing` (현재 -0.01em, 음수는 좁게 / 양수는 넓게) |
 | 배경 로고 한 개의 고정 너비 | `--manual-logo-size` (현재 460px, 본문·화면 너비와 무관) |
-| 로고 가로 추가 간격 | `--manual-logo-gap-x` (px, 0 = 원본 간격) |
-| 로고 세로 추가 간격 | `--manual-logo-gap-y` (px, 0 = 원본 간격) |
+| 로고 가로 간격 | `--manual-logo-gap-x` (px, 음수 = 좁게 / 0 = 원본 / 양수 = 넓게) |
+| 로고 세로 간격 | `--manual-logo-gap-y` (px, 음수 = 좁게 / 0 = 원본 / 양수 = 넓게) |
 | 전체 배경 너비 | `--manual-logo-width` (로고 크기 × 가로 개수 + 열 사이 간격) |
 | 배경 좌우 이동 | `--manual-logo-x` (중앙 기준, 양수: 오른쪽 / 음수: 왼쪽) |
 | 배경 시작 위치 | `--manual-logo-top` (PC 108px, 모바일 0px) |
@@ -61,6 +61,9 @@ PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높
 로고 모양은 마스크로 사용하고 색상은 `--manual-logo-color`, 불투명도는 `--manual-logo-opacity`에서 각각 조절합니다.
 로고는 장식용 그리드로 배치하며 각 칸의 마스크를 왼쪽 위에 고정합니다.
 `--manual-logo-gap-x: 20px`, `--manual-logo-gap-y: 30px`이면 로고 크기를 유지한 채 가로는 20px, 세로는 30px의 여백을 추가합니다.
+`--manual-logo-gap-x: -15px`, `--manual-logo-gap-y: -15px`처럼 음수를 입력하면 원본에 포함된 투명 여백을 겹쳐 간격을 줄입니다.
+`0.15px`는 0.15px만큼 넓히는 값입니다. 좁히려면 `-15px`처럼 음수와 px 단위를 입력하세요.
+`--manual-logo-height`, `--manual-logo-step-x`, `--manual-logo-step-y`는 자동 계산값이므로 수정하지 않아도 됩니다.
 `js/pages/manual.js`가 페이지 높이에 맞춰 필요한 로고 개수를 자동으로 채웁니다.
 배경 로고는 약 5px 스트로크 효과로 두껍게 표시하며, 상단 착용 이미지는 표시하지 않습니다.
 로고 굵기는 `scripts/build_manual_logo_tile.py`의 `STROKE_WIDTH`에서 조절합니다.
