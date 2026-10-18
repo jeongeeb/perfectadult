@@ -19,6 +19,10 @@ body[data-page="shop"] .site-frame {
 }
 
 .shop-page {
+  /* [메인 한글 굵기] 100~900. 400 = 보통, 700 = 굵게.
+     메뉴얼의 --manual-kr-*-weight와 서로 독립적입니다. */
+  --home-kr-intro-weight: 400; /* 노란 배경의 한글 소개문·제목 */
+  --home-kr-product-weight: 400; /* 상품 목록의 한글 제품명 */
   position: relative;
   min-height: calc(3650px * var(--stage-scale, 1));
   /* 화면 크기와 관계없이 실제 30px 바깥 여백 */
@@ -188,6 +192,7 @@ body[data-page="shop"] .footer-handle {
 .intro-copy-korean {
   margin-top: calc(32px * var(--stage-scale, 1));
   font-family: var(--kr-font);
+  font-weight: var(--home-kr-intro-weight);
   font-size: calc(18px * var(--stage-scale, 1));
   line-height: calc(28px * var(--stage-scale, 1));
   letter-spacing: -0.02em;
@@ -199,13 +204,18 @@ body[data-page="shop"] .footer-handle {
 .intro-copy h2 {
   margin: 0 0 calc(10px * var(--stage-scale, 1));
   font: inherit;
-  font-weight: 400;
+  font-weight: inherit;
   text-decoration: underline;
   text-underline-offset: calc(2px * var(--stage-scale, 1));
 }
 
 .intro-copy p {
   margin: 0;
+}
+
+/* 공유 카드의 900 굵기를 메인 한글 제품명에만 별도 설정합니다. */
+.shop-page .product-name {
+  font-weight: var(--home-kr-product-weight);
 }
 
 .intro-copy em {

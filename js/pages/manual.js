@@ -294,7 +294,7 @@ function buildManualBilingualLayout() {
 }
 
 // [배경 로고 간격] CSS의 --manual-logo-gap-x / --manual-logo-gap-y에서 조절합니다.
-// 본문 길이·화면 크기가 바뀌어도 배경 전체를 채울 만큼만 장식용 로고를 생성합니다.
+// 본문 길이·화면 크기가 바뀌어도 온전히 들어가는 줄만 생성합니다. 하단에서 잘리는 마지막 줄은 생략합니다.
 function bindManualLogoBackground() {
   const background = document.querySelector(".manual-logo-background");
   if (!background) return;
@@ -306,7 +306,16 @@ function bindManualLogoBackground() {
     const rowStep = parseFloat(style.gridAutoRows);
     if (!Number.isFinite(rowStep) || rowStep <= 0) return;
 
-    const rows = Math.ceil(background.clientHeight / rowStep);
+    // 음수 세로 간격에서는 반복 칸보다 로고가 큽니다. 실제 로고 높이까지 확인해야 잘리지 않습니다.
+    let sample = background.firstElementChild;
+    if (!sample) {
+      sample = document.createElement("span");
+      sample.className = "manual-logo-tile";
+      background.append(sample);
+    }
+    const logoHeight = parseFloat(getComputedStyle(sample).height);
+    if (!Number.isFinite(logoHeight) || logoHeight <= 0) return;
+    const rows = Math.max(0, Math.floor((background.getBoundingClientRect().height - logoHeight) / rowStep) + 1);
     const count = rows * columns;
     if (background.childElementCount === count) return;
 

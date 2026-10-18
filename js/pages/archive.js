@@ -5,7 +5,6 @@ function archiveCaptionMarkup(product) {
   return `
     <p class="archive-project-number">${formatProductNumber(product, productIndex)} / ${product.name}</p>
     <h2>${productDisplayName(product)}</h2>
-    <p class="archive-project-price">${product.price}</p>
     <p class="archive-project-summary">${summary}</p>`;
 }
 

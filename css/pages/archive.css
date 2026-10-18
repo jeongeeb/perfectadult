@@ -243,9 +243,13 @@ body[data-page="archive"] {
 }
 
 .archive-project-info {
+  /* [설명 아래 이동] 삭제한 가격 한 줄(행간 1.4 + 위 여백 3px)만큼 설명 전체를 내립니다.
+     더 내리려면 이 값을 키우세요. PC·모바일에서 현재 글자 크기를 기준으로 계산합니다. */
+  --archive-caption-offset: calc(1em * 1.4 + 3px);
   width: min(100%, 520px);
   min-height: 118px;
   margin: 0 auto;
+  padding-top: var(--archive-caption-offset);
   font-size: 12px;
   line-height: 1.4;
   /* 이미지와 분리된 설명 영역에도 중앙 정렬을 직접 적용합니다. */
@@ -264,9 +268,6 @@ body[data-page="archive"] {
 .archive-project-info h2 {
   font-size: 15px;
   font-weight: 600;
-}
-.archive-project-price {
-  margin-top: 3px !important;
 }
 .archive-project-summary {
   margin-top: 10px !important;

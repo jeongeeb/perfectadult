@@ -22,6 +22,11 @@
 
 ## 모바일 메인·상세페이지
 
+메인 한글 굵기는 `pages/home.css` 상단 `.shop-page`에서 따로 조절합니다.
+`--home-kr-intro-weight`는 한글 소개문·제목, `--home-kr-product-weight`는 상품 목록의 한글 제품명입니다.
+기본값은 둘 다 400이며, 메뉴얼의 `--manual-kr-*-weight`와 서로 영향을 주지 않습니다.
+상품 카드 공통 스타일의 기존 한글 제품명 굵기는 900이지만, 메인에서는 이 전용 설정이 우선합니다.
+
 760px 이하에서 메인 상품 목록은 가운데 정렬한 2열로 표시합니다.
 `pages/home.css`의 모바일 `.shop-grid`에서 열 수와 `gap`을 조절하고,
 `product-cards.css` 하단에서 카드 이미지 영역과 모바일 글자 크기를 조절합니다.
@@ -113,7 +118,7 @@ PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높
 `--manual-logo-gap-x: -15px`, `--manual-logo-gap-y: -15px`처럼 음수를 입력하면 원본에 포함된 투명 여백을 겹쳐 간격을 줄입니다.
 `0.15px`는 0.15px만큼 넓히는 값입니다. 좁히려면 `-15px`처럼 음수와 px 단위를 입력하세요.
 `--manual-logo-height`, `--manual-logo-step-x`, `--manual-logo-step-y`는 자동 계산값이므로 수정하지 않아도 됩니다.
-`js/pages/manual.js`가 페이지 높이에 맞춰 필요한 로고 개수를 자동으로 채웁니다.
+`js/pages/manual.js`가 페이지 높이에 맞춰 필요한 로고 개수를 자동으로 채웁니다. 하단에 온전히 들어가지 않는 마지막 줄은 생성하지 않습니다.
 배경 로고는 약 5px 스트로크 효과로 두껍게 표시하며, 상단 착용 이미지는 표시하지 않습니다.
 로고 굵기는 `scripts/build_manual_logo_tile.py`의 `STROKE_WIDTH`에서 조절합니다.
 `python3 scripts/build_manual_logo_tile.py`로 타일을 다시 만들 수 있습니다.
@@ -143,6 +148,9 @@ PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높
 같은 제품을 착용한 여러 사진에도 해당 배율이 적용됩니다.
 
 ## Archive 제품별 이미지 조정
+
+아카이브에서는 가격을 표시하지 않습니다. `pages/archive.css`의 `.archive-project-info` 안
+`--archive-caption-offset`이 가격 한 줄 높이만큼 번호·제품명·설명을 아래로 맞춥니다.
 
 `pages/archive.css`의 `[제품별 이미지 크기·위치]`에서 제품 번호와 이름을 찾습니다.
 각 `.archive-project[data-product-id="제품 ID"]` 안의 세 값만 변경합니다.
