@@ -19,9 +19,10 @@
 모든 영문은 `font.css`의 `--en-font`에 지정한 Arial Narrow를 사용합니다.
 일반 Arial로 변경하지 않습니다. 상단 메뉴는 Arial Narrow 볼드(700)를 사용합니다.
 
-메뉴얼 한글 본문은 600, 영문은 실제 Arial Narrow Bold(700)를 사용하며 문장 중간에 개별 강조용 볼드를 넣지 않습니다.
-부제목(`.manual-rail h2`)은 16px / 800, 소제목(`h4`, `.manual-label`)은 13px / 700을 사용합니다.
-본문과 목록 숫자는 13px / 600으로 맞춥니다.
+메뉴얼은 한글과 영어의 본문·소제목·부제목 크기와 굵기를 각각 조절합니다.
+목록 숫자는 해당 언어 본문의 크기와 굵기를 따라갑니다. 문장 중간의 개별 강조는 추가하지 않습니다.
+영어는 Arial Narrow를 유지하며 400(Regular)과 700(Bold) 폰트 파일을 사용합니다.
+600~800은 같은 Bold로 표시될 수 있습니다. 더 두껍게 보이려면 영문 stroke 값을 조절하고, 원본 굵기만 사용하려면 stroke를 0px로 설정합니다.
 문단 안의 소제목은 `.manual-label` 뒤에 `<br>`을 넣어 바로 다음 줄에 설명을 배치합니다.
 
 ## Manual 중앙 본문과 로고 배경
@@ -31,8 +32,12 @@
 | 조정할 부분 | 수정할 값 |
 | --- | --- |
 | 중앙 본문 최대 너비 | `--manual-content-width` 안의 `860px` |
-| 본문 / 소제목 / 부제목 크기 | `--manual-body-size: 13px`, `--manual-subheading-size: 13px`, `--manual-heading-size: 16px` |
-| 본문 / 부제목 굵기 | `--manual-body-weight: 600`, `--manual-heading-weight: 800` (소제목 700) |
+| 한글 본문 크기 / 굵기 | `--manual-kr-body-size`, `--manual-kr-body-weight` |
+| 한글 소제목 크기 / 굵기 | `--manual-kr-subheading-size`, `--manual-kr-subheading-weight` |
+| 한글 부제목 크기 / 굵기 | `--manual-kr-heading-size`, `--manual-kr-heading-weight` |
+| 영어 본문 크기 / 굵기 | `--manual-en-body-size`, `--manual-en-body-weight` |
+| 영어 소제목 크기 / 굵기 | `--manual-en-subheading-size`, `--manual-en-subheading-weight` |
+| 영어 부제목 크기 / 굵기 | `--manual-en-heading-size`, `--manual-en-heading-weight` |
 | 영문 추가 굵기 | `--manual-en-body-stroke: 0.2px`, `--manual-en-subheading-stroke: 0.25px`, `--manual-en-heading-stroke: 0.4px` |
 | 본문 줄 간격 | `--manual-line-height` (배수, 예: `1.4`) |
 | 부제목 줄 간격 | `--manual-heading-line-height` (배수) |
@@ -52,6 +57,9 @@
 | 배경 로고 색상 | `--manual-logo-color` (HEX 색상, 예: `#000000`, `#ff0000`) |
 | 배경 로고 진하기 | `--manual-logo-opacity` (현재 0.12, 커질수록 진하게) |
 | 한 줄의 로고 개수 | `--manual-logo-columns` (현재 2개) |
+
+크기는 `14px`, 굵기는 `700`처럼 입력합니다. `--manual-body-size` 등 자동 연결 항목은 수정하지 않아도 됩니다.
+영어 설정은 영어 소개와 본문, INTRODUCTION 문구에 적용하고 한글 설정은 한글 소개와 본문에 적용합니다.
 
 본문은 화면 중앙의 한 열에 배치하고 문장은 왼쪽으로 정렬합니다.
 PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높이에서 시작합니다. 모바일은 메뉴 아래에 본문을 배치합니다.

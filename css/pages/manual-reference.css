@@ -2,7 +2,7 @@
   메뉴얼 편집 레이아웃
   - 공통 왼쪽 목차 / 화면 중앙의 1열 본문 / 옅은 로고 반복 배경
   - 소제목과 해당 본문을 한 묶음으로 배치
-  - 본문·소제목·목록 숫자 13px / 부제목 16px, 단어 단위 줄바꿈
+  - 한글·영어의 본문/소제목/부제목 크기와 굵기를 각각 조절, 단어 단위 줄바꿈
   - 메뉴 색상과 마우스 오버 효과는 css/common.css에서 공통 관리
 */
 body[data-page="manual"],
@@ -21,16 +21,36 @@ body[data-page="manual"] .footer-handle {
 .manual-page {
   --manual-sidebar-offset: clamp(210px, 15vw, 290px);
   --manual-column-gap: clamp(24px, 1.8vw, 36px);
-  /* [글자 크기] PC·모바일 공통: 본문·소제목 13px, 그 위의 부제목 16px */
-  --manual-body-size: 13px;
-  --manual-heading-size: 16px;
-  --manual-subheading-size: 13px;
-  /* [글자 굵기] 본문 600 / 소제목 700 / 부제목 800 */
-  --manual-body-weight: 600;
-  --manual-heading-weight: 800;
+  /* [한글 크기] px 단위. 본문 / 소제목(h4·문단 안 굵은 제목) / 부제목(h2) */
+  --manual-kr-body-size: 13px;
+  --manual-kr-subheading-size: 13px;
+  --manual-kr-heading-size: 16px;
+  /* [한글 굵기] 100~900. 숫자가 클수록 두꺼워집니다. */
+  --manual-kr-body-weight: 600;
+  --manual-kr-subheading-weight: 700;
+  --manual-kr-heading-weight: 800;
+
+  /* [영어 크기] 한글 설정과 독립적입니다. 서체는 Arial Narrow 유지 */
+  --manual-en-body-size: 13px;
+  --manual-en-subheading-size: 13px;
+  --manual-en-heading-size: 16px;
+  /* [영어 굵기] 실제 폰트 파일은 400(Regular) / 700(Bold).
+     600~800은 같은 Bold로 보일 수 있으므로, 추가 굵기는 아래 stroke로 조절합니다. */
+  --manual-en-body-weight: 700;
+  --manual-en-subheading-weight: 700;
+  --manual-en-heading-weight: 800;
+
+  /* [자동 연결] 기본 본문은 한글 설정. 영어 영역에서는 영어 설정으로 연결합니다.
+     크기·굵기를 바꾸려면 위의 --manual-kr-* / --manual-en-* 값만 수정하세요. */
+  --manual-body-size: var(--manual-kr-body-size);
+  --manual-subheading-size: var(--manual-kr-subheading-size);
+  --manual-heading-size: var(--manual-kr-heading-size);
+  --manual-body-weight: var(--manual-kr-body-weight);
+  --manual-subheading-weight: var(--manual-kr-subheading-weight);
+  --manual-heading-weight: var(--manual-kr-heading-weight);
   /* [영문 굵기 보강] Arial Narrow는 Regular/Bold만 있어 600~800이 같은 Bold로 보입니다.
      영문에는 Bold 파일을 명시하고 아래 외곽선으로 추가 굵기를 조절합니다.
-     0px = 원본 Bold, 숫자가 클수록 더 두껍게. */
+     0px = 위에서 선택한 폰트의 원본 굵기, 숫자가 클수록 더 두껍게. */
   --manual-en-body-stroke: 0.2px;
   --manual-en-subheading-stroke: 0.25px;
   --manual-en-heading-stroke: 0.4px;
@@ -184,8 +204,8 @@ body[data-page="manual"] .footer-handle {
 .manual-intro::before {
   display: block;
   margin-bottom: 8px;
-  font-size: var(--manual-heading-size);
-  font-weight: var(--manual-heading-weight);
+  font-size: var(--manual-en-heading-size);
+  font-weight: var(--manual-en-heading-weight);
   -webkit-text-stroke: var(--manual-en-heading-stroke) currentColor;
   line-height: var(--manual-heading-line-height);
   text-align: left;
@@ -263,7 +283,7 @@ body[data-page="manual"] .footer-handle {
   margin: 0 0 var(--manual-subheading-gap);
   font: inherit;
   font-size: var(--manual-subheading-size);
-  font-weight: 700;
+  font-weight: var(--manual-subheading-weight);
   line-height: var(--manual-subheading-line-height);
   text-align: left;
 }
@@ -272,7 +292,7 @@ body[data-page="manual"] .footer-handle {
   display: block;
   margin-bottom: var(--manual-subheading-gap);
   font-size: var(--manual-subheading-size);
-  font-weight: 700;
+  font-weight: var(--manual-subheading-weight);
   line-height: var(--manual-subheading-line-height);
 }
 
@@ -287,9 +307,16 @@ body[data-page="manual"] .footer-handle {
   text-transform: uppercase;
 }
 
-/* 영문은 실제 Arial Narrow Bold(700)를 사용합니다. 한글과 메뉴에는 적용하지 않습니다. */
+/* 영어 소개·본문의 설정을 따로 연결합니다. 한글과 왼쪽 메뉴 설정에는 영향을 주지 않습니다. */
 .manual-language-section[lang="en"] {
-  font-weight: 700;
+  --manual-body-size: var(--manual-en-body-size);
+  --manual-subheading-size: var(--manual-en-subheading-size);
+  --manual-heading-size: var(--manual-en-heading-size);
+  --manual-body-weight: var(--manual-en-body-weight);
+  --manual-subheading-weight: var(--manual-en-subheading-weight);
+  --manual-heading-weight: var(--manual-en-heading-weight);
+  font-size: var(--manual-body-size);
+  font-weight: var(--manual-body-weight);
   -webkit-text-stroke: var(--manual-en-body-stroke) currentColor;
 }
 .manual-language-section[lang="en"] .manual-rail h2 {
@@ -319,7 +346,7 @@ body[data-page="manual"] .footer-handle {
   margin-bottom: var(--manual-list-item-gap);
 }
 
-/* 목록의 1. 2. 3. 숫자도 본문과 같은 13px로 맞춥니다. */
+/* 목록 숫자도 해당 언어 본문의 크기와 굵기를 따라갑니다. */
 .manual-chapter-copy li::marker {
   font-size: var(--manual-body-size);
   font-weight: var(--manual-body-weight);
