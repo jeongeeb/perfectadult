@@ -21,14 +21,6 @@ function renderManual() {
         </nav>
       </aside>
     <main class="manual-page">
-      <section class="manual-hero" aria-label="Manual visual overview">
-        <figure class="manual-hero-panel manual-hero-panel-wide">
-          <img src="${versionMainImage("assets/manual/1.webp")}" alt="Manual top visual">
-        </figure>
-        <figure class="manual-hero-panel">
-          <img src="${versionMainImage("assets/manual/2.webp")}" alt="Manual product visual">
-        </figure>
-      </section>
       <section class="manual-intro manual-editorial-row" aria-labelledby="manual-intro-title">
         <header class="manual-rail">
           <h2 id="manual-intro-title">완벽한 어른을 사회적 기준에서 설계하다</h2>

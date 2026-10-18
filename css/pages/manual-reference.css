@@ -31,8 +31,8 @@ body[data-page="manual"] .footer-handle {
   --manual-logo-width: calc(var(--manual-content-width) + var(--manual-logo-outset) * 2);
   /* [배경 시작 위치] 상단 메뉴 바로 아래에서 첫 줄이 잘리지 않게 시작합니다. */
   --manual-logo-top: 108px;
-  /* [배경 로고 반복] 가로 한 줄에 로고 3개. 숫자가 커지면 로고가 작아집니다. */
-  --manual-logo-columns: 3;
+  /* [배경 로고 반복] 가로 한 줄에 로고 2개. 3열일 때보다 각 로고가 1.5배 커집니다. */
+  --manual-logo-columns: 2;
   position: relative;
   isolation: isolate;
   padding: 128px 30px 150px;
@@ -59,8 +59,8 @@ body[data-page="manual"] .footer-handle {
   max-width: calc(100% - 16px);
   transform: translateX(-50%);
   z-index: -1;
-  /* ‘聖人用品’ 네 글자와 일정한 행·열 간격이 포함된 타일을 3열로 반복합니다. */
-  background-image: url("../../assets/graphics/manual-logo-tile.svg");
+  /* 약 5px 스트로크 효과를 준 ‘聖人用品’ 타일을 2열로 반복합니다. */
+  background-image: url("../../assets/graphics/manual-logo-tile.svg?v=20261018-stroke5");
   background-repeat: repeat;
   background-position: center top;
   background-size: calc(100% / var(--manual-logo-columns)) auto;

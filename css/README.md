@@ -33,11 +33,13 @@
 | 본문 밖으로 확장되는 배경 여백 | `--manual-logo-outset` (좌우 각각 PC 30px, 모바일 8px) |
 | 배경 시작 위치 | `--manual-logo-top` (PC 108px, 모바일 0px) |
 | 배경 로고 진하기 | `--manual-logo-opacity` (현재 0.12, 커질수록 진하게) |
-| 한 줄의 로고 개수 | `--manual-logo-columns` (현재 3개) |
+| 한 줄의 로고 개수 | `--manual-logo-columns` (현재 2개) |
 
 본문은 화면 중앙의 한 열에 배치하고 문장은 왼쪽으로 정렬합니다.
 로고 배경은 본문보다 좌우로 조금 넓게 표시하며, 왼쪽 목차는 공통 스타일을 사용합니다.
 배경 타일은 기존 로고에서 ‘聖人用品’ 네 글자만 표시하며 행·열 간격을 포함합니다.
+배경 로고는 약 5px 스트로크 효과로 두껍게 표시하며, 상단 착용 이미지는 표시하지 않습니다.
+로고 굵기는 `scripts/build_manual_logo_tile.py`의 `STROKE_WIDTH`에서 조절합니다.
 `python3 scripts/build_manual_logo_tile.py`로 타일을 다시 만들 수 있습니다.
 
 ## About 이미지 위치 조정
