@@ -5,7 +5,7 @@
 - `pages/home.css`: 메인페이지 소개와 상품 배치
 - `pages/product.css`: 제품 상세페이지, 도장, 설명, 구매 버튼과 팝업
 - `pages/product-description.css`: 설명 영역 접기·펼치기 동작. `product.css` 뒤에 적용
-- `pages/product-stamp.css`: 도장 뒤의 노란빛. 2.8초 주기, 최대 불투명도 0.18, 3회 반복
+- `pages/product-stamp.css`: 도장 원본의 투명도 외곽을 따라 퍼지는 노란빛. 2.8초 주기, 최대 불투명도 0.18, 3회 반복
 - `pages/archive.css`: 아카이브 중앙 이미지, 하단 설명, 이전·다음 미리보기
 - `pages/about.css`: 비교용 룩북의 왼쪽 이미지 목록과 오른쪽 뷰어·제품 컷
 - `pages/manual-reference.css`: 메뉴얼 문서 레이아웃과 최소 12px 본문
@@ -37,6 +37,8 @@ PC·모바일의 description은 닫을 때 설명 영역의 높이도 함께 줄
 동작과 속도는 `pages/product-description.css`의 `.detail-description-collapse`와 `380ms`에서 조절합니다. 이 파일은 `product.css` 다음에 불러옵니다.
 구매·장바구니 버튼 위 간격은 `pages/product.css`의 `.detail-product-details`에서 조절합니다. PC는 `margin-bottom: calc(80px * var(--stage-scale, 1))`의 80px, 모바일은 같은 선택자의 `margin-bottom: 32px`입니다. 숫자를 줄이면 버튼이 위로 올라갑니다.
 도장 배경빛은 `pages/product-stamp.css`의 `--stamp-glow-duration`, `--stamp-glow-opacity`, `--stamp-glow-repeats`에서 조절합니다.
+원형 그라디언트 대신 `stamp_red.webp`의 투명도 모양을 마스크로 사용합니다. 색은 `--stamp-glow-color`, 외곽으로 퍼지는 정도는 `--stamp-glow-blur`에서 조절합니다.
+도장 원본과 마스크를 모두 가운데 정렬·contain으로 표시해 PC·모바일에서 외곽이 일치합니다.
 도장이 처음 화면에 보일 때만 시작하고, 누르거나 3회 반복이 끝나면 종료합니다. 이미지 자체의 위치·선명도는 바꾸지 않습니다.
 
 `header.css`는 이전 통합 파일이며 새 HTML에서는 사용하지 않습니다.

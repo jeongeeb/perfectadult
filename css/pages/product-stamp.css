@@ -4,22 +4,35 @@
   --stamp-glow-duration: 2.8s;
   --stamp-glow-opacity: 0.18;
   --stamp-glow-repeats: 3;
+  /* [외곽 불빛 색상 / 퍼짐] 투명한 도장 모양을 따라 빛을 만듭니다. */
+  --stamp-glow-color: #ffff00;
+  --stamp-glow-blur: 8px;
   isolation: isolate;
 }
 
-.detail-info-toggle::before {
-  content: "";
+/* 부모에서 빛을 퍼뜨리고, 자식에서 도장의 투명도 모양을 만듭니다.
+   이렇게 분리해야 불빛이 마스크 경계에서 잘리지 않고 외곽으로 퍼집니다. */
+.detail-stamp-glow {
   position: absolute;
-  inset: -10%;
+  inset: 0;
   z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, #ffff00 0%, #ffff00 35%, transparent 72%);
-  filter: blur(8px);
+  filter: drop-shadow(0 0 var(--stamp-glow-blur) var(--stamp-glow-color));
   opacity: 0;
   pointer-events: none;
 }
 
-.detail-info-toggle.is-stamp-attention::before {
+.detail-stamp-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--stamp-glow-color);
+  /* 도장 원본과 동일한 크기·정렬로 외곽을 맞춥니다. */
+  -webkit-mask: url("../../assets/graphics/stamp_red.webp") center / contain no-repeat;
+  mask: url("../../assets/graphics/stamp_red.webp") center / contain no-repeat;
+  mask-mode: alpha;
+}
+
+.detail-info-toggle.is-stamp-attention .detail-stamp-glow {
   animation: stamp-attention-glow var(--stamp-glow-duration) ease-in-out
     var(--stamp-glow-repeats);
 }
@@ -30,7 +43,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .detail-info-toggle.is-stamp-attention::before {
+  .detail-info-toggle.is-stamp-attention .detail-stamp-glow {
     animation: none;
   }
 }
