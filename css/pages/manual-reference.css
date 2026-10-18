@@ -245,6 +245,11 @@ body[data-page="manual"] .footer-handle {
   content: "INTRODUCTION";
 }
 
+/* 한글 열에서는 INTRODUCTION 글자만 숨깁니다. 높이·여백을 유지해 본문 위치는 바뀌지 않습니다. */
+.manual-intro[lang="ko"]::before {
+  visibility: hidden;
+}
+
 .manual-rail {
   margin-bottom: var(--manual-heading-gap);
   text-align: left;
