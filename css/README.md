@@ -20,7 +20,8 @@
 일반 Arial로 변경하지 않습니다. 상단 메뉴는 Arial Narrow 볼드(700)를 사용합니다.
 
 메뉴얼 설명 본문은 세미볼드(600)로 통일하며 문장 중간에 개별 강조용 볼드를 넣지 않습니다.
-장 제목·소제목과 `.manual-label`은 볼드(700)를 사용합니다.
+부제목(`.manual-rail h2`)은 16px / 800, 소제목(`h4`, `.manual-label`)은 13px / 700을 사용합니다.
+본문과 목록 숫자는 13px / 600으로 맞춥니다.
 문단 안의 소제목은 `.manual-label` 뒤에 `<br>`을 넣어 바로 다음 줄에 설명을 배치합니다.
 
 ## Manual 중앙 본문과 로고 배경
@@ -30,8 +31,10 @@
 | 조정할 부분 | 수정할 값 |
 | --- | --- |
 | 중앙 본문 최대 너비 | `--manual-content-width` 안의 `860px` |
-| 본문 / 부제목 크기 | `--manual-body-size: 13px`, `--manual-heading-size: 16px` (PC·모바일 공통) |
-| 본문 글자 굵기 | `--manual-body-weight` (현재 600, 제목·소제목은 700) |
+| 본문 / 소제목 / 부제목 크기 | `--manual-body-size: 13px`, `--manual-subheading-size: 13px`, `--manual-heading-size: 16px` |
+| 본문 / 부제목 굵기 | `--manual-body-weight: 600`, `--manual-heading-weight: 800` (소제목 700) |
+| 행간 | `--manual-line-height` (현재 1.4, 커질수록 넓게) |
+| 자간 | `--manual-letter-spacing` (현재 -0.01em, 음수는 좁게 / 양수는 넓게) |
 | 본문 밖으로 확장되는 배경 여백 | `--manual-logo-outset` (좌우 각각 PC 30px, 모바일 8px) |
 | 배경 시작 위치 | `--manual-logo-top` (PC 108px, 모바일 0px) |
 | 배경 로고 진하기 | `--manual-logo-opacity` (현재 0.12, 커질수록 진하게) |

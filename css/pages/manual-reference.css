@@ -2,7 +2,7 @@
   메뉴얼 편집 레이아웃
   - 공통 왼쪽 목차 / 화면 중앙의 1열 본문 / 옅은 로고 반복 배경
   - 소제목과 해당 본문을 한 묶음으로 배치
-  - 본문 13px / 부제목 16px, 단어 단위 줄바꿈
+  - 본문·소제목·목록 숫자 13px / 부제목 16px, 단어 단위 줄바꿈
   - 메뉴 색상과 마우스 오버 효과는 css/common.css에서 공통 관리
 */
 body[data-page="manual"],
@@ -21,11 +21,17 @@ body[data-page="manual"] .footer-handle {
 .manual-page {
   --manual-sidebar-offset: clamp(210px, 15vw, 290px);
   --manual-column-gap: clamp(24px, 1.8vw, 36px);
-  /* [글자 크기] PC·모바일 공통: 본문 13px, 부제목 16px */
+  /* [글자 크기] PC·모바일 공통: 본문·소제목 13px, 그 위의 부제목 16px */
   --manual-body-size: 13px;
   --manual-heading-size: 16px;
-  /* [본문 굵기] 600 = 세미볼드. 제목·소제목은 기존 700을 사용합니다. */
+  --manual-subheading-size: 13px;
+  /* [글자 굵기] 본문 600 / 소제목 700 / 부제목 800 */
   --manual-body-weight: 600;
+  --manual-heading-weight: 800;
+  /* [행간] 글자 크기의 배수. 1.4 = 현재, 1.6 = 더 넓게, 1.2 = 더 좁게 */
+  --manual-line-height: 1.4;
+  /* [자간] 글자 사이 간격. 음수 = 좁게, 0 = 기본, 양수 = 넓게 */
+  --manual-letter-spacing: -0.01em;
   /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
   --manual-content-width: min(860px, calc(100vw - 60px - var(--manual-sidebar-offset) * 2));
   /* [배경 로고 진하기] 0 = 안 보임, 0.12 = 불투명도 12%, 0.15 = 더 진하게 */
@@ -45,8 +51,8 @@ body[data-page="manual"] .footer-handle {
   font-family: var(--en-font);
   font-size: var(--manual-body-size);
   font-weight: var(--manual-body-weight);
-  line-height: 1.4;
-  letter-spacing: -0.01em;
+  line-height: var(--manual-line-height);
+  letter-spacing: var(--manual-letter-spacing);
   word-break: keep-all;
   overflow-wrap: normal;
   hyphens: none;
@@ -123,7 +129,8 @@ body[data-page="manual"] .footer-handle {
   display: block;
   margin-bottom: 8px;
   font-size: var(--manual-heading-size);
-  font-weight: 700;
+  font-weight: var(--manual-heading-weight);
+  -webkit-text-stroke: 0.15px currentColor;
   line-height: inherit;
   text-align: left;
 }
@@ -142,8 +149,10 @@ body[data-page="manual"] .footer-handle {
   margin: 0;
   font: inherit;
   font-size: var(--manual-heading-size);
-  font-weight: 700;
-  line-height: 1.4;
+  font-weight: var(--manual-heading-weight);
+  /* 부제목만 살짝 더 굵게 표시합니다. */
+  -webkit-text-stroke: 0.15px currentColor;
+  line-height: var(--manual-line-height);
   word-break: keep-all;
 }
 
@@ -192,13 +201,13 @@ body[data-page="manual"] .footer-handle {
   break-after: avoid;
   margin: 0;
   font: inherit;
-  font-size: var(--manual-heading-size);
+  font-size: var(--manual-subheading-size);
   font-weight: 700;
   text-align: left;
 }
 
 .manual-label {
-  font-size: var(--manual-heading-size);
+  font-size: var(--manual-subheading-size);
   font-weight: 700;
 }
 
@@ -223,7 +232,14 @@ body[data-page="manual"] .footer-handle {
 }
 
 .manual-chapter-copy li {
+  font-size: var(--manual-body-size);
   margin-bottom: 6px;
+}
+
+/* 목록의 1. 2. 3. 숫자도 본문과 같은 13px로 맞춥니다. */
+.manual-chapter-copy li::marker {
+  font-size: var(--manual-body-size);
+  font-weight: var(--manual-body-weight);
 }
 
 /* 공통 푸터의 작은 글씨도 메뉴얼에서는 12px 아래로 줄어들지 않습니다. */
