@@ -63,10 +63,15 @@ body[data-page="manual"] .footer-handle {
   --manual-logo-opacity: 0.1;
   /* [배경 로고 한 개의 고정 너비] 본문·화면 너비와 무관합니다. 예: 500px = 더 크게 */
   --manual-logo-size: 480px;
-  /* [가로 개수] 기본 2개. 전체 배경 너비는 로고 크기 × 개수로 계산합니다. */
+  /* [배경 로고 가로 추가 간격] 로고 크기를 바꾸지 않고 열 사이 여백만 조절. 0px = 원본 간격 */
+  --manual-logo-gap-x: 0px;
+  /* [배경 로고 세로 추가 간격] 행 사이 여백. 예: 20px = 원본보다 20px 더 넓게 */
+  --manual-logo-gap-y: 0px;
+  /* [가로 개수] 기본 2개. 전체 배경 너비는 로고 크기 × 개수 + 열 사이 간격입니다. */
   --manual-logo-columns: 2;
   --manual-logo-width: calc(
-    var(--manual-logo-size) * var(--manual-logo-columns)
+    var(--manual-logo-size) * var(--manual-logo-columns) +
+    max(0px, var(--manual-logo-gap-x)) * (var(--manual-logo-columns) - 1)
   );
   /* [배경 좌우 위치] 화면 중앙 기준. 양수 = 오른쪽, 음수 = 왼쪽 */
   --manual-logo-x: 0px;
@@ -74,6 +79,7 @@ body[data-page="manual"] .footer-handle {
   --manual-logo-top: 108px;
   position: relative;
   isolation: isolate;
+  /* PC 본문 시작 높이: common.css의 .page-side-index top(128px)과 맞춥니다. */
   padding: 128px 30px 150px;
   background: #fff;
   color: #000;
@@ -88,8 +94,7 @@ body[data-page="manual"] .footer-handle {
 }
 
 /* 본문 너비와 독립된 고정 크기 배경. 좁은 화면에서도 로고 크기를 자동 축소하지 않습니다. */
-.manual-page::before {
-  content: "";
+.manual-logo-background {
   position: absolute;
   top: var(--manual-logo-top);
   bottom: 0;
@@ -98,20 +103,30 @@ body[data-page="manual"] .footer-handle {
   max-width: none;
   transform: translateX(-50%);
   z-index: -1;
-  /* 로고의 투명도 모양을 마스크로 사용해, 원본을 수정하지 않고 CSS 색상을 입힙니다. */
+  display: grid;
+  grid-template-columns: repeat(var(--manual-logo-columns), var(--manual-logo-size));
+  grid-auto-rows: calc(var(--manual-logo-size) * 420 / 1440);
+  gap: max(0px, var(--manual-logo-gap-y)) max(0px, var(--manual-logo-gap-x));
+  align-content: start;
+  overflow: hidden;
+  opacity: var(--manual-logo-opacity);
+  pointer-events: none;
+}
+
+/* 한 칸의 로고 비율은 고정하고, 칸 사이 여백만 grid gap으로 조절합니다. */
+.manual-logo-tile {
+  display: block;
   background-color: var(--manual-logo-color);
   -webkit-mask-image: url("../../assets/graphics/manual-logo-tile.svg?v=20261018-stroke5");
   mask-image: url("../../assets/graphics/manual-logo-tile.svg?v=20261018-stroke5");
   mask-mode: alpha;
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
-  /* 2열은 왼쪽부터 시작해야 양 끝이 반씩 잘리지 않고 로고 2개가 온전히 보입니다. */
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  /* 왼쪽 위 기준으로 배치해 양 끝 로고가 잘리지 않게 합니다. */
   -webkit-mask-position: left top;
   mask-position: left top;
   -webkit-mask-size: var(--manual-logo-size) auto;
   mask-size: var(--manual-logo-size) auto;
-  opacity: var(--manual-logo-opacity);
-  pointer-events: none;
 }
 
 .manual-hero,
@@ -370,5 +385,13 @@ body[data-page="manual"] .site-end-copy {
 
   .manual-rail h2 {
     max-width: 100%;
+  }
+}
+
+/* PC 첫 글의 시작점을 왼쪽 메뉴와 같은 128px에 맞춥니다.
+   모바일에서는 메뉴 아래에 본문이 이어지는 기존 세로 배치를 유지합니다. */
+@media (min-width: 761px) {
+  .manual-page > .manual-intro:first-of-type {
+    padding-top: 0;
   }
 }

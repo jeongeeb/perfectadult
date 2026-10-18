@@ -44,7 +44,9 @@
 | 목록 항목 사이 | `--manual-list-item-gap` (px) |
 | 자간 | `--manual-letter-spacing` (현재 -0.01em, 음수는 좁게 / 양수는 넓게) |
 | 배경 로고 한 개의 고정 너비 | `--manual-logo-size` (현재 460px, 본문·화면 너비와 무관) |
-| 전체 배경 너비 | `--manual-logo-width` (로고 크기 × 가로 개수, 기본 920px) |
+| 로고 가로 추가 간격 | `--manual-logo-gap-x` (px, 0 = 원본 간격) |
+| 로고 세로 추가 간격 | `--manual-logo-gap-y` (px, 0 = 원본 간격) |
+| 전체 배경 너비 | `--manual-logo-width` (로고 크기 × 가로 개수 + 열 사이 간격) |
 | 배경 좌우 이동 | `--manual-logo-x` (중앙 기준, 양수: 오른쪽 / 음수: 왼쪽) |
 | 배경 시작 위치 | `--manual-logo-top` (PC 108px, 모바일 0px) |
 | 배경 로고 색상 | `--manual-logo-color` (HEX 색상, 예: `#000000`, `#ff0000`) |
@@ -52,11 +54,14 @@
 | 한 줄의 로고 개수 | `--manual-logo-columns` (현재 2개) |
 
 본문은 화면 중앙의 한 열에 배치하고 문장은 왼쪽으로 정렬합니다.
+PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높이에서 시작합니다. 모바일은 메뉴 아래에 본문을 배치합니다.
 로고 배경은 본문과 화면 너비에 따라 축소되지 않는 고정 크기이며, 왼쪽 목차는 공통 스타일을 사용합니다.
 `--manual-logo-size`를 500px로 바꾸면 로고 하나가 500px, 2열 전체가 1000px로 커집니다.
 배경 타일은 기존 로고에서 ‘聖人用品’ 네 글자만 표시하며 행·열 간격을 포함합니다.
 로고 모양은 마스크로 사용하고 색상은 `--manual-logo-color`, 불투명도는 `--manual-logo-opacity`에서 각각 조절합니다.
-타일은 왼쪽 위부터 반복합니다. `mask-position: center`로 변경하면 2열의 양 끝 로고가 잘립니다.
+로고는 장식용 그리드로 배치하며 각 칸의 마스크를 왼쪽 위에 고정합니다.
+`--manual-logo-gap-x: 20px`, `--manual-logo-gap-y: 30px`이면 로고 크기를 유지한 채 가로는 20px, 세로는 30px의 여백을 추가합니다.
+`js/pages/manual.js`가 페이지 높이에 맞춰 필요한 로고 개수를 자동으로 채웁니다.
 배경 로고는 약 5px 스트로크 효과로 두껍게 표시하며, 상단 착용 이미지는 표시하지 않습니다.
 로고 굵기는 `scripts/build_manual_logo_tile.py`의 `STROKE_WIDTH`에서 조절합니다.
 `python3 scripts/build_manual_logo_tile.py`로 타일을 다시 만들 수 있습니다.

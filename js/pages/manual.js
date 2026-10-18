@@ -23,6 +23,7 @@ function renderManual() {
         </nav>
       </aside>
     <main class="manual-page">
+      <div class="manual-logo-background" aria-hidden="true"></div>
       <!-- [표시 순서] 영어 소개 → 영어 본문 → 한글 소개 → 한글 본문 -->
       <section class="manual-intro manual-editorial-row manual-language-section" lang="en" aria-labelledby="manual-intro-title">
         <header class="manual-rail">
@@ -215,7 +216,43 @@ function renderManual() {
     </main>`);
 
   buildManualEditorialGrid();
+  bindManualLogoBackground();
   bindManualSideNav();
+}
+
+// [배경 로고 간격] CSS의 --manual-logo-gap-x / --manual-logo-gap-y에서 조절합니다.
+// 본문 길이·화면 크기가 바뀌어도 배경 전체를 채울 만큼만 장식용 로고를 생성합니다.
+function bindManualLogoBackground() {
+  const background = document.querySelector(".manual-logo-background");
+  if (!background) return;
+
+  const updateTiles = () => {
+    const style = getComputedStyle(background);
+    const columns = style.gridTemplateColumns.trim().split(/\s+/).length;
+    const tileHeight = parseFloat(style.gridAutoRows);
+    const rowGap = parseFloat(style.rowGap) || 0;
+    if (!Number.isFinite(tileHeight) || tileHeight <= 0) return;
+
+    const rows = Math.ceil((background.clientHeight + rowGap) / (tileHeight + rowGap));
+    const count = rows * columns;
+    if (background.childElementCount === count) return;
+
+    const tiles = document.createDocumentFragment();
+    for (let index = 0; index < count; index += 1) {
+      const tile = document.createElement("span");
+      tile.className = "manual-logo-tile";
+      tiles.append(tile);
+    }
+    background.replaceChildren(tiles);
+  };
+
+  updateTiles();
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(updateTiles).observe(background);
+  } else {
+    window.addEventListener("resize", updateTiles);
+    document.fonts?.ready.then(updateTiles);
+  }
 }
 
 // h3를 장 제목으로 사용해 제목 아래 다단 본문 구조를 자동 생성합니다.
