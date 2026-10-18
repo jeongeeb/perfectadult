@@ -220,7 +220,7 @@ function bindArchiveGallery() {
     return window.scrollY >= top - 1 && window.scrollY <= top + step * (cards.length - 1) + 1;
   };
 
-  // 휠과 트랙패드 한 제스처 = 화살표 한 번. 첫/마지막 제품도 서로 이어집니다.
+  // 한 제스처 = 한 제품. 마지막 제품의 다음 아래 스크롤은 하단 로고/설명으로 이어집니다.
   window.addEventListener("wheel", (event) => {
     if (compact.matches || event.defaultPrevented || event.ctrlKey || event.metaKey ||
         Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY || !inGallery()) return;
@@ -240,6 +240,8 @@ function bindArchiveGallery() {
       return;
     }
     const direction = Math.sign(event.deltaY);
+    // 새 제스처일 때만 하단으로 빠져나갑니다. 마지막 제품에 도착한 관성은 위에서 차단합니다.
+    if (direction > 0 && targetIndex === cards.length - 1 && scrollProgress() >= cards.length - 1 - 0.01) return;
     event.preventDefault();
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
     const delta = event.deltaY * unit;
@@ -262,6 +264,7 @@ function bindArchiveGallery() {
     const dy = touch.y - event.touches[0].clientY;
     if (Math.abs(dy) < 10 || Math.abs(dx) > Math.abs(dy)) return;
     const direction = Math.sign(dy);
+    if (direction > 0 && touch.index === cards.length - 1) { touch = null; return; }
     const target = normalize(touch.index + direction);
     if (target === touch.index) return;
     event.preventDefault();
@@ -287,6 +290,10 @@ function bindArchiveGallery() {
     const directions = { ArrowRight: 1, ArrowDown: 1, PageDown: 1, ArrowLeft: -1, ArrowUp: -1, PageUp: -1 };
     if (event.key in directions) {
       event.preventDefault();
+      if ((event.key === "ArrowDown" || event.key === "PageDown") && targetIndex === cards.length - 1) {
+        document.getElementById("project-footer")?.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth" });
+        return;
+      }
       goTo(targetIndex + directions[event.key]);
     } else if (event.key === "Home" || event.key === "End") {
       event.preventDefault();

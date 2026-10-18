@@ -42,8 +42,9 @@ function bindDetailInfoToggle() {
       panel.classList.toggle("is-open", isOpen);
       toggle.setAttribute("aria-expanded", isOpen.toString());
       toggle.textContent = `${isOpen ? "-" : "+"} description`;
-      panel.hidden = !isOpen;
+      panel.closest(".detail-description-collapse")?.classList.toggle("is-open", isOpen);
       panel.setAttribute("aria-hidden", (!isOpen).toString());
+      panel.inert = !isOpen;
     });
   }
 
@@ -76,7 +77,9 @@ function productDetailMarkup(product) {
         <p>Product details</p>
         <button class="detail-description-toggle is-open" type="button" aria-expanded="true" aria-controls="detail-description-body">- description</button>
       </div>
+      <div class="detail-description-collapse is-open">
       <div class="detail-description-body is-open" id="detail-description-body" aria-hidden="false">
+        <div class="detail-description-content">
         ${detailLine("대응 강령 :", product.name)}
         ${detailLine("사회표준 지침 :", detail.standard)}
         ${detailLine("수행 규약 :", detail.code)}
@@ -84,6 +87,8 @@ function productDetailMarkup(product) {
         ${detailLine("제품화 방향 :", detail.direction)}
         ${detail.description ? `<p>${detail.description}</p>` : ""}
         ${features ? `<p><strong class="detail-description-label">*제품 주요 기능</strong></p><ul>${features}</ul>` : ""}
+        </div>
+      </div>
       </div>
     </div>`;
 }
@@ -123,8 +128,8 @@ function productQuoteMarkup(product, productIndex) {
 }
 
 function prepareProductStampQuoteFit() {
-  // [4·6·16번 제품 도장 문구] 강제 줄바꿈 없이, 화면에 넘칠 때만 글자 크기를 줄입니다.
-  const overlay = document.querySelector(".detail-info-overlay[data-fit-quote]");
+  // 모바일은 모든 제품, PC는 기존 4·6·16번 문구를 화면 안에 맞춥니다.
+  const overlay = document.querySelector(".detail-info-overlay");
   if (!overlay) return;
   const grid = overlay.querySelector(".detail-quote-grid");
   const quote = overlay.querySelector(".detail-quote-standard");
@@ -133,8 +138,9 @@ function prepareProductStampQuoteFit() {
   const fit = () => {
     frame = 0;
     overlay.style.removeProperty("font-size");
-    // 모바일 도장 문구는 이미지 아래의 일반 본문처럼 자연스럽게 줄바꿈합니다.
-    if (window.matchMedia("(max-width: 760px)").matches) return;
+    grid.style.removeProperty("max-width");
+    const mobile = window.matchMedia("(max-width: 760px)").matches;
+    if (!mobile && !overlay.hasAttribute("data-fit-quote")) return;
     const style = window.getComputedStyle(overlay);
     const maxSize = Number.parseFloat(style.fontSize);
     // 글자 외곽선과 서체의 돌출 부분까지 화면 안에 들어오도록 여유를 둡니다.
@@ -142,6 +148,8 @@ function prepareProductStampQuoteFit() {
     const height = overlay.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) - safety;
     const width = overlay.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - safety;
     if (height <= 0 || width <= 0 || !grid.offsetWidth) return;
+    // 모바일은 가로 압축 없이 표시하므로 외곽선 여유만큼 실제 문구 영역도 줄입니다.
+    if (mobile) grid.style.maxWidth = `${Math.floor(width)}px`;
     const scaleX = grid.getBoundingClientRect().width / grid.offsetWidth;
     const fits = () => Math.max(grid.scrollHeight, quote.scrollHeight) <= height &&
       Math.max(grid.scrollWidth, quote.scrollWidth) * scaleX <= width;
@@ -162,6 +170,7 @@ function prepareProductStampQuoteFit() {
   };
   // 화면 크기 및 웹폰트 로딩 후 실제 글자 크기를 기준으로 다시 계산합니다.
   window.addEventListener("resize", requestFit);
+  window.visualViewport?.addEventListener("resize", requestFit);
   document.fonts?.ready.then(requestFit);
   requestFit();
 }

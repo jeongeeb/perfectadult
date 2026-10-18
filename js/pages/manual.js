@@ -1,7 +1,7 @@
 /*
   [메뉴얼 내용 수정]
   - PC 배치: 영어 왼쪽 / 한글 오른쪽, 같은 장끼리 나란히
-  - 태블릿·모바일 배치: 같은 장의 영어 → 한글 순서
+  - 태블릿·모바일 배치: 영어 전체 → 한글 전체 순서
   - 소개문: 각 lang="en" / lang="ko"인 manual-intro 안의 manual-subsection
   - 영어 지침서: id="manual-en"인 manual-section
   - 한국어 지침서: id="manual-kr"인 manual-section
@@ -263,6 +263,29 @@ function buildManualBilingualLayout() {
   englishSection.remove();
   koreanSection.remove();
   page.append(layout);
+
+  // 좁은 화면에서는 장별 교차 대신 영어 전체를 읽은 뒤 한글 전체가 이어집니다.
+  // 원문 노드를 이동하므로 폰트 설정·목차 ID·내용은 그대로 유지합니다.
+  const rows = [...layout.children];
+  const englishCells = rows.map((row) => row.children[0]);
+  const koreanCells = rows.map((row) => row.children[1]);
+  const narrow = window.matchMedia("(max-width: 1024px)");
+  const updateLanguageOrder = () => {
+    if (narrow.matches) {
+      const streams = [englishCells, koreanCells].map((cells) => {
+        const stream = document.createElement("div");
+        stream.className = "manual-language-stream";
+        stream.append(...cells);
+        return stream;
+      });
+      layout.replaceChildren(...streams);
+    } else {
+      rows.forEach((row, index) => row.append(englishCells[index], koreanCells[index]));
+      layout.replaceChildren(...rows);
+    }
+  };
+  narrow.addEventListener("change", updateLanguageOrder);
+  updateLanguageOrder();
 }
 
 // [배경 로고 간격] CSS의 --manual-logo-gap-x / --manual-logo-gap-y에서 조절합니다.
