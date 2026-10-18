@@ -109,11 +109,53 @@ function productQuoteMarkup(product, productIndex) {
   const detail = product.detail || {};
   const isLongQuote = (detail.standard || "").length > 28;
   return `
-    <section class="detail-info-overlay${isLongQuote ? " is-long-quote" : ""}" id="detail-info-overlay" aria-hidden="true">
+    <section class="detail-info-overlay${isLongQuote ? " is-long-quote" : ""}" id="detail-info-overlay"${product.id === "silent-helmet" ? ' data-fit-quote' : ""} aria-hidden="true">
       <div class="detail-quote-grid">
         <p class="detail-quote-standard">“${detail.standard || ""}”</p>
       </div>
     </section>`;
+}
+
+function prepareProductStampQuoteFit() {
+  // [4번 제품 도장 문구만] 강제 줄바꿈 없이, 화면에 넘칠 때만 글자 크기를 줄입니다.
+  const overlay = document.querySelector(".detail-info-overlay[data-fit-quote]");
+  if (!overlay) return;
+  const grid = overlay.querySelector(".detail-quote-grid");
+  const quote = overlay.querySelector(".detail-quote-standard");
+  let frame = 0;
+
+  const fit = () => {
+    frame = 0;
+    overlay.style.removeProperty("font-size");
+    const style = window.getComputedStyle(overlay);
+    const maxSize = Number.parseFloat(style.fontSize);
+    // 글자 외곽선과 서체의 돌출 부분까지 화면 안에 들어오도록 여유를 둡니다.
+    const safety = Number.parseFloat(style.webkitTextStrokeWidth || "0") * 2 + 4;
+    const height = overlay.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) - safety;
+    const width = overlay.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - safety;
+    if (height <= 0 || width <= 0 || !grid.offsetWidth) return;
+    const scaleX = grid.getBoundingClientRect().width / grid.offsetWidth;
+    const fits = () => Math.max(grid.scrollHeight, quote.scrollHeight) <= height &&
+      Math.max(grid.scrollWidth, quote.scrollWidth) * scaleX <= width;
+    if (fits()) return;
+
+    let low = 1;
+    let high = maxSize;
+    for (let attempt = 0; attempt < 12; attempt += 1) {
+      const size = (low + high) / 2;
+      overlay.style.fontSize = `${size}px`;
+      if (fits()) low = size;
+      else high = size;
+    }
+    overlay.style.fontSize = `${Math.floor(low * 10) / 10}px`;
+  };
+  const requestFit = () => {
+    if (!frame) frame = window.requestAnimationFrame(fit);
+  };
+  // 화면 크기 및 웹폰트 로딩 후 실제 글자 크기를 기준으로 다시 계산합니다.
+  window.addEventListener("resize", requestFit);
+  document.fonts?.ready.then(requestFit);
+  requestFit();
 }
 
 function productDisplayName(product) {
@@ -403,6 +445,7 @@ function renderDetail() {
   prepareProductHoverImages();
   prepareDetailOpening();
   bindDetailInfoToggle();
+  prepareProductStampQuoteFit();
   bindPurchaseModal(product);
 }
 
