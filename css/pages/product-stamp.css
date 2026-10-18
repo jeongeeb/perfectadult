@@ -1,0 +1,36 @@
+/* [도장 클릭 유도] PC·모바일 공통. 도장 이미지에는 효과를 적용하지 않습니다. */
+.detail-info-toggle {
+  /* 주기 / 최대 불투명도 / 반복 횟수는 아래 세 값으로 조절합니다. */
+  --stamp-glow-duration: 2.8s;
+  --stamp-glow-opacity: 0.18;
+  --stamp-glow-repeats: 3;
+  isolation: isolate;
+}
+
+.detail-info-toggle::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #ffff00 0%, #ffff00 35%, transparent 72%);
+  filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.detail-info-toggle.is-stamp-attention::before {
+  animation: stamp-attention-glow var(--stamp-glow-duration) ease-in-out
+    var(--stamp-glow-repeats);
+}
+
+@keyframes stamp-attention-glow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: var(--stamp-glow-opacity); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-info-toggle.is-stamp-attention::before {
+    animation: none;
+  }
+}

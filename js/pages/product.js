@@ -2,6 +2,7 @@
   [제품 상세페이지 기능 지도]
   - prepareDetailOpening: 처음 보이는 큰 제품명과 그래픽
   - bindDetailInfoToggle: 도장 클릭 시 제품 설명 열기/닫기
+  - bindStampAttention: 도장이 처음 보일 때 배경 노란빛, 클릭/3회 반복 후 종료
   - bindPurchaseModal: BUY NOW/ADD TO CART 팝업과 수량 계산
   - renderDetail: 상세페이지 전체 HTML 출력
   제품명/가격/설명은 js/shared/data.js의 products에서 바꿉니다.
@@ -58,6 +59,43 @@ function bindDetailInfoToggle() {
     stampToggle.setAttribute("aria-expanded", isOpen.toString());
     stampPanel.setAttribute("aria-hidden", (!isOpen).toString());
   });
+  bindStampAttention(stampToggle);
+}
+
+// 도장이 실제로 보일 때 한 번만 시작합니다. 모바일의 긴 상세 이미지 아래에서도 동작합니다.
+function bindStampAttention(stamp) {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (reducedMotion.matches) return;
+  let started = false;
+  let finished = false;
+  let observer;
+  const stop = () => {
+    finished = true;
+    stamp.classList.remove("is-stamp-attention");
+    observer?.disconnect();
+  };
+  const start = () => {
+    if (started || finished) return;
+    started = true;
+    stamp.classList.add("is-stamp-attention");
+    observer?.disconnect();
+  };
+
+  stamp.addEventListener("click", stop, { once: true });
+  stamp.addEventListener("animationend", (event) => {
+    if (event.animationName === "stamp-attention-glow") stop();
+  });
+  reducedMotion.addEventListener("change", (event) => {
+    if (event.matches) stop();
+  });
+  if ("IntersectionObserver" in window) {
+    observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.25)) start();
+    }, { threshold: 0.25 });
+    observer.observe(stamp);
+  } else {
+    start();
+  }
 }
 
 function detailLine(label, text) {
