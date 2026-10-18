@@ -19,7 +19,7 @@
 모든 영문은 `font.css`의 `--en-font`에 지정한 Arial Narrow를 사용합니다.
 일반 Arial로 변경하지 않습니다. 상단 메뉴는 Arial Narrow 볼드(700)를 사용합니다.
 
-메뉴얼 설명 본문은 세미볼드(600)로 통일하며 문장 중간에 개별 강조용 볼드를 넣지 않습니다.
+메뉴얼 한글 본문은 600, 영문은 실제 Arial Narrow Bold(700)를 사용하며 문장 중간에 개별 강조용 볼드를 넣지 않습니다.
 부제목(`.manual-rail h2`)은 16px / 800, 소제목(`h4`, `.manual-label`)은 13px / 700을 사용합니다.
 본문과 목록 숫자는 13px / 600으로 맞춥니다.
 문단 안의 소제목은 `.manual-label` 뒤에 `<br>`을 넣어 바로 다음 줄에 설명을 배치합니다.
@@ -33,6 +33,7 @@
 | 중앙 본문 최대 너비 | `--manual-content-width` 안의 `860px` |
 | 본문 / 소제목 / 부제목 크기 | `--manual-body-size: 13px`, `--manual-subheading-size: 13px`, `--manual-heading-size: 16px` |
 | 본문 / 부제목 굵기 | `--manual-body-weight: 600`, `--manual-heading-weight: 800` (소제목 700) |
+| 영문 추가 굵기 | `--manual-en-body-stroke: 0.2px`, `--manual-en-subheading-stroke: 0.25px`, `--manual-en-heading-stroke: 0.4px` |
 | 행간 | `--manual-line-height` (커질수록 넓게) |
 | 자간 | `--manual-letter-spacing` (현재 -0.01em, 음수는 좁게 / 양수는 넓게) |
 | 배경 로고 한 개의 고정 너비 | `--manual-logo-size` (현재 460px, 본문·화면 너비와 무관) |

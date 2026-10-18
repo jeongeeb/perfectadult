@@ -28,6 +28,12 @@ body[data-page="manual"] .footer-handle {
   /* [글자 굵기] 본문 600 / 소제목 700 / 부제목 800 */
   --manual-body-weight: 600;
   --manual-heading-weight: 800;
+  /* [영문 굵기 보강] Arial Narrow는 Regular/Bold만 있어 600~800이 같은 Bold로 보입니다.
+     영문에는 Bold 파일을 명시하고 아래 외곽선으로 추가 굵기를 조절합니다.
+     0px = 원본 Bold, 숫자가 클수록 더 두껍게. */
+  --manual-en-body-stroke: 0.2px;
+  --manual-en-subheading-stroke: 0.25px;
+  --manual-en-heading-stroke: 0.4px;
   /* [행간] 글자 크기의 배수. 1.4 = 현재, 1.6 = 더 넓게, 1.2 = 더 좁게 */
   --manual-line-height: 1.6;
   /* [자간] 글자 사이 간격. 음수 = 좁게, 0 = 기본, 양수 = 넓게 */
@@ -38,12 +44,14 @@ body[data-page="manual"] .footer-handle {
     calc(100vw - 60px - var(--manual-sidebar-offset) * 2)
   );
   /* [배경 로고 진하기] 0 = 안 보임, 0.12 = 불투명도 12%, 0.15 = 더 진하게 */
-  --manual-logo-opacity: 0.12;
+  --manual-logo-opacity: 0.1;
   /* [배경 로고 한 개의 고정 너비] 본문·화면 너비와 무관합니다. 예: 500px = 더 크게 */
-  --manual-logo-size: 460px;
+  --manual-logo-size: 480px;
   /* [가로 개수] 기본 2개. 전체 배경 너비는 로고 크기 × 개수로 계산합니다. */
   --manual-logo-columns: 2;
-  --manual-logo-width: calc(var(--manual-logo-size) * var(--manual-logo-columns));
+  --manual-logo-width: calc(
+    var(--manual-logo-size) * var(--manual-logo-columns)
+  );
   /* [배경 좌우 위치] 화면 중앙 기준. 양수 = 오른쪽, 음수 = 왼쪽 */
   --manual-logo-x: 0px;
   /* [배경 시작 위치] 상단 메뉴 바로 아래에서 첫 줄이 잘리지 않게 시작합니다. */
@@ -135,7 +143,7 @@ body[data-page="manual"] .footer-handle {
   margin-bottom: 8px;
   font-size: var(--manual-heading-size);
   font-weight: var(--manual-heading-weight);
-  -webkit-text-stroke: 0.15px currentColor;
+  -webkit-text-stroke: var(--manual-en-heading-stroke) currentColor;
   line-height: inherit;
   text-align: left;
 }
@@ -220,6 +228,19 @@ body[data-page="manual"] .footer-handle {
 .manual-language-section[lang="en"] .manual-chapter-copy h4,
 .manual-language-section[lang="en"] .manual-label {
   text-transform: uppercase;
+}
+
+/* 영문은 실제 Arial Narrow Bold(700)를 사용합니다. 한글과 메뉴에는 적용하지 않습니다. */
+.manual-language-section[lang="en"] {
+  font-weight: 700;
+  -webkit-text-stroke: var(--manual-en-body-stroke) currentColor;
+}
+.manual-language-section[lang="en"] .manual-rail h2 {
+  -webkit-text-stroke: var(--manual-en-heading-stroke) currentColor;
+}
+.manual-language-section[lang="en"] .manual-chapter-copy h4,
+.manual-language-section[lang="en"] .manual-label {
+  -webkit-text-stroke: var(--manual-en-subheading-stroke) currentColor;
 }
 
 .manual-chapter-copy p,
