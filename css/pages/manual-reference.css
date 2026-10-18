@@ -22,6 +22,8 @@ body[data-page="manual"] .footer-handle {
   --manual-sidebar-offset: clamp(210px, 15vw, 290px);
   --manual-column-gap: clamp(24px, 1.8vw, 36px);
   --manual-body-size: clamp(12px, 0.73vw, 14px);
+  /* [본문 굵기] 600 = 세미볼드. 제목·소제목은 기존 700을 사용합니다. */
+  --manual-body-weight: 600;
   /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
   --manual-content-width: min(860px, calc(100vw - 60px - var(--manual-sidebar-offset) * 2));
   /* [배경 로고 진하기] 0 = 안 보임, 0.12 = 불투명도 12%, 0.15 = 더 진하게 */
@@ -40,7 +42,7 @@ body[data-page="manual"] .footer-handle {
   color: #000;
   font-family: var(--en-font);
   font-size: var(--manual-body-size);
-  font-weight: 400;
+  font-weight: var(--manual-body-weight);
   line-height: 1.4;
   letter-spacing: -0.01em;
   word-break: keep-all;
@@ -111,7 +113,7 @@ body[data-page="manual"] .footer-handle {
 .manual-intro,
 .manual-chapter {
   display: block;
-  padding: 32px 0 56px;
+  padding: 24px 0 40px;
   scroll-margin-top: 128px;
 }
 
@@ -119,7 +121,7 @@ body[data-page="manual"] .footer-handle {
   display: block;
   margin-bottom: 8px;
   font-size: inherit;
-  font-weight: 400;
+  font-weight: 700;
   line-height: inherit;
   text-align: left;
 }
@@ -129,7 +131,7 @@ body[data-page="manual"] .footer-handle {
 }
 
 .manual-rail {
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   text-align: left;
 }
 
@@ -204,7 +206,7 @@ body[data-page="manual"] .footer-handle {
 .manual-chapter-copy p,
 .manual-chapter-copy ol,
 .manual-chapter-copy ul {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font: inherit;
   orphans: 3;
   widows: 3;
@@ -283,7 +285,7 @@ body[data-page="manual"] .site-end-copy {
   }
 
   .manual-rail {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 
   .manual-rail h2 {
