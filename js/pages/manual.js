@@ -214,9 +214,9 @@ function renderManual() {
         </article>
       </section>
 
-      <!-- [메뉴얼 끝 도장] 그레이 이미지. 크기·위치·기울기는 CSS의 --manual-end-stamp-*에서 조절 -->
+      <!-- [메뉴얼 끝 도장] 빨간 이미지. 크기·위치·기울기는 CSS의 --manual-end-stamp-*에서 조절 -->
       <figure class="manual-end-stamp" aria-hidden="true">
-        <img src="assets/graphics/stamp_gray.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/graphics/stamp_red.webp" alt="" loading="lazy" decoding="async">
       </figure>
     </main>`);
 
