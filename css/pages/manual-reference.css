@@ -1,7 +1,7 @@
 /*
   메뉴얼 편집 레이아웃
-  - 공통 왼쪽 목차 / 왼쪽 볼드 제목 / 2열 본문
-  - 소제목과 해당 본문을 한 묶음으로 배치, 모바일 1열
+  - 공통 왼쪽 목차 / 화면 중앙의 1열 본문 / 옅은 로고 반복 배경
+  - 소제목과 해당 본문을 한 묶음으로 배치
   - 본문 최소 12px, 단어 단위 줄바꿈
   - 메뉴 색상과 마우스 오버 효과는 css/common.css에서 공통 관리
 */
@@ -22,6 +22,14 @@ body[data-page="manual"] .footer-handle {
   --manual-sidebar-offset: clamp(210px, 15vw, 290px);
   --manual-column-gap: clamp(24px, 1.8vw, 36px);
   --manual-body-size: clamp(12px, 0.73vw, 14px);
+  /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
+  --manual-content-width: min(860px, calc(100vw - 60px - var(--manual-sidebar-offset) * 2));
+  /* [배경 로고 진하기] 0 = 안 보임, 0.08 = 불투명도 8%, 0.15 = 더 진하게 */
+  --manual-logo-opacity: 0.08;
+  /* [배경 로고 반복] 가로 한 줄에 로고 3개. 숫자가 커지면 로고가 작아집니다. */
+  --manual-logo-columns: 3;
+  position: relative;
+  isolation: isolate;
   padding: 128px 30px 150px;
   background: #fff;
   color: #000;
@@ -35,11 +43,31 @@ body[data-page="manual"] .footer-handle {
   hyphens: none;
 }
 
+/* 본문 뒤에만 로고를 깔며, 왼쪽 목차·상단 메뉴는 기존 위치와 배경을 유지합니다. */
+.manual-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: var(--manual-content-width);
+  transform: translateX(-50%);
+  z-index: -1;
+  background-image: url("../../assets/graphics/top-logo.webp");
+  background-repeat: repeat;
+  background-position: center top;
+  background-size: calc(100% / var(--manual-logo-columns)) auto;
+  opacity: var(--manual-logo-opacity);
+  pointer-events: none;
+}
+
 .manual-hero,
 .manual-intro,
 .manual-section {
-  /* 상단 이미지와 본문 모두 왼쪽 목차 여백만큼 오른쪽에도 동일하게 확보합니다. */
-  margin-inline: var(--manual-sidebar-offset);
+  /* 영역은 화면 중앙에 두고, 영역 안의 글은 기존 왼쪽 정렬을 사용합니다. */
+  width: var(--manual-content-width);
+  max-width: 100%;
+  margin-inline: auto;
 }
 
 /* 상단 이미지는 본문 시작선에 맞춰 유지합니다. */
@@ -129,7 +157,7 @@ body[data-page="manual"] .footer-handle {
 
 .manual-chapter-copy {
   min-width: 0;
-  column-count: 2;
+  column-count: 1;
   column-gap: var(--manual-column-gap);
   column-fill: balance;
   text-align: left;
@@ -215,13 +243,15 @@ body[data-page="manual"] .site-end-copy {
 
   .manual-page {
     --manual-body-size: 14px;
+    --manual-content-width: calc(100vw - 32px);
+    --manual-logo-columns: 2;
     padding: 0 16px 90px;
   }
 
   .manual-hero,
   .manual-intro,
   .manual-section {
-    margin-inline: 0;
+    margin-inline: auto;
   }
 
   .manual-hero {

@@ -23,6 +23,19 @@
 장 제목·소제목과 `.manual-label`만 볼드(700)를 사용합니다.
 문단 안의 소제목은 `.manual-label` 뒤에 `<br>`을 넣어 바로 다음 줄에 설명을 배치합니다.
 
+## Manual 중앙 본문과 로고 배경
+
+`pages/manual-reference.css`의 `.manual-page`에서 조절합니다.
+
+| 조정할 부분 | 수정할 값 |
+| --- | --- |
+| 중앙 본문 최대 너비 | `--manual-content-width` 안의 `860px` |
+| 배경 로고 진하기 | `--manual-logo-opacity` (현재 0.08, 커질수록 진하게) |
+| 한 줄의 로고 개수 | `--manual-logo-columns` (PC 3개, 모바일 2개) |
+
+본문은 화면 중앙의 한 열에 배치하고 문장은 왼쪽으로 정렬합니다.
+로고 배경은 중앙 본문 영역에만 표시하며, 왼쪽 목차는 공통 스타일을 사용합니다.
+
 ## About 이미지 위치 조정
 
 `pages/about.css` 상단의 `.about-page`에서 큰 이미지와 제품 컷을 조정합니다.
