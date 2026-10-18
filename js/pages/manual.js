@@ -214,6 +214,10 @@ function renderManual() {
         </article>
       </section>
 
+      <!-- [메뉴얼 끝 도장] 그레이 이미지. 크기·위치·기울기는 CSS의 --manual-end-stamp-*에서 조절 -->
+      <figure class="manual-end-stamp" aria-hidden="true">
+        <img src="assets/graphics/stamp_gray.webp" alt="" loading="lazy" decoding="async">
+      </figure>
     </main>`);
 
   buildManualEditorialGrid();
@@ -262,7 +266,8 @@ function buildManualBilingualLayout() {
 
   englishSection.remove();
   koreanSection.remove();
-  page.append(layout);
+  // 끝 도장은 영어·한글 본문을 모두 읽은 다음에 표시합니다.
+  page.insertBefore(layout, page.querySelector(".manual-end-stamp"));
 
   // 좁은 화면에서는 장별 교차 대신 영어 전체를 읽은 뒤 한글 전체가 이어집니다.
   // 원문 노드를 이동하므로 폰트 설정·목차 ID·내용은 그대로 유지합니다.

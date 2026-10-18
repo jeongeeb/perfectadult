@@ -65,6 +65,10 @@ PC·모바일의 description은 닫을 때 설명 영역의 높이도 함께 줄
 | --- | --- |
 | 영어·한글 2단 전체 너비 | `--manual-content-width` 안의 최대 너비 |
 | 영어·한글 열 사이 여백 | `--manual-column-gap` |
+| 마지막 그레이 도장 크기 | `--manual-end-stamp-width` (기본 160px) |
+| 마지막 도장 기울기 | `--manual-end-stamp-angle` (기본 -14deg) |
+| 마지막 도장 좌우·상하 이동 | `--manual-end-stamp-x`, `--manual-end-stamp-y` |
+| 마지막 도장 위 간격 | `--manual-end-stamp-gap` |
 | 한글 본문 크기 / 굵기 | `--manual-kr-body-size`, `--manual-kr-body-weight` |
 | 한글 소제목 크기 / 굵기 | `--manual-kr-subheading-size`, `--manual-kr-subheading-weight` |
 | 한글 부제목 크기 / 굵기 | `--manual-kr-heading-size`, `--manual-kr-heading-weight` |
