@@ -1,8 +1,10 @@
 /*
   [메뉴얼 내용 수정]
-  - 첫 화면 소개문: manual-intro 안의 manual-subsection
-  - 한국어 지침서: lang="ko"인 manual-section
-  - 영어 지침서: lang="en"인 manual-section
+  - 표시 순서: 영어 소개/본문 → 한글 소개/본문
+  - 소개문: 각 lang="en" / lang="ko"인 manual-intro 안의 manual-subsection
+  - 영어 지침서: id="manual-en"인 manual-section
+  - 한국어 지침서: id="manual-kr"인 manual-section
+  - 왼쪽 목차: 먼저 나오는 영어 소개와 영어 본문으로 연결
   - 화면 배치와 폰트: css/pages/manual-reference.css
   HTML 태그는 유지하고 <p>, <h3>, <h4>, <li> 안의 문장만 바꾸면 안전합니다.
 */
@@ -13,17 +15,108 @@ function renderManual() {
       <aside class="page-side-index manual-side-index" aria-label="Manual contents">
         <nav class="page-side-nav manual-side-nav">
           <a href="#manual-intro-title">Introduction</a>
-          <a href="#manual-kr-1">Standard code</a>
-          <a href="#manual-kr-2">Core proposition</a>
-          <a href="#manual-kr-3">Adult standards</a>
-          <a href="#manual-kr-4">Manual origin</a>
+          <a href="#manual-en-1">Standard code</a>
+          <a href="#manual-en-2">Core proposition</a>
+          <a href="#manual-en-3">Adult standards</a>
+          <a href="#manual-en-4">Manual origin</a>
           <a href="#project-footer">Project info</a>
         </nav>
       </aside>
     <main class="manual-page">
-      <section class="manual-intro manual-editorial-row" aria-labelledby="manual-intro-title">
+      <!-- [표시 순서] 영어 소개 → 영어 본문 → 한글 소개 → 한글 본문 -->
+      <section class="manual-intro manual-editorial-row manual-language-section" lang="en" aria-labelledby="manual-intro-title">
         <header class="manual-rail">
-          <h2 id="manual-intro-title">완벽한 어른을 사회적 기준에서 설계하다</h2>
+          <h2 id="manual-intro-title">Designing the Perfect Adult Through Social Standards</h2>
+        </header>
+        <div class="manual-chapter-copy">
+          <div class="manual-subsection">
+            <h4>Project Background</h4>
+            <p>This brand began with the question of whether becoming a perfect adult means more than simply growing older: a process of meeting the many standards society demands.<br>One must remain composed, responsible, independent, restrained, considerate, and productive. Society presents countless conditions for adulthood, and we accept them as standards we are naturally expected to follow.<br>聖人用品 指針 translates these social standards into a system of products.</p>
+          </div>
+          <div class="manual-subsection">
+            <h4>The Brand and Its Products</h4>
+            <p>This fictional adult goods brand observes the behaviors and attitudes society demands of an ideal adult and gives them physical form through a manual and products.<br>Each product is designed to make the wearer perform a social virtue, such as independence, responsibility, restraint, listening, emotional control, or dignity.<br>Becoming a perfect adult is simpler than you might think. Follow the manual and wear the products on your body. Once you are wearing every device, you will look like a perfect adult. You now embody the very standards by which society defines adulthood.</p>
+          </div>
+          <div class="manual-subsection">
+            <h4>The Project’s Perspective</h4>
+            <p>This brand does not make you perfect. It simply makes you look like a perfect adult.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="manual-section manual-language-section" id="manual-en" lang="en">
+        <article class="manual-copy manual-document">
+          <h3>A STANDARD CODE OF CONDUCT FOR PERFORMING THE PERFECT ADULT</h3>
+          <h4>About This Manual</h4>
+          <p>This book is not a self-help guide that teaches readers how to become perfect adults. It is a critical book of norms that exposes, through the exaggerated form of a manual, the social standards that repeatedly judge people in their twenties and thirties as “legally adult, yet still socially inadequate.”</p>
+
+          <h4>Editorial Direction</h4>
+          <p>The text is organized into three layers.</p>
+          <ol>
+            <li><span class="manual-label">Evidence:</span><br>Verifiable materials such as laws, surveys, research, and traditional norms.</li>
+            <li><span class="manual-label">Codes:</span><br>Satirical commands that translate the behavior society demands from individuals.</li>
+            <li><span class="manual-label">Products:</span><br>Physical devices that make users perform the codes. The products appear friendly, but in practice they correct, fix, and suppress the body and emotions.</li>
+          </ol>
+
+          <h4>Principles for Using Evidence</h4>
+          <ul>
+            <li>Verified evidence is explicitly identified in the text.</li>
+            <li>Figures requiring verification are marked “original source verification required.”</li>
+            <li>Additional entries are identified as interpretations derived from existing evidence.</li>
+            <li>Product descriptions are satirical creations, but the social pressures they target remain connected to evidence.</li>
+            <li>Historical periods are working categories for this project’s analysis rather than strict historiographical divisions.</li>
+          </ul>
+
+          <hr>
+          <h3>Core Proposition</h3>
+          <h4>The perfect adult does not exist.</h4>
+          <p>The standard of adulthood has changed across time. In traditional society, an adult protected order and family lineage. During modernization, an adult kept the family from going hungry. Today, an adult is expected to respect others, regulate emotions, and manage an independent life.</p>
+          <p>The problem is that earlier standards never disappeared. Contemporary society did not remove authority, responsibility, endurance, financial capacity, sacrifice, and diligence before asking for empathy and independence. Emotional management, self-improvement, sociability, consideration, and self-presentation on social media have simply been added on top.</p>
+          <p>The contemporary adult is therefore a high-specification human subjected to “updates without deletion.” The human body and emotions remain the same while society continuously raises the required specifications of adulthood.</p>
+          <p>People in their twenties and thirties do not necessarily follow these standards because they wish to become perfect adults. Social scrutiny, family expectations, workplace evaluation, peer comparison, and economic insecurity compel them to perform the appearance of adulthood. This manual was written to reveal how impossible and strange that performance has become.</p>
+
+          <h4>Structural Contradiction: Why No One Can Complete This Manual</h4>
+          <p>Article 4 of the Civil Act of the Republic of Korea states that a person reaches adulthood at nineteen. Legal adulthood, however, does not automatically constitute social adulthood. Article 3 of the Framework Act on Juveniles defines a juvenile as a person between the ages of nine and twenty-four. A person may therefore be recognized as an adult in one system while remaining within the juvenile category in another.</p>
+          <p>Developmental psychology also challenges conventional divisions of adulthood. In a 2000 paper, Jeffrey J. Arnett described the period from age eighteen through the late twenties as “emerging adulthood.” People in this period often find it difficult to define themselves as either fully adult or not adult.</p>
+          <p>The problem is not simply individual immaturity. Standards of adulthood operate differently across law, public institutions, generations, families, workplaces, and markets. Society combines these conflicting standards into one completed human ideal and imposes it on individuals.</p>
+          <p>This manual offers no solution. It asks the reader to confront who designed these standards and how they operate.</p>
+
+          <hr>
+          <h3>Changing Standards of Adulthood</h3>
+          <h4>Traditional Era</h4>
+          <p>In traditional society, an adult served as both the ethical standard and a decision-maker for the community. Authority arose from a combination of age, lineage, status, education, and morality. Adults functioned less as individuals than as representatives of family and communal order.</p>
+          <p><span class="manual-label">Standard of Adulthood</span><br>Confucian learning, including the Four Books and Five Classics; strict morality; responsibility for family honor; and authority to instruct younger generations.</p>
+          <p><span class="manual-label">Roles and Behavior</span><br>Discipline younger generations according to age hierarchy. Regard the restraint of joy, anger, sorrow, and pleasure as a virtue of seriousness. Treat ancestral rites, family continuity, and communal order as lifelong responsibilities.</p>
+          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Do not reveal emotion carelessly.” “Appear exemplary to younger generations.” “Do not damage the family’s dignity.”</p>
+
+          <h4>Modernization Era</h4>
+          <p>Through colonization, war, and industrialization, the standard of adulthood shifted from moral authority toward survival and the economic capacity to support a family.</p>
+          <p><span class="manual-label">Standard of Adulthood</span><br>The financial ability to support a family, performance within an organization, and a willingness to prioritize survival and results over personal feelings.</p>
+          <p><span class="manual-label">Roles and Behavior</span><br>Place the family’s livelihood before personal happiness or emotional needs. Understand the refusal to pass poverty to one’s children as a form of love. Prove responsibility through action and results rather than words.</p>
+          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Continue functioning while exhausted.” “Postpone emotion for family and organization.” “Prove yourself through results.”</p>
+
+          <h4>Contemporary Era</h4>
+          <p>In contemporary society, age alone no longer grants recognition as an adult. The standard adult is redefined as someone who respects others, chooses persuasion over coercion, acknowledges mistakes, and knows how to apologize.</p>
+          <p><span class="manual-label">Standard of Adulthood</span><br>Emotional maturity, communication skills, self-management, financial independence, respect for others’ boundaries, and civic awareness of vulnerable groups and communal issues.</p>
+          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Do not coerce.” “Empathize.” “Apologize.” “Do not inconvenience others.” “Continue managing yourself.”</p>
+
+          <hr>
+          <h3>From Samgang Haengsildo to 「聖人用品 指針」</h3>
+          <h4>Adapting the Structure</h4>
+          <p><em>Samgang Haengsildo</em> was a Joseon-era manual that used images and text to teach Confucian virtues such as loyalty, filial piety, and fidelity.</p>
+          <p>聖人用品 指針 reworks this structure for the present. Where the earlier conduct manual taught loyalty, filial piety, and fidelity, this manual teaches likability, diligence, independence, responsibility, dignity, and silence.</p>
+          <h4>Codes and Products</h4>
+          <p><span class="manual-label">Codes:</span><br>The social standards demanded from individuals are formalized as behavioral directives.</p>
+          <p><span class="manual-label">Products:</span><br>Social equipment is sold to help users perform those directives in everyday life.</p>
+          <h4>The Figure and Fictional World</h4>
+          <p>The figure resembles a mannequin that is always smiling. Its expression is friendly, yet emotionally empty. The products resemble soft, clean wellness goods, while their actual function is to fix the user’s eyes, mouth, neck, hands, posture, and emotional responses.</p>
+          <p>The Chinese-character names of the codes are not historical terms. They are coined expressions created for the project’s fictional world.</p>
+        </article>
+      </section>
+
+      <section class="manual-intro manual-editorial-row" lang="ko" aria-labelledby="manual-intro-title-ko">
+        <header class="manual-rail">
+          <h2 id="manual-intro-title-ko">완벽한 어른을 사회적 기준에서 설계하다</h2>
         </header>
         <div class="manual-chapter-copy">
           <div class="manual-subsection">
@@ -119,75 +212,6 @@ function renderManual() {
         </article>
       </section>
 
-      <section class="manual-section manual-language-section" id="manual-en" lang="en">
-        <article class="manual-copy manual-document">
-          <h3>A STANDARD CODE OF CONDUCT FOR PERFORMING THE PERFECT ADULT</h3>
-          <h4>About This Manual</h4>
-          <p>This book is not a self-help guide that teaches readers how to become perfect adults. It is a critical book of norms that exposes, through the exaggerated form of a manual, the social standards that repeatedly judge people in their twenties and thirties as “legally adult, yet still socially inadequate.”</p>
-
-          <h4>Editorial Direction</h4>
-          <p>The text is organized into three layers.</p>
-          <ol>
-            <li><span class="manual-label">Evidence:</span><br>Verifiable materials such as laws, surveys, research, and traditional norms.</li>
-            <li><span class="manual-label">Codes:</span><br>Satirical commands that translate the behavior society demands from individuals.</li>
-            <li><span class="manual-label">Products:</span><br>Physical devices that make users perform the codes. The products appear friendly, but in practice they correct, fix, and suppress the body and emotions.</li>
-          </ol>
-
-          <h4>Principles for Using Evidence</h4>
-          <ul>
-            <li>Verified evidence is explicitly identified in the text.</li>
-            <li>Figures requiring verification are marked “original source verification required.”</li>
-            <li>Additional entries are identified as interpretations derived from existing evidence.</li>
-            <li>Product descriptions are satirical creations, but the social pressures they target remain connected to evidence.</li>
-            <li>Historical periods are working categories for this project’s analysis rather than strict historiographical divisions.</li>
-          </ul>
-
-          <hr>
-          <h3>Core Proposition</h3>
-          <h4>The perfect adult does not exist.</h4>
-          <p>The standard of adulthood has changed across time. In traditional society, an adult protected order and family lineage. During modernization, an adult kept the family from going hungry. Today, an adult is expected to respect others, regulate emotions, and manage an independent life.</p>
-          <p>The problem is that earlier standards never disappeared. Contemporary society did not remove authority, responsibility, endurance, financial capacity, sacrifice, and diligence before asking for empathy and independence. Emotional management, self-improvement, sociability, consideration, and self-presentation on social media have simply been added on top.</p>
-          <p>The contemporary adult is therefore a high-specification human subjected to “updates without deletion.” The human body and emotions remain the same while society continuously raises the required specifications of adulthood.</p>
-          <p>People in their twenties and thirties do not necessarily follow these standards because they wish to become perfect adults. Social scrutiny, family expectations, workplace evaluation, peer comparison, and economic insecurity compel them to perform the appearance of adulthood. This manual was written to reveal how impossible and strange that performance has become.</p>
-
-          <h4>Structural Contradiction: Why No One Can Complete This Manual</h4>
-          <p>Article 4 of the Civil Act of the Republic of Korea states that a person reaches adulthood at nineteen. Legal adulthood, however, does not automatically constitute social adulthood. Article 3 of the Framework Act on Juveniles defines a juvenile as a person between the ages of nine and twenty-four. A person may therefore be recognized as an adult in one system while remaining within the juvenile category in another.</p>
-          <p>Developmental psychology also challenges conventional divisions of adulthood. In a 2000 paper, Jeffrey J. Arnett described the period from age eighteen through the late twenties as “emerging adulthood.” People in this period often find it difficult to define themselves as either fully adult or not adult.</p>
-          <p>The problem is not simply individual immaturity. Standards of adulthood operate differently across law, public institutions, generations, families, workplaces, and markets. Society combines these conflicting standards into one completed human ideal and imposes it on individuals.</p>
-          <p>This manual offers no solution. It asks the reader to confront who designed these standards and how they operate.</p>
-
-          <hr>
-          <h3>Changing Standards of Adulthood</h3>
-          <h4>Traditional Era</h4>
-          <p>In traditional society, an adult served as both the ethical standard and a decision-maker for the community. Authority arose from a combination of age, lineage, status, education, and morality. Adults functioned less as individuals than as representatives of family and communal order.</p>
-          <p><span class="manual-label">Standard of Adulthood</span><br>Confucian learning, including the Four Books and Five Classics; strict morality; responsibility for family honor; and authority to instruct younger generations.</p>
-          <p><span class="manual-label">Roles and Behavior</span><br>Discipline younger generations according to age hierarchy. Regard the restraint of joy, anger, sorrow, and pleasure as a virtue of seriousness. Treat ancestral rites, family continuity, and communal order as lifelong responsibilities.</p>
-          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Do not reveal emotion carelessly.” “Appear exemplary to younger generations.” “Do not damage the family’s dignity.”</p>
-
-          <h4>Modernization Era</h4>
-          <p>Through colonization, war, and industrialization, the standard of adulthood shifted from moral authority toward survival and the economic capacity to support a family.</p>
-          <p><span class="manual-label">Standard of Adulthood</span><br>The financial ability to support a family, performance within an organization, and a willingness to prioritize survival and results over personal feelings.</p>
-          <p><span class="manual-label">Roles and Behavior</span><br>Place the family’s livelihood before personal happiness or emotional needs. Understand the refusal to pass poverty to one’s children as a form of love. Prove responsibility through action and results rather than words.</p>
-          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Continue functioning while exhausted.” “Postpone emotion for family and organization.” “Prove yourself through results.”</p>
-
-          <h4>Contemporary Era</h4>
-          <p>In contemporary society, age alone no longer grants recognition as an adult. The standard adult is redefined as someone who respects others, chooses persuasion over coercion, acknowledges mistakes, and knows how to apologize.</p>
-          <p><span class="manual-label">Standard of Adulthood</span><br>Emotional maturity, communication skills, self-management, financial independence, respect for others’ boundaries, and civic awareness of vulnerable groups and communal issues.</p>
-          <p><span class="manual-label">Translated into a Contemporary Manual</span><br>“Do not coerce.” “Empathize.” “Apologize.” “Do not inconvenience others.” “Continue managing yourself.”</p>
-
-          <hr>
-          <h3>From Samgang Haengsildo to 「聖人用品 指針」</h3>
-          <h4>Adapting the Structure</h4>
-          <p><em>Samgang Haengsildo</em> was a Joseon-era manual that used images and text to teach Confucian virtues such as loyalty, filial piety, and fidelity.</p>
-          <p>聖人用品 指針 reworks this structure for the present. Where the earlier conduct manual taught loyalty, filial piety, and fidelity, this manual teaches likability, diligence, independence, responsibility, dignity, and silence.</p>
-          <h4>Codes and Products</h4>
-          <p><span class="manual-label">Codes:</span><br>The social standards demanded from individuals are formalized as behavioral directives.</p>
-          <p><span class="manual-label">Products:</span><br>Social equipment is sold to help users perform those directives in everyday life.</p>
-          <h4>The Figure and Fictional World</h4>
-          <p>The figure resembles a mannequin that is always smiling. Its expression is friendly, yet emotionally empty. The products resemble soft, clean wellness goods, while their actual function is to fix the user’s eyes, mouth, neck, hands, posture, and emotional responses.</p>
-          <p>The Chinese-character names of the codes are not historical terms. They are coined expressions created for the project’s fictional world.</p>
-        </article>
-      </section>
     </main>`);
 
   buildManualEditorialGrid();
