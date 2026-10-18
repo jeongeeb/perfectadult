@@ -1,6 +1,7 @@
 /*
   [메뉴얼 내용 수정]
-  - 표시 순서: 영어 소개/본문 → 한글 소개/본문
+  - PC 배치: 영어 왼쪽 / 한글 오른쪽, 같은 장끼리 나란히
+  - 태블릿·모바일 배치: 같은 장의 영어 → 한글 순서
   - 소개문: 각 lang="en" / lang="ko"인 manual-intro 안의 manual-subsection
   - 영어 지침서: id="manual-en"인 manual-section
   - 한국어 지침서: id="manual-kr"인 manual-section
@@ -24,7 +25,7 @@ function renderManual() {
       </aside>
     <main class="manual-page">
       <div class="manual-logo-background" aria-hidden="true"></div>
-      <!-- [표시 순서] 영어 소개 → 영어 본문 → 한글 소개 → 한글 본문 -->
+      <!-- [원문 편집 순서] 영어 소개/본문 → 한글 소개/본문. 아래 함수가 같은 장끼리 2단으로 묶습니다. -->
       <section class="manual-intro manual-editorial-row manual-language-section" lang="en" aria-labelledby="manual-intro-title">
         <header class="manual-rail">
           <h2 id="manual-intro-title">Designing the Perfect Adult Through Social Standards</h2>
@@ -216,8 +217,52 @@ function renderManual() {
     </main>`);
 
   buildManualEditorialGrid();
+  buildManualBilingualLayout();
   bindManualLogoBackground();
   bindManualSideNav();
+}
+
+// [2단 배치] 원문과 목차 ID는 유지하면서 영어·한글의 같은 장을 한 행으로 묶습니다.
+function buildManualBilingualLayout() {
+  const page = document.querySelector(".manual-page");
+  const englishIntro = page?.querySelector('.manual-intro[lang="en"]');
+  const koreanIntro = page?.querySelector('.manual-intro[lang="ko"]');
+  const englishSection = page?.querySelector("#manual-en");
+  const koreanSection = page?.querySelector("#manual-kr");
+  if (!englishIntro || !koreanIntro || !englishSection || !koreanSection) return;
+
+  const englishChapters = [...englishSection.querySelectorAll(".manual-chapter")];
+  const koreanChapters = [...koreanSection.querySelectorAll(".manual-chapter")];
+  const layout = document.createElement("div");
+  layout.className = "manual-bilingual";
+
+  const appendRow = (...cells) => {
+    const row = document.createElement("div");
+    row.className = "manual-bilingual-row";
+    row.append(...cells);
+    layout.append(row);
+  };
+  appendRow(englishIntro, koreanIntro);
+
+  const count = Math.max(englishChapters.length, koreanChapters.length);
+  for (let index = 0; index < count; index += 1) {
+    const cells = [
+      { lang: "en", chapter: englishChapters[index], sectionId: "manual-en" },
+      { lang: "ko", chapter: koreanChapters[index], sectionId: "manual-kr" },
+    ].map(({ lang, chapter, sectionId }) => {
+      const cell = document.createElement("div");
+      cell.className = "manual-language-section manual-language-cell";
+      cell.lang = lang;
+      if (index === 0) cell.id = sectionId;
+      if (chapter) cell.append(chapter);
+      return cell;
+    });
+    appendRow(...cells);
+  }
+
+  englishSection.remove();
+  koreanSection.remove();
+  page.append(layout);
 }
 
 // [배경 로고 간격] CSS의 --manual-logo-gap-x / --manual-logo-gap-y에서 조절합니다.

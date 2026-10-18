@@ -1,6 +1,6 @@
 /*
   메뉴얼 편집 레이아웃
-  - 공통 왼쪽 목차 / 화면 중앙의 1열 본문 / 옅은 로고 반복 배경
+  - 공통 왼쪽 목차 / 영어 왼쪽·한글 오른쪽 2단 본문 / 옅은 로고 반복 배경
   - 소제목과 해당 본문을 한 묶음으로 배치
   - 한글·영어의 본문/소제목/부제목 크기와 굵기를 각각 조절, 단어 단위 줄바꿈
   - 메뉴 색상과 마우스 오버 효과는 css/common.css에서 공통 관리
@@ -20,6 +20,7 @@ body[data-page="manual"] .footer-handle {
 
 .manual-page {
   --manual-sidebar-offset: clamp(210px, 15vw, 290px);
+  /* [영어 ↔ 한글 열 간격] 두 언어 사이 여백. 예: 40px = 더 넓게 */
   --manual-column-gap: clamp(24px, 1.8vw, 36px);
   /* [한글 크기] px 단위. 본문 / 소제목(h4·문단 안 굵은 제목) / 부제목(h2) */
   --manual-kr-body-size: 13px;
@@ -72,7 +73,7 @@ body[data-page="manual"] .footer-handle {
   --manual-list-item-gap: 6px;
   /* [자간] 글자 사이 간격. 음수 = 좁게, 0 = 기본, 양수 = 넓게 */
   --manual-letter-spacing: -0.01em;
-  /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
+  /* [2단 본문 전체 너비] 영어·한글 두 열을 합친 너비. 왼쪽 목차 영역은 비워둡니다. */
   --manual-content-width: min(
     860px,
     calc(100vw - 60px - var(--manual-sidebar-offset) * 2)
@@ -162,6 +163,35 @@ body[data-page="manual"] .footer-handle {
   width: var(--manual-content-width);
   max-width: 100%;
   margin-inline: auto;
+}
+
+/* 같은 장의 영어(왼쪽)와 한글(오른쪽)을 한 행으로 묶어 시작 높이를 맞춥니다. */
+.manual-bilingual {
+  width: var(--manual-content-width);
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.manual-bilingual-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--manual-column-gap);
+  align-items: start;
+}
+
+.manual-language-cell,
+.manual-bilingual-row > .manual-intro {
+  min-width: 0;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* 태블릿·모바일은 같은 내용의 영어 → 한글 순서로 이어집니다. */
+@media (max-width: 1024px) {
+  .manual-bilingual-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* 상단 이미지는 본문 시작선에 맞춰 유지합니다. */
@@ -424,7 +454,7 @@ body[data-page="manual"] .site-end-copy {
 /* PC 첫 글의 시작점을 왼쪽 메뉴와 같은 128px에 맞춥니다.
    모바일에서는 메뉴 아래에 본문이 이어지는 기존 세로 배치를 유지합니다. */
 @media (min-width: 761px) {
-  .manual-page > .manual-intro:first-of-type {
+  .manual-bilingual-row:first-child .manual-intro {
     padding-top: 0;
   }
 }
