@@ -24,8 +24,12 @@ body[data-page="manual"] .footer-handle {
   --manual-body-size: clamp(12px, 0.73vw, 14px);
   /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
   --manual-content-width: min(860px, calc(100vw - 60px - var(--manual-sidebar-offset) * 2));
-  /* [배경 로고 진하기] 0 = 안 보임, 0.08 = 불투명도 8%, 0.15 = 더 진하게 */
-  --manual-logo-opacity: 0.08;
+  /* [배경 로고 진하기] 0 = 안 보임, 0.12 = 불투명도 12%, 0.15 = 더 진하게 */
+  --manual-logo-opacity: 0.12;
+  /* [배경 로고 영역 너비] 본문과 별도로 중앙에 최대 800px 너비로 배치합니다. */
+  --manual-logo-width: 800px;
+  /* [배경 시작 위치] 상단 메뉴 바로 아래에서 첫 줄이 잘리지 않게 시작합니다. */
+  --manual-logo-top: 108px;
   /* [배경 로고 반복] 가로 한 줄에 로고 3개. 숫자가 커지면 로고가 작아집니다. */
   --manual-logo-columns: 3;
   position: relative;
@@ -47,13 +51,14 @@ body[data-page="manual"] .footer-handle {
 .manual-page::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: var(--manual-logo-top);
   bottom: 0;
   left: 50%;
-  width: var(--manual-content-width);
+  width: min(var(--manual-logo-width), var(--manual-content-width));
   transform: translateX(-50%);
   z-index: -1;
-  background-image: url("../../assets/graphics/top-logo.webp");
+  /* ‘聖人用品’ 네 글자와 일정한 행·열 간격이 포함된 타일을 3열로 반복합니다. */
+  background-image: url("../../assets/graphics/manual-logo-tile.svg");
   background-repeat: repeat;
   background-position: center top;
   background-size: calc(100% / var(--manual-logo-columns)) auto;
@@ -244,7 +249,7 @@ body[data-page="manual"] .site-end-copy {
   .manual-page {
     --manual-body-size: 14px;
     --manual-content-width: calc(100vw - 32px);
-    --manual-logo-columns: 2;
+    --manual-logo-top: 0px;
     padding: 0 16px 90px;
   }
 
