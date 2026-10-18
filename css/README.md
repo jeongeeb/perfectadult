@@ -153,6 +153,9 @@ PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높
 
 아카이브에서는 가격을 표시하지 않습니다. `pages/archive.css`의 `.archive-project-info` 안
 `--archive-caption-offset`이 가격 한 줄 높이만큼 번호·제품명·설명을 아래로 맞춥니다.
+자동 전환 간격은 `js/pages/archive.js`의 `AUTOPLAY_DELAY = 3000`에서 조절합니다. 3000ms = 3초입니다.
+마지막 제품 다음에는 1번으로 순환하며, 수동 조작 후에는 새 제품을 3초 보여줍니다.
+하단 설명 영역·숨겨진 탭·낮은 화면의 일반 목록·모션 줄이기 설정에서는 자동 전환을 멈춥니다.
 
 `pages/archive.css`의 `[제품별 이미지 크기·위치]`에서 제품 번호와 이름을 찾습니다.
 각 `.archive-project[data-product-id="제품 ID"]` 안의 세 값만 변경합니다.

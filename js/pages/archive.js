@@ -78,7 +78,10 @@ function bindArchiveGallery() {
   let touch = null;
   let wrapProgress = null;
   let wrapFrame = 0;
+  let autoplayTimer;
 
+  // [자동 전환 간격] 3000ms = 3초. 수동으로 넘긴 뒤에도 새 제품을 3초 보여줍니다.
+  const AUTOPLAY_DELAY = 3000;
   // 작은 트랙패드 움직임은 모아 판단하고, 관성 중에는 다음 제품으로 재이동하지 않습니다.
   const WHEEL_THRESHOLD = 36;
   const GESTURE_PAUSE = 180;
@@ -173,8 +176,10 @@ function bindArchiveGallery() {
     window.clearTimeout(navigationTimer);
     isNavigating = false;
     requestUpdate();
+    restartAutoplay();
   };
   const goTo = (index) => {
+    window.clearTimeout(autoplayTimer);
     const target = normalize(index);
     const wasWrapping = wrapProgress !== null;
     const from = wrapProgress ?? scrollProgress();
@@ -219,6 +224,17 @@ function bindArchiveGallery() {
     return window.scrollY >= top - 1 && window.scrollY <= top + step * (cards.length - 1) + 1;
   };
 
+  // 하단 설명을 읽거나 다른 탭을 보는 동안은 멈춥니다. 갤러리로 돌아오면 다시 시작합니다.
+  const canAutoplay = () => cards.length > 1 && !compact.matches && !reducedMotion.matches &&
+    !document.hidden && !touch && !isNavigating && inGallery();
+  const restartAutoplay = () => {
+    window.clearTimeout(autoplayTimer);
+    if (!canAutoplay()) return;
+    autoplayTimer = window.setTimeout(() => {
+      if (canAutoplay()) goTo(targetIndex + 1);
+    }, AUTOPLAY_DELAY);
+  };
+
   // 한 제스처 = 한 제품. 마지막 제품의 다음 아래 스크롤은 하단 로고/설명으로 이어집니다.
   window.addEventListener("wheel", (event) => {
     if (compact.matches || event.defaultPrevented || event.ctrlKey || event.metaKey ||
@@ -227,6 +243,7 @@ function bindArchiveGallery() {
     if (element?.closest("input, textarea, select, [contenteditable='true']")) return;
     const sidebar = element?.closest(".page-side-index");
     if (sidebar && sidebar.scrollHeight > sidebar.clientHeight) return;
+    restartAutoplay();
 
     window.clearTimeout(wheelTimer);
     wheelTimer = window.setTimeout(() => {
@@ -255,6 +272,7 @@ function bindArchiveGallery() {
   stage.addEventListener("touchstart", (event) => {
     if (compact.matches || event.touches.length !== 1 || !inGallery()) { touch = null; return; }
     touch = { x: event.touches[0].clientX, y: event.touches[0].clientY, index: targetIndex, consumed: false };
+    restartAutoplay();
   }, { passive: true });
   stage.addEventListener("touchmove", (event) => {
     if (!touch || event.touches.length !== 1) { touch = null; return; }
@@ -271,7 +289,7 @@ function bindArchiveGallery() {
     touch.consumed = true;
     goTo(target);
   }, { passive: false });
-  const endTouch = () => { touch = null; };
+  const endTouch = () => { touch = null; restartAutoplay(); };
   stage.addEventListener("touchend", endTouch);
   stage.addEventListener("touchcancel", endTouch);
 
@@ -302,6 +320,7 @@ function bindArchiveGallery() {
   window.addEventListener("scroll", () => {
     if (wrapProgress === null && isNavigating && Math.abs(window.scrollY - scrollTarget) < 1) finishNavigation();
     requestUpdate();
+    restartAutoplay();
     window.clearTimeout(settleTimer);
     // 스크롤바 조작이나 뒤로 가기로 이동한 경우에도 정지 후 가장 가까운 제품에 맞춥니다.
     settleTimer = window.setTimeout(() => {
@@ -311,11 +330,14 @@ function bindArchiveGallery() {
       if (Math.abs(window.scrollY - (top + nearest * step)) > 1) goTo(nearest);
     }, GESTURE_PAUSE);
   }, { passive: true });
-  window.addEventListener("resize", requestUpdate);
-  window.addEventListener("pageshow", requestUpdate);
-  reducedMotion.addEventListener("change", requestUpdate);
-  compact.addEventListener("change", requestUpdate);
+  const refreshGallery = () => { requestUpdate(); restartAutoplay(); };
+  window.addEventListener("resize", refreshGallery);
+  window.addEventListener("pageshow", refreshGallery);
+  document.addEventListener("visibilitychange", restartAutoplay);
+  reducedMotion.addEventListener("change", refreshGallery);
+  compact.addEventListener("change", refreshGallery);
   update();
+  restartAutoplay();
 }
 
 renderArchive();
