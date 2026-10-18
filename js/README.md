@@ -7,5 +7,6 @@
 - `pages/archive.js`: 제품 메인 이미지 갤러리, 한 제품씩 휠·터치 전환과 중앙 정렬
 - `pages/about.js`: 비교용 룩북 선택·이전/다음·스와이프 및 제품 컷 연결
 - `pages/manual.js`: 메뉴얼 페이지 출력
+- `pages/book.js`: 책 이미지·설명 설정, 클릭·화살표·키보드·스와이프 전환
 
 `products.js`는 이전 통합 파일이며 새 HTML에서는 사용하지 않습니다.

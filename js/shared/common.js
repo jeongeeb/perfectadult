@@ -170,6 +170,7 @@ function navMarkup() {
     document.body.dataset.page === "shop" ||
     document.body.dataset.page === "detail";
   const isManual = document.body.dataset.page === "manual";
+  const isBook = document.body.dataset.page === "book";
   const isArchive = document.body.dataset.page === "archive";
   const isAbout = document.body.dataset.page === "about";
 
@@ -179,6 +180,7 @@ function navMarkup() {
         <span class="nav-primary-group">
           <a class="${isShop ? "active" : ""}" href="index.html"${isShop ? ' aria-current="page"' : ""}>Shop</a>
           <a class="${isManual ? "active" : ""}" href="manual.html"${isManual ? ' aria-current="page"' : ""}>Manual</a>
+          <a class="${isBook ? "active" : ""}" href="book.html"${isBook ? ' aria-current="page"' : ""}>Book</a>
           <a class="${isArchive ? "active" : ""}" href="archive.html"${isArchive ? ' aria-current="page"' : ""}>Archive</a>
           <a class="${isAbout ? "active" : ""}" href="about.html"${isAbout ? ' aria-current="page"' : ""}>About</a>
         </span>

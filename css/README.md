@@ -9,6 +9,7 @@
 - `pages/archive.css`: 아카이브 중앙 이미지, 하단 설명, 이전·다음 미리보기
 - `pages/about.css`: 비교용 룩북의 왼쪽 이미지 목록과 오른쪽 뷰어·제품 컷
 - `pages/manual-reference.css`: 메뉴얼 문서 레이아웃과 최소 12px 본문
+- `pages/book.css`: 지침서 책 이미지 뷰어와 이미지 아래 설명
 - `font.css`: 폰트 등록과 공통 색상 변수
 
 ## 상단 로고·메뉴·입술 정렬
@@ -124,6 +125,26 @@ PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높
 배경 로고는 약 5px 스트로크 효과로 두껍게 표시하며, 상단 착용 이미지는 표시하지 않습니다.
 로고 굵기는 `scripts/build_manual_logo_tile.py`의 `STROKE_WIDTH`에서 조절합니다.
 `python3 scripts/build_manual_logo_tile.py`로 타일을 다시 만들 수 있습니다.
+
+## Book 이미지·설명 조정
+
+`js/pages/book.js`의 `bookPublication`에서 제목·설명과 `slides` 이미지 목록을 수정합니다.
+새 사진은 `assets/book/`에 저장하고 WebP로 변환한 뒤 `src` 경로를 바꿉니다.
+`crop: "full"`이면 원본 전체가 표시됩니다. `left`/`right`는 기존 합성 이미지의 두 펼침면을 분리하는 임시 설정입니다.
+원본 비율은 로드 후 자동 반영하며 사진을 확대해서 자르지 않습니다.
+
+`pages/book.css`의 `.book-page`에서 다음 값을 조절합니다.
+
+| 조정할 부분 | 수정할 값 |
+| --- | --- |
+| 이미지 표시 높이 | `--book-image-height` (모바일은 아래 미디어 규칙에서 별도 조절) |
+| 이미지 아래 설명과의 간격 | `--book-caption-gap` |
+| 배경색 | `--book-background` |
+| 설명 글자 크기·굵기 | `--book-text-size`, `--book-text-weight` |
+| 제목 굵기 | `--book-title-weight` |
+
+이미지를 클릭하거나 화살표·키보드 좌우·모바일 스와이프로 넘깁니다. 끝에서는 처음으로 순환합니다.
+영문은 공통 Arial Narrow를 사용하고, Book의 크기·굵기 설정은 메뉴얼·메인과 독립적입니다.
 
 ## About 이미지 위치 조정
 

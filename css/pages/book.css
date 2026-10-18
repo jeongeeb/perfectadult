@@ -1,0 +1,170 @@
+/*
+  [BOOK 페이지 조절 지도]
+  - 사진 교체·순서·설명: js/pages/book.js 맨 위 bookPublication
+  - 이미지 높이·배경색·본문 크기·글 굵기: 바로 아래 .book-page 변수
+  - 이미지 아래 간격: --book-caption-gap
+  - 화살표 크기: .book-controls img (24px / 36px)
+  다른 페이지와 폰트 크기·굵기를 공유하지 않습니다. 영문은 Arial Narrow 유지.
+*/
+body[data-page="book"] .site-frame {
+  min-height: 100svh;
+}
+
+body[data-page="book"] .footer-handle {
+  display: none;
+}
+
+.book-page {
+  --book-background: #f3f3f3;
+  --book-image-height: clamp(260px, 65svh, 820px);
+  --book-caption-gap: 28px;
+  --book-text-size: 13px;
+  --book-text-weight: 400;
+  --book-title-weight: 700;
+  min-height: 100svh;
+  padding: 138px 30px 70px;
+  background: var(--book-background);
+  color: #050505;
+  font-family: var(--en-font);
+  font-size: var(--book-text-size);
+  font-weight: var(--book-text-weight);
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.book-gallery {
+  position: relative;
+  touch-action: pan-y pinch-zoom;
+}
+
+.book-images {
+  position: relative;
+  height: var(--book-image-height);
+}
+
+.book-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 64px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.book-slide[hidden],
+.book-controls[hidden] {
+  display: none;
+}
+
+.book-image-window {
+  position: relative;
+  display: block;
+  width: min(100%, calc(var(--book-image-height) * var(--book-image-ratio)));
+  aspect-ratio: var(--book-image-ratio);
+  overflow: hidden;
+}
+
+.book-image-window img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 기존 이미지 한 장에 담긴 두 펼침면만 분리 표시합니다. 새 사진은 crop: "full" 사용. */
+.book-image-window[data-crop="left"] img,
+.book-image-window[data-crop="right"] img {
+  width: 200%;
+  max-width: none;
+}
+
+.book-image-window[data-crop="right"] img {
+  transform: translateX(-50%);
+}
+
+.book-controls button {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  transform: translateY(-50%);
+  background: transparent;
+}
+
+.book-previous { left: 0; }
+.book-next { right: 0; }
+
+.book-controls img {
+  display: block;
+  width: 24px;
+  height: 36px;
+}
+
+.book-previous img { transform: rotate(180deg); }
+
+.book-slide:focus-visible,
+.book-controls button:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+}
+
+.book-caption {
+  margin-top: var(--book-caption-gap);
+}
+
+.book-caption-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px 30px;
+  align-items: baseline;
+}
+
+.book-caption h1,
+.book-caption p {
+  margin: 0;
+  font-size: inherit;
+}
+
+.book-caption h1 {
+  font-weight: var(--book-title-weight);
+}
+
+.book-name { margin-top: 4px !important; }
+.book-position { font-variant-numeric: tabular-nums; }
+
+.book-description {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 30px;
+  max-width: 800px;
+  margin-top: 18px;
+}
+
+.book-image-caption {
+  margin-top: 18px !important;
+  color: #666;
+}
+
+@media (max-width: 760px) {
+  .book-page {
+    --book-image-height: clamp(240px, 53svh, 600px);
+    --book-caption-gap: 24px;
+    padding-top: 128px;
+    padding-bottom: 50px;
+  }
+
+  .book-slide { padding-inline: 36px; }
+  .book-controls button { width: 32px; }
+  .book-caption-top { gap: 8px 16px; }
+  .book-description { grid-template-columns: minmax(0, 1fr); }
+}

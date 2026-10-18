@@ -15,3 +15,10 @@ python3 scripts/convert_images.py
 
 About 페이지는 아카이브와 비교하기 위한 분할 룩북입니다. 왼쪽 썸네일을
 새로 만들려면 `python3 scripts/build_lookbook_thumbnails.py`를 실행합니다.
+
+Book 페이지는 `book.html`입니다. 기존 지침서 내지의 두 펼침면으로 미리 구성했습니다.
+GPT에서 완성한 책 이미지는 `assets/book/`에 저장하고 위 변환 스크립트로 WebP를 만듭니다.
+`js/pages/book.js` 맨 위 `bookPublication.slides`의 `src`를 새 `.webp` 경로로 바꾸고,
+기존 이미지 분리용 `crop`은 `"full"`로 변경하세요. 이미지 원본 비율은 자동 적용됩니다.
+순서·이미지별 설명도 같은 설정에서 바꿉니다. Book 배경색·이미지 높이·글자 설정은
+`css/pages/book.css`의 `.book-page` 변수에서 다른 페이지와 독립적으로 조절합니다.
