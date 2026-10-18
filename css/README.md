@@ -40,6 +40,7 @@
 | 전체 배경 너비 | `--manual-logo-width` (로고 크기 × 가로 개수, 기본 920px) |
 | 배경 좌우 이동 | `--manual-logo-x` (중앙 기준, 양수: 오른쪽 / 음수: 왼쪽) |
 | 배경 시작 위치 | `--manual-logo-top` (PC 108px, 모바일 0px) |
+| 배경 로고 색상 | `--manual-logo-color` (HEX 색상, 예: `#000000`, `#ff0000`) |
 | 배경 로고 진하기 | `--manual-logo-opacity` (현재 0.12, 커질수록 진하게) |
 | 한 줄의 로고 개수 | `--manual-logo-columns` (현재 2개) |
 
@@ -47,7 +48,8 @@
 로고 배경은 본문과 화면 너비에 따라 축소되지 않는 고정 크기이며, 왼쪽 목차는 공통 스타일을 사용합니다.
 `--manual-logo-size`를 500px로 바꾸면 로고 하나가 500px, 2열 전체가 1000px로 커집니다.
 배경 타일은 기존 로고에서 ‘聖人用品’ 네 글자만 표시하며 행·열 간격을 포함합니다.
-타일은 왼쪽 위부터 반복합니다. `background-position: center`로 변경하면 2열의 양 끝 로고가 잘립니다.
+로고 모양은 마스크로 사용하고 색상은 `--manual-logo-color`, 불투명도는 `--manual-logo-opacity`에서 각각 조절합니다.
+타일은 왼쪽 위부터 반복합니다. `mask-position: center`로 변경하면 2열의 양 끝 로고가 잘립니다.
 배경 로고는 약 5px 스트로크 효과로 두껍게 표시하며, 상단 착용 이미지는 표시하지 않습니다.
 로고 굵기는 `scripts/build_manual_logo_tile.py`의 `STROKE_WIDTH`에서 조절합니다.
 `python3 scripts/build_manual_logo_tile.py`로 타일을 다시 만들 수 있습니다.

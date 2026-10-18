@@ -43,7 +43,9 @@ body[data-page="manual"] .footer-handle {
     860px,
     calc(100vw - 60px - var(--manual-sidebar-offset) * 2)
   );
-  /* [배경 로고 진하기] 0 = 안 보임, 0.12 = 불투명도 12%, 0.15 = 더 진하게 */
+  /* [배경 로고 색상] HEX 색상을 입력합니다. 예: #000000 검정, #ff0000 빨강, #2255ff 파랑 */
+  --manual-logo-color: #000000;
+  /* [배경 로고 진하기] 위 색상에 적용되는 불투명도. 0 = 안 보임, 1 = 원래 색 */
   --manual-logo-opacity: 0.1;
   /* [배경 로고 한 개의 고정 너비] 본문·화면 너비와 무관합니다. 예: 500px = 더 크게 */
   --manual-logo-size: 480px;
@@ -82,12 +84,18 @@ body[data-page="manual"] .footer-handle {
   max-width: none;
   transform: translateX(-50%);
   z-index: -1;
-  /* 약 5px 스트로크 효과를 준 ‘聖人用品’ 타일을 2열로 반복합니다. */
-  background-image: url("../../assets/graphics/manual-logo-tile.svg?v=20261018-stroke5");
-  background-repeat: repeat;
+  /* 로고의 투명도 모양을 마스크로 사용해, 원본을 수정하지 않고 CSS 색상을 입힙니다. */
+  background-color: var(--manual-logo-color);
+  -webkit-mask-image: url("../../assets/graphics/manual-logo-tile.svg?v=20261018-stroke5");
+  mask-image: url("../../assets/graphics/manual-logo-tile.svg?v=20261018-stroke5");
+  mask-mode: alpha;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
   /* 2열은 왼쪽부터 시작해야 양 끝이 반씩 잘리지 않고 로고 2개가 온전히 보입니다. */
-  background-position: left top;
-  background-size: var(--manual-logo-size) auto;
+  -webkit-mask-position: left top;
+  mask-position: left top;
+  -webkit-mask-size: var(--manual-logo-size) auto;
+  mask-size: var(--manual-logo-size) auto;
   opacity: var(--manual-logo-opacity);
   pointer-events: none;
 }
