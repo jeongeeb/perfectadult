@@ -74,6 +74,7 @@ PC·모바일의 description은 닫을 때 설명 영역의 높이도 함께 줄
 | 마지막 도장 기울기 | `--manual-end-stamp-angle` (기본 -14deg) |
 | 마지막 도장 좌우·상하 이동 | `--manual-end-stamp-x`, `--manual-end-stamp-y` |
 | 마지막 도장 위 간격 | `--manual-end-stamp-gap` |
+| 마지막 도장 투명도 | `--manual-end-stamp-opacity` (기본 0.4, 0 = 안 보임 / 1 = 원본 진하기) |
 | 한글 본문 크기 / 굵기 | `--manual-kr-body-size`, `--manual-kr-body-weight` |
 | 한글 소제목 크기 / 굵기 | `--manual-kr-subheading-size`, `--manual-kr-subheading-weight` |
 | 한글 부제목 크기 / 굵기 | `--manual-kr-heading-size`, `--manual-kr-heading-weight` |
@@ -101,6 +102,7 @@ PC·모바일의 description은 닫을 때 설명 영역의 높이도 함께 줄
 | 한 줄의 로고 개수 | `--manual-logo-columns` (현재 2개) |
 
 크기는 `14px`, 굵기는 `700`처럼 입력합니다. `--manual-body-size` 등 자동 연결 항목은 수정하지 않아도 됩니다.
+마지막 그레이 도장은 본문보다 아래 레이어에 있습니다. `--manual-end-stamp-y`를 음수로 올려 글과 겹쳐도 글이 앞에 표시되며, 투명도를 낮추면 도장만 옅어집니다.
 영어 설정은 영어 소개와 본문, INTRODUCTION 문구에 적용하고 한글 설정은 한글 소개와 본문에 적용합니다.
 
 PC에서는 영어를 왼쪽, 한글을 오른쪽에 배치합니다. 소개와 각 장을 한 행씩 묶어 같은 내용의 시작 높이를 맞춥니다.

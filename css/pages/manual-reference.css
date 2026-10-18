@@ -22,12 +22,13 @@ body[data-page="manual"] .footer-handle {
   --manual-sidebar-offset: clamp(210px, 15vw, 290px);
   /* [영어 ↔ 한글 열 간격] 두 언어 사이 여백. 예: 40px = 더 넓게 */
   --manual-column-gap: clamp(24px, 1.8vw, 36px);
-  /* [메뉴얼 마지막 그레이 도장] 크기 / 기울기 / 좌우 / 위아래 / 본문과의 간격 */
+  /* [메뉴얼 마지막 그레이 도장] 크기 / 기울기 / 좌우 / 위아래 / 본문과의 간격 / 투명도 */
   --manual-end-stamp-width: 160px;
-  --manual-end-stamp-angle: -14deg; /* 음수 = 왼쪽으로 기울임, 양수 = 오른쪽 */
+  --manual-end-stamp-angle: 10deg; /* 음수 = 왼쪽으로 기울임, 양수 = 오른쪽 */
   --manual-end-stamp-x: 0px; /* 양수 = 오른쪽, 음수 = 왼쪽 */
-  --manual-end-stamp-y: 0px; /* 양수 = 아래, 음수 = 위 */
+  --manual-end-stamp-y: -200px; /* 양수 = 아래, 음수 = 위 */
   --manual-end-stamp-gap: 24px;
+  --manual-end-stamp-opacity: 0.4; /* 0 = 안 보임, 1 = 원본 진하기. 작을수록 투명 */
   /* [한글 크기] px 단위. 본문 / 소제목(h4·문단 안 굵은 제목) / 부제목(h2) */
   --manual-kr-body-size: 13px;
   --manual-kr-subheading-size: 13px;
@@ -175,6 +176,9 @@ body[data-page="manual"] .footer-handle {
 
 /* 같은 장의 영어(왼쪽)와 한글(오른쪽)을 한 행으로 묶어 시작 높이를 맞춥니다. */
 .manual-bilingual {
+  /* 도장을 위로 옮겨 글과 겹쳐도 본문이 앞에 표시됩니다. */
+  position: relative;
+  z-index: 1;
   width: var(--manual-content-width);
   max-width: 100%;
   margin-inline: auto;
@@ -202,8 +206,11 @@ body[data-page="manual"] .footer-handle {
   }
 }
 
-/* [마지막 그레이 도장 배치] 본문 끝 오른쪽에 놓고, 페이지 하단 로고 앞에서 마무리합니다. */
+/* [마지막 그레이 도장 배치] 글 아래 레이어. 위치·기울기는 위 변수에서 조절합니다. */
 .manual-end-stamp {
+  position: relative;
+  z-index: 0;
+  pointer-events: none;
   display: flex;
   justify-content: flex-end;
   width: var(--manual-content-width);
@@ -214,6 +221,7 @@ body[data-page="manual"] .footer-handle {
 
 .manual-end-stamp img {
   display: block;
+  opacity: var(--manual-end-stamp-opacity);
   width: min(var(--manual-end-stamp-width), 40vw);
   height: auto;
   transform: translate(var(--manual-end-stamp-x), var(--manual-end-stamp-y))
