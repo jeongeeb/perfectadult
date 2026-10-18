@@ -28,6 +28,8 @@ body[data-page="manual"] .footer-handle {
   --manual-kr-heading-size: 16px;
   /* [한글 굵기] 100~900. 숫자가 클수록 두꺼워집니다. */
   --manual-kr-body-weight: 600;
+  /* [한글 소제목 굵기] '기획 배경', '전통시대', '표준 어른의 기준' 등에 적용.
+     400 = 보통 / 700 = 굵게 / 800~900 = 더 굵게. 본문·영어에는 영향을 주지 않습니다. */
   --manual-kr-subheading-weight: 700;
   --manual-kr-heading-weight: 800;
 
