@@ -29,20 +29,25 @@ body[data-page="manual"] .footer-handle {
   --manual-body-weight: 600;
   --manual-heading-weight: 800;
   /* [행간] 글자 크기의 배수. 1.4 = 현재, 1.6 = 더 넓게, 1.2 = 더 좁게 */
-  --manual-line-height: 1.4;
+  --manual-line-height: 1.6;
   /* [자간] 글자 사이 간격. 음수 = 좁게, 0 = 기본, 양수 = 넓게 */
   --manual-letter-spacing: -0.01em;
   /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
-  --manual-content-width: min(860px, calc(100vw - 60px - var(--manual-sidebar-offset) * 2));
+  --manual-content-width: min(
+    860px,
+    calc(100vw - 60px - var(--manual-sidebar-offset) * 2)
+  );
   /* [배경 로고 진하기] 0 = 안 보임, 0.12 = 불투명도 12%, 0.15 = 더 진하게 */
   --manual-logo-opacity: 0.12;
-  /* [배경이 본문 밖으로 나오는 여백] 좌우 각각 30px. 숫자를 키우면 더 넓어집니다. */
-  --manual-logo-outset: 30px;
-  --manual-logo-width: calc(var(--manual-content-width) + var(--manual-logo-outset) * 2);
+  /* [배경 로고 한 개의 고정 너비] 본문·화면 너비와 무관합니다. 예: 500px = 더 크게 */
+  --manual-logo-size: 460px;
+  /* [가로 개수] 기본 2개. 전체 배경 너비는 로고 크기 × 개수로 계산합니다. */
+  --manual-logo-columns: 2;
+  --manual-logo-width: calc(var(--manual-logo-size) * var(--manual-logo-columns));
+  /* [배경 좌우 위치] 화면 중앙 기준. 양수 = 오른쪽, 음수 = 왼쪽 */
+  --manual-logo-x: 0px;
   /* [배경 시작 위치] 상단 메뉴 바로 아래에서 첫 줄이 잘리지 않게 시작합니다. */
   --manual-logo-top: 108px;
-  /* [배경 로고 반복] 가로 한 줄에 로고 2개. 3열일 때보다 각 로고가 1.5배 커집니다. */
-  --manual-logo-columns: 2;
   position: relative;
   isolation: isolate;
   padding: 128px 30px 150px;
@@ -58,15 +63,15 @@ body[data-page="manual"] .footer-handle {
   hyphens: none;
 }
 
-/* 중앙 본문보다 약간 넓게 로고를 깔며, 왼쪽 목차·상단 메뉴는 기존 위치를 유지합니다. */
+/* 본문 너비와 독립된 고정 크기 배경. 좁은 화면에서도 로고 크기를 자동 축소하지 않습니다. */
 .manual-page::before {
   content: "";
   position: absolute;
   top: var(--manual-logo-top);
   bottom: 0;
-  left: 50%;
+  left: calc(50% + var(--manual-logo-x));
   width: var(--manual-logo-width);
-  max-width: calc(100% - 16px);
+  max-width: none;
   transform: translateX(-50%);
   z-index: -1;
   /* 약 5px 스트로크 효과를 준 ‘聖人用品’ 타일을 2열로 반복합니다. */
@@ -74,7 +79,7 @@ body[data-page="manual"] .footer-handle {
   background-repeat: repeat;
   /* 2열은 왼쪽부터 시작해야 양 끝이 반씩 잘리지 않고 로고 2개가 온전히 보입니다. */
   background-position: left top;
-  background-size: calc(100% / var(--manual-logo-columns)) auto;
+  background-size: var(--manual-logo-size) auto;
   opacity: var(--manual-logo-opacity);
   pointer-events: none;
 }
@@ -253,7 +258,6 @@ body[data-page="manual"] .site-end-copy {
     --manual-sidebar-offset: 190px;
     padding-right: 30px;
   }
-
 }
 
 @media (max-width: 760px) {
@@ -274,7 +278,6 @@ body[data-page="manual"] .site-end-copy {
 
   .manual-page {
     --manual-content-width: calc(100vw - 32px);
-    --manual-logo-outset: 8px;
     --manual-logo-top: 0px;
     padding: 0 16px 90px;
   }

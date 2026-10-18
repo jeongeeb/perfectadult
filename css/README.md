@@ -33,15 +33,18 @@
 | 중앙 본문 최대 너비 | `--manual-content-width` 안의 `860px` |
 | 본문 / 소제목 / 부제목 크기 | `--manual-body-size: 13px`, `--manual-subheading-size: 13px`, `--manual-heading-size: 16px` |
 | 본문 / 부제목 굵기 | `--manual-body-weight: 600`, `--manual-heading-weight: 800` (소제목 700) |
-| 행간 | `--manual-line-height` (현재 1.4, 커질수록 넓게) |
+| 행간 | `--manual-line-height` (커질수록 넓게) |
 | 자간 | `--manual-letter-spacing` (현재 -0.01em, 음수는 좁게 / 양수는 넓게) |
-| 본문 밖으로 확장되는 배경 여백 | `--manual-logo-outset` (좌우 각각 PC 30px, 모바일 8px) |
+| 배경 로고 한 개의 고정 너비 | `--manual-logo-size` (현재 460px, 본문·화면 너비와 무관) |
+| 전체 배경 너비 | `--manual-logo-width` (로고 크기 × 가로 개수, 기본 920px) |
+| 배경 좌우 이동 | `--manual-logo-x` (중앙 기준, 양수: 오른쪽 / 음수: 왼쪽) |
 | 배경 시작 위치 | `--manual-logo-top` (PC 108px, 모바일 0px) |
 | 배경 로고 진하기 | `--manual-logo-opacity` (현재 0.12, 커질수록 진하게) |
 | 한 줄의 로고 개수 | `--manual-logo-columns` (현재 2개) |
 
 본문은 화면 중앙의 한 열에 배치하고 문장은 왼쪽으로 정렬합니다.
-로고 배경은 본문보다 좌우로 조금 넓게 표시하며, 왼쪽 목차는 공통 스타일을 사용합니다.
+로고 배경은 본문과 화면 너비에 따라 축소되지 않는 고정 크기이며, 왼쪽 목차는 공통 스타일을 사용합니다.
+`--manual-logo-size`를 500px로 바꾸면 로고 하나가 500px, 2열 전체가 1000px로 커집니다.
 배경 타일은 기존 로고에서 ‘聖人用品’ 네 글자만 표시하며 행·열 간격을 포함합니다.
 타일은 왼쪽 위부터 반복합니다. `background-position: center`로 변경하면 2열의 양 끝 로고가 잘립니다.
 배경 로고는 약 5px 스트로크 효과로 두껍게 표시하며, 상단 착용 이미지는 표시하지 않습니다.
