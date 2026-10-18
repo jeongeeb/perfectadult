@@ -62,7 +62,8 @@ body[data-page="manual"] .footer-handle {
   /* 약 5px 스트로크 효과를 준 ‘聖人用品’ 타일을 2열로 반복합니다. */
   background-image: url("../../assets/graphics/manual-logo-tile.svg?v=20261018-stroke5");
   background-repeat: repeat;
-  background-position: center top;
+  /* 2열은 왼쪽부터 시작해야 양 끝이 반씩 잘리지 않고 로고 2개가 온전히 보입니다. */
+  background-position: left top;
   background-size: calc(100% / var(--manual-logo-columns)) auto;
   opacity: var(--manual-logo-opacity);
   pointer-events: none;
