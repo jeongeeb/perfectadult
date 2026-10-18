@@ -108,8 +108,9 @@ function productDoctrineLabel(productIndex) {
 function productQuoteMarkup(product, productIndex) {
   const detail = product.detail || {};
   const isLongQuote = (detail.standard || "").length > 28;
+  const shouldFitQuote = ["silent-helmet", "calm-capsule", "adult-tool-16"].includes(product.id);
   return `
-    <section class="detail-info-overlay${isLongQuote ? " is-long-quote" : ""}" id="detail-info-overlay"${product.id === "silent-helmet" ? ' data-fit-quote' : ""} aria-hidden="true">
+    <section class="detail-info-overlay${isLongQuote ? " is-long-quote" : ""}" id="detail-info-overlay"${shouldFitQuote ? ' data-fit-quote' : ""} aria-hidden="true">
       <div class="detail-quote-grid">
         <p class="detail-quote-standard">“${detail.standard || ""}”</p>
       </div>
@@ -117,7 +118,7 @@ function productQuoteMarkup(product, productIndex) {
 }
 
 function prepareProductStampQuoteFit() {
-  // [4번 제품 도장 문구만] 강제 줄바꿈 없이, 화면에 넘칠 때만 글자 크기를 줄입니다.
+  // [4·6·16번 제품 도장 문구] 강제 줄바꿈 없이, 화면에 넘칠 때만 글자 크기를 줄입니다.
   const overlay = document.querySelector(".detail-info-overlay[data-fit-quote]");
   if (!overlay) return;
   const grid = overlay.querySelector(".detail-quote-grid");
