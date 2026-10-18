@@ -31,7 +31,9 @@
 설명 좌우 여백은 `.detail-actions`의 `padding`, 글자 크기는 `.detail-description-body`에서 조절합니다.
 모바일 도장 문구는 노란색 전체 화면 오버레이로 열립니다. 모든 제품의 문구를 실제 화면 너비·높이에 맞춰 자동 축소하며, 웹폰트·화면 회전·뷰포트 변화 후 다시 계산합니다.
 PC 오프닝과 고정 설명 영역 해제 계산은 모바일에서 실행하지 않습니다.
-PC·모바일의 description은 `.detail-description-collapse`가 높이를 접고 펼칩니다. 속도는 해당 규칙의 `380ms`에서 조절합니다.
+PC·모바일의 description은 설명 영역의 높이를 유지하고 `.detail-description-body`의 `translateY(-100%)` ↔ `translateY(0)`으로 글만 위아래로 움직입니다.
+상품명·가격·Product details 제목·구매 버튼과 하단 콘텐츠의 위치는 열고 닫아도 바뀌지 않습니다. 접힌 동안에도 설명 자리의 공간을 유지합니다.
+속도는 `.detail-description-body`의 `380ms`에서 조절합니다.
 
 `header.css`는 이전 통합 파일이며 새 HTML에서는 사용하지 않습니다.
 
