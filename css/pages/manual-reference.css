@@ -38,7 +38,8 @@ body[data-page="manual"] .footer-handle {
 .manual-hero,
 .manual-intro,
 .manual-section {
-  margin-left: var(--manual-sidebar-offset);
+  /* 상단 이미지와 본문 모두 왼쪽 목차 여백만큼 오른쪽에도 동일하게 확보합니다. */
+  margin-inline: var(--manual-sidebar-offset);
 }
 
 /* 상단 이미지는 본문 시작선에 맞춰 유지합니다. */
@@ -220,7 +221,7 @@ body[data-page="manual"] .site-end-copy {
   .manual-hero,
   .manual-intro,
   .manual-section {
-    margin-left: 0;
+    margin-inline: 0;
   }
 
   .manual-hero {
