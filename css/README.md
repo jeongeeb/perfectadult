@@ -9,6 +9,19 @@
 - `pages/manual-reference.css`: 메뉴얼 문서 레이아웃과 최소 12px 본문
 - `font.css`: 폰트 등록과 공통 색상 변수
 
+## 모바일 메인·상세페이지
+
+760px 이하에서 메인 상품 목록은 가운데 정렬한 2열로 표시합니다.
+`pages/home.css`의 모바일 `.shop-grid`에서 열 수와 `gap`을 조절하고,
+`product-cards.css` 하단에서 카드 이미지 영역과 모바일 글자 크기를 조절합니다.
+컬렉션 필터 결과가 홀수 개면 마지막 상품도 가운데에 표시합니다.
+
+상세페이지는 `pages/product.css` 하단의 모바일 규칙에서 조절합니다.
+상세 이미지가 화면 너비 전체를 채우며 이미지 → 도장 → 상품명·가격·설명 → 구매 버튼 → 전체 상품 목록 순서로 이어집니다.
+모바일 도장의 크기는 `.detail-info-toggle`의 `width`와 `height`, 이미지 아래 여백은 `margin`입니다.
+설명 좌우 여백은 `.detail-actions`의 `padding`, 글자 크기는 `.detail-description-body`에서 조절합니다.
+모바일 도장 문구는 도장 아래에서 열립니다. PC 오프닝과 고정 설명 영역 해제 계산은 모바일에서 실행하지 않습니다.
+
 `header.css`는 이전 통합 파일이며 새 HTML에서는 사용하지 않습니다.
 
 메뉴얼과 아카이브의 왼쪽 메뉴는 항상 `common.css`의 `.page-side-index`와

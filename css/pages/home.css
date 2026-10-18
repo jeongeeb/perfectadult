@@ -259,6 +259,34 @@ body[data-page="shop"] .footer-handle {
 }
 
 @media (max-width: 760px) {
+  body[data-page="shop"] .site-frame,
+  .shop-page {
+    min-height: 0;
+  }
+
+  /* [모바일 상품 목록] 2열 중앙 정렬. 목록 높이는 상품 개수에 맞춰 늘어납니다. */
+  .shop-section {
+    min-height: 0;
+    padding: 72px 0 64px;
+  }
+
+  .shop-grid {
+    position: static;
+    inset: auto;
+    width: 100%;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: center;
+    justify-items: center;
+    gap: 36px 16px;
+  }
+
+  /* 컬렉션 필터 결과가 홀수 개면 마지막 상품도 화면 가운데에 둡니다. */
+  .shop-grid > .product-tile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    width: calc((100% - 16px) / 2);
+  }
+
   .home-scroll-logo {
     top: 22vw;
     width: calc(100vw - 20px);

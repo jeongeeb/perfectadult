@@ -9,6 +9,11 @@
 function prepareDetailOpening() {
   const opening = document.querySelector(".detail-opening");
   if (!opening) return;
+  // 모바일은 PC 오프닝 대신 상세 이미지부터 바로 보여줍니다.
+  if (window.matchMedia("(max-width: 760px)").matches) {
+    opening.remove();
+    return;
+  }
 
   const graphic = opening.querySelector(".detail-opening-graphic");
   const candidates = graphic.dataset.graphicCandidates.split("|");
@@ -128,6 +133,8 @@ function prepareProductStampQuoteFit() {
   const fit = () => {
     frame = 0;
     overlay.style.removeProperty("font-size");
+    // 모바일 도장 문구는 이미지 아래의 일반 본문처럼 자연스럽게 줄바꿈합니다.
+    if (window.matchMedia("(max-width: 760px)").matches) return;
     const style = window.getComputedStyle(overlay);
     const maxSize = Number.parseFloat(style.fontSize);
     // 글자 외곽선과 서체의 돌출 부분까지 화면 안에 들어오도록 여유를 둡니다.
@@ -289,6 +296,15 @@ function prepareDetailPageImage() {
     if (!actions) return;
 
     const updateControlPosition = () => {
+      // 모바일은 이미지 → 도장 → 설명의 일반 흐름이므로 PC 고정/해제 계산을 건너뜁니다.
+      if (window.matchMedia("(max-width: 760px)").matches) {
+        [panel, actions, infoToggle, infoOverlay, quoteOverlay].forEach((element) => {
+          element?.classList.remove("is-released");
+        });
+        panel?.style.removeProperty("top");
+        actions.style.removeProperty("top");
+        return;
+      }
       const scale = window.innerWidth / DESIGN_WIDTH;
       const releaseScrollY = Math.max(
         0,
