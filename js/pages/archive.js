@@ -1,4 +1,13 @@
 /* 제품 메인 이미지 갤러리. 화살표·휠·터치로 한 제품씩 중앙에 맞춰 이동합니다. */
+function archiveCaptionMarkup(product) {
+  const productIndex = products.indexOf(product);
+  return `
+    <p class="archive-project-number">${formatProductNumber(product, productIndex)} / ${product.name}</p>
+    <h2>${productDisplayName(product)}</h2>
+    <p class="archive-project-price">${product.price}</p>
+    <p class="archive-project-summary">${product.summary}</p>`;
+}
+
 function archiveProjectEntry(product, index) {
   const productIndex = products.indexOf(product);
   return `
@@ -7,12 +16,7 @@ function archiveProjectEntry(product, index) {
         <figure class="archive-image-wrap">
           <img class="archive-main-image" src="${versionMainImage(product.image)}" alt="${productDisplayName(product)} 제품 메인 이미지" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
         </figure>
-        <div class="archive-project-info">
-          <p class="archive-project-number">${formatProductNumber(product, productIndex)} / ${product.name}</p>
-          <h2>${productDisplayName(product)}</h2>
-          <p class="archive-project-price">${product.price}</p>
-          <p class="archive-project-summary">${product.summary}</p>
-        </div>
+        <div class="archive-project-info">${archiveCaptionMarkup(product)}</div>
       </a>
     </article>`;
 }
@@ -30,7 +34,14 @@ function renderArchive() {
     </aside>
     <main class="archive-page" id="archive-gallery" style="--archive-steps: ${Math.max(0, archiveProducts.length - 1)}">
       <section class="archive-stage" aria-labelledby="archive-title" aria-roledescription="carousel" tabindex="0">
-        <div class="archive-gallery">${archiveProducts.map(archiveProjectEntry).join("")}</div>
+        <div class="archive-gallery">
+          <div class="archive-composition">
+            <div class="archive-images">${archiveProducts.map(archiveProjectEntry).join("")}</div>
+            <div class="archive-captions">
+              ${archiveProducts.map((product) => `<a class="archive-project-info" href="product.html?id=${product.id}" aria-hidden="true" tabindex="-1">${archiveCaptionMarkup(product)}</a>`).join("")}
+            </div>
+          </div>
+        </div>
         <nav class="archive-controls" aria-label="아카이브 이미지 탐색">
           <button class="archive-previous" type="button" aria-label="이전 이미지"><img src="assets/graphics/gallery-chevron.svg" alt="" aria-hidden="true"></button>
           <p class="archive-position" aria-live="polite" aria-atomic="true">01 / ${String(archiveProducts.length).padStart(2, "0")}</p>
@@ -46,6 +57,7 @@ function bindArchiveGallery() {
   const page = document.querySelector(".archive-page");
   const stage = page.querySelector(".archive-stage");
   const cards = [...page.querySelectorAll(".archive-project")];
+  const captions = [...page.querySelectorAll(".archive-captions .archive-project-info")];
   const previous = page.querySelector(".archive-previous");
   const next = page.querySelector(".archive-next");
   const position = page.querySelector(".archive-position");
@@ -64,37 +76,57 @@ function bindArchiveGallery() {
   let wheelDistance = 0;
   let wheelConsumed = false;
   let touch = null;
+  let wrapProgress = null;
+  let wrapFrame = 0;
 
   // 작은 트랙패드 움직임은 모아 판단하고, 관성 중에는 다음 제품으로 재이동하지 않습니다.
   const WHEEL_THRESHOLD = 36;
   const GESTURE_PAUSE = 180;
+  const WRAP_DURATION = 420;
+  const normalize = (index) => ((index % cards.length) + cards.length) % cards.length;
+  // 1번 왼쪽에는 16번, 16번 오른쪽에는 1번이 오도록 가장 가까운 순환 거리를 구합니다.
+  const circularDistance = (index, progress) =>
+    normalize(index - progress + cards.length / 2) - cards.length / 2;
 
   const metrics = () => ({
     top: page.getBoundingClientRect().top + window.scrollY,
     step: Math.max(1, (page.offsetHeight - stage.offsetHeight) / Math.max(1, cards.length - 1)),
   });
+  const scrollProgress = () => {
+    const { top, step } = metrics();
+    return Math.max(0, Math.min(cards.length - 1, (window.scrollY - top) / step));
+  };
 
   const update = () => {
     frame = 0;
     // 낮은 가로 화면에서는 각 이미지를 일반 문서 흐름으로 표시합니다.
     if (compact.matches) {
+      if (wrapProgress !== null) {
+        window.cancelAnimationFrame(wrapFrame);
+        wrapFrame = 0;
+        wrapProgress = null;
+        isNavigating = false;
+      }
       cards.forEach((card) => {
         card.removeAttribute("aria-hidden");
         card.querySelector("a").tabIndex = 0;
       });
+      captions.forEach((caption) => {
+        caption.setAttribute("aria-hidden", "true");
+        caption.tabIndex = -1;
+      });
       activeIndex = -1;
       return;
     }
-    const { top, step } = metrics();
-    const progress = Math.max(0, Math.min(cards.length - 1, (window.scrollY - top) / step));
-    const current = Math.round(progress);
+    const progress = wrapProgress ?? scrollProgress();
+    const current = normalize(Math.round(progress));
     if (!isNavigating) targetIndex = current;
     const visualProgress = reducedMotion.matches ? current : progress;
     // [옆 이미지 간격] 아래 0.60은 모바일 너비의 60%, 0.37은 PC 너비의 37%.
     const spacing = window.innerWidth * (window.innerWidth <= 760 ? 0.60 : 0.37);
 
     cards.forEach((card, index) => {
-      const distance = index - visualProgress;
+      const distance = circularDistance(index, visualProgress);
       const depth = Math.min(Math.abs(distance), 1);
       const visible = Math.abs(distance) < 1.8;
       // [옆 이미지 크기] 아래 scale의 0.54는 54% 축소 = 중앙 크기의 46%.
@@ -104,7 +136,12 @@ function bindArchiveGallery() {
       card.style.opacity = visible ? String((1 - depth * 0.80) * Math.min(1, (1.8 - Math.abs(distance)) / 0.8)) : "0";
       card.style.visibility = visible ? "visible" : "hidden";
       card.style.zIndex = String(10 - Math.min(9, Math.round(Math.abs(distance) * 3)));
-      card.style.setProperty("--caption-opacity", String(Math.max(0, 1 - Math.abs(distance) * 2)));
+    });
+    // 설명은 이미지와 별도 영역에 겹쳐 두고, 이동 없이 사라졌다가 나타납니다.
+    captions.forEach((caption, index) => {
+      const distance = Math.abs(circularDistance(index, visualProgress));
+      caption.style.opacity = String(Math.max(0, 1 - distance * 2));
+      caption.style.visibility = distance < 0.5 ? "visible" : "hidden";
     });
 
     if (current === activeIndex) return;
@@ -115,12 +152,17 @@ function bindArchiveGallery() {
       card.setAttribute("aria-hidden", String(!isActive));
       card.querySelector("a").tabIndex = isActive ? 0 : -1;
     });
-    // 다음 이미지가 중앙에 오기 전에 미리 읽습니다.
-    cards.slice(Math.max(0, current - 1), current + 3).forEach((card) => {
-      card.querySelector("img").loading = "eager";
+    captions.forEach((caption, index) => {
+      const isActive = index === current;
+      caption.setAttribute("aria-hidden", String(!isActive));
+      caption.tabIndex = isActive ? 0 : -1;
     });
-    previous.disabled = current === 0;
-    next.disabled = current === cards.length - 1;
+    // 다음 이미지가 중앙에 오기 전에 미리 읽습니다.
+    [-1, 0, 1, 2].forEach((offset) => {
+      cards[normalize(current + offset)].querySelector("img").loading = "eager";
+    });
+    previous.disabled = cards.length < 2;
+    next.disabled = cards.length < 2;
     position.textContent = `${String(current + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")}`;
   };
 
@@ -133,13 +175,42 @@ function bindArchiveGallery() {
     requestUpdate();
   };
   const goTo = (index) => {
-    const target = Math.max(0, Math.min(cards.length - 1, index));
+    const target = normalize(index);
+    const wasWrapping = wrapProgress !== null;
+    const from = wrapProgress ?? scrollProgress();
+    const distance = circularDistance(target, from);
+    const destination = from + distance;
+    const crossesBoundary = destination < -0.001 || destination > cards.length - 1 + 0.001;
     const { top, step } = metrics();
+    window.cancelAnimationFrame(wrapFrame);
+    wrapFrame = 0;
+    wrapProgress = null;
     targetIndex = target;
     scrollTarget = top + target * step;
     window.clearTimeout(navigationTimer);
     isNavigating = true;
-    window.scrollTo({ top: scrollTarget, behavior: reducedMotion.matches ? "instant" : "smooth" });
+    if ((crossesBoundary || wasWrapping) && !reducedMotion.matches) {
+      // 경계에서는 옆 한 장만 애니메이션한 뒤 실제 페이지 스크롤 위치를 즉시 맞춥니다.
+      // 1→16 이동 때문에 중간 15개 제품이 한꺼번에 지나가지 않도록 합니다.
+      window.scrollTo({ top: window.scrollY, behavior: "instant" });
+      wrapProgress = from;
+      const started = performance.now();
+      const animate = (now) => {
+        const elapsed = Math.min(1, (now - started) / WRAP_DURATION);
+        wrapProgress = from + distance * (1 - (1 - elapsed) ** 3);
+        requestUpdate();
+        if (elapsed < 1) wrapFrame = window.requestAnimationFrame(animate);
+        else {
+          wrapFrame = 0;
+          wrapProgress = null;
+          window.scrollTo({ top: scrollTarget, behavior: "instant" });
+          finishNavigation();
+        }
+      };
+      wrapFrame = window.requestAnimationFrame(animate);
+      return;
+    }
+    window.scrollTo({ top: scrollTarget, behavior: reducedMotion.matches || crossesBoundary ? "instant" : "smooth" });
     if (Math.abs(window.scrollY - scrollTarget) < 1) finishNavigation();
     else navigationTimer = window.setTimeout(finishNavigation, 1200);
   };
@@ -148,7 +219,7 @@ function bindArchiveGallery() {
     return window.scrollY >= top - 1 && window.scrollY <= top + step * (cards.length - 1) + 1;
   };
 
-  // 휠과 트랙패드 한 제스처 = 화살표 한 번. 첫/마지막 제품 밖으로는 일반 스크롤 허용.
+  // 휠과 트랙패드 한 제스처 = 화살표 한 번. 첫/마지막 제품도 서로 이어집니다.
   window.addEventListener("wheel", (event) => {
     if (compact.matches || event.defaultPrevented || event.ctrlKey || event.metaKey ||
         Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY || !inGallery()) return;
@@ -168,8 +239,6 @@ function bindArchiveGallery() {
       return;
     }
     const direction = Math.sign(event.deltaY);
-    if ((targetIndex === 0 && direction < 0) ||
-        (targetIndex === cards.length - 1 && direction > 0)) return;
     event.preventDefault();
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
     const delta = event.deltaY * unit;
@@ -180,7 +249,7 @@ function bindArchiveGallery() {
     goTo(targetIndex + direction);
   }, { passive: false, capture: true });
 
-  // 세로 스와이프 한 번에 한 제품씩 이동하며, 확대 제스처와 양 끝의 일반 스크롤은 유지합니다.
+  // 세로 스와이프 한 번에 한 제품씩 순환하며 확대 제스처는 유지합니다.
   stage.addEventListener("touchstart", (event) => {
     if (compact.matches || event.touches.length !== 1 || !inGallery()) { touch = null; return; }
     touch = { x: event.touches[0].clientX, y: event.touches[0].clientY, index: targetIndex, consumed: false };
@@ -192,7 +261,7 @@ function bindArchiveGallery() {
     const dy = touch.y - event.touches[0].clientY;
     if (Math.abs(dy) < 10 || Math.abs(dx) > Math.abs(dy)) return;
     const direction = Math.sign(dy);
-    const target = Math.max(0, Math.min(cards.length - 1, touch.index + direction));
+    const target = normalize(touch.index + direction);
     if (target === touch.index) return;
     event.preventDefault();
     if (Math.abs(dy) < 48) return;
@@ -224,7 +293,7 @@ function bindArchiveGallery() {
     }
   });
   window.addEventListener("scroll", () => {
-    if (isNavigating && Math.abs(window.scrollY - scrollTarget) < 1) finishNavigation();
+    if (wrapProgress === null && isNavigating && Math.abs(window.scrollY - scrollTarget) < 1) finishNavigation();
     requestUpdate();
     window.clearTimeout(settleTimer);
     // 스크롤바 조작이나 뒤로 가기로 이동한 경우에도 정지 후 가장 가까운 제품에 맞춥니다.

@@ -4,7 +4,7 @@
   1. 이미지 높이: .archive-page의 --archive-image-height
   2. 이미지 영역 너비: .archive-project의 width
   3. 이미지·설명 묶음의 위치: .is-enhanced .archive-gallery의 inset
-  4. 이미지와 설명 사이 간격: .archive-image-wrap의 margin
+  4. 이미지와 설명 사이 간격: .archive-page의 --archive-caption-gap
   5. 모바일 크기·위치: 아래 @media (max-width: 760px)
   6. 높이가 낮은 화면의 크기: 아래 @media (max-height: 560px)
   7. 옆 이미지 간격·크기·투명도: js/pages/archive.js의 update 함수
@@ -30,6 +30,8 @@ body[data-page="archive"] {
   /* [1. 이미지 높이 / PC] 아래 --archive-image-height를 수정합니다.
      고정 크기 예: --archive-image-height: 500px; */
   --archive-image-height: max(160px, min(64svh, calc(100svh - 350px)));
+  /* [4. 이미지와 고정 설명 사이 간격] */
+  --archive-caption-gap: 50px;
   color: #262626;
   font-family: var(--en-font);
 }
@@ -65,6 +67,33 @@ body[data-page="archive"] {
   inset: 150px 0 74px;
   padding: 0;
 }
+.is-enhanced .archive-composition {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+.is-enhanced .archive-images {
+  position: relative;
+  height: var(--archive-image-height);
+  margin-bottom: var(--archive-caption-gap);
+}
+/* 설명을 이미지 이동 영역 밖에 배치하여 좌우 이동이나 축소 없이 투명도만 바꿉니다. */
+.archive-captions { display: none; }
+.is-enhanced .archive-captions {
+  display: grid;
+  width: min(54vw, 720px);
+  margin: 0 auto;
+  pointer-events: none;
+}
+.is-enhanced .archive-captions > .archive-project-info {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+}
+.is-enhanced .archive-captions > .archive-project-info[aria-hidden="false"] { pointer-events: auto; }
+.is-enhanced .archive-project .archive-project-info { display: none; }
 .archive-project {
   /* [2. 이미지 영역 너비 / PC] width를 수정합니다. 예: min(60vw, 900px).
      min(화면 비례 너비, 최대 너비)이며 원본 비율에 따라 높이 제한도 함께 영향을 줍니다. */
@@ -85,13 +114,14 @@ body[data-page="archive"] {
   display: block;
 }
 .archive-image-wrap {
-  /* [4. 이미지와 설명 사이 간격] 아래 margin의 마지막 숫자가 이미지 아래 여백입니다. */
+  /* 일반 목록에서도 같은 간격 변수를 사용합니다. 간격은 위 --archive-caption-gap에서 수정합니다. */
   display: flex;
   align-items: center;
   justify-content: center;
   height: var(--archive-image-height);
-  margin: 0 0 50px;
+  margin: 0 0 var(--archive-caption-gap);
 }
+.is-enhanced .archive-project .archive-image-wrap { margin: 0; }
 .archive-main-image {
   /* object-fit: contain은 원본 비율을 유지하며 지정한 영역 안에 이미지 전체를 표시합니다. */
   display: block;
@@ -220,9 +250,6 @@ body[data-page="archive"] {
   line-height: 1.4;
   word-break: keep-all;
 }
-.is-enhanced .archive-project-info {
-  opacity: var(--caption-opacity, 0);
-}
 .archive-project-info p,
 .archive-project-info h2 {
   margin: 0;
@@ -314,18 +341,16 @@ body[data-page="archive"] {
   .archive-page {
     /* [5. 모바일 이미지 높이] 아래 변수는 PC 높이보다 우선합니다. 고정 예: 300px */
     --archive-image-height: max(120px, min(56svh, calc(100svh - 370px)));
+    --archive-caption-gap: 14px;
   }
   .is-enhanced .archive-gallery {
     /* [모바일 위치] inset 순서: 위 / 좌우 / 아래. PC와 같은 방식으로 조절합니다. */
     inset: 154px 0 70px;
   }
-  .archive-project {
+  .archive-project,
+  .is-enhanced .archive-captions {
     /* [모바일 이미지 영역 너비] width의 vw 숫자는 화면 너비에 대한 백분율입니다. */
     width: 76vw;
-  }
-  .archive-image-wrap {
-    /* [모바일 이미지와 설명 사이 간격] margin-bottom을 수정합니다. */
-    margin-bottom: 14px;
   }
   .archive-project-info {
     min-height: 132px;
@@ -359,6 +384,10 @@ body[data-page="archive"] {
     inset: auto;
     padding: 170px 20px 80px;
   }
+  .is-enhanced .archive-composition { position: static; transform: none; }
+  .is-enhanced .archive-images { height: auto; margin: 0; }
+  .is-enhanced .archive-captions { display: none; }
+  .is-enhanced .archive-project .archive-project-info { display: block; }
   .is-enhanced .archive-project {
     position: relative;
     top: auto;
@@ -374,9 +403,7 @@ body[data-page="archive"] {
     /* [6. 높이가 낮은 화면의 이미지 높이] 일반 목록에서는 아래 height가 우선합니다. */
     height: 65svh;
   }
-  .is-enhanced .archive-project-info {
-    opacity: 1;
-  }
+  .is-enhanced .archive-project .archive-image-wrap { margin-bottom: var(--archive-caption-gap); }
   .archive-controls,
   .archive-scroll-hint {
     display: none;
