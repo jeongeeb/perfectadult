@@ -34,8 +34,22 @@ body[data-page="manual"] .footer-handle {
   --manual-en-body-stroke: 0.2px;
   --manual-en-subheading-stroke: 0.25px;
   --manual-en-heading-stroke: 0.4px;
-  /* [행간] 글자 크기의 배수. 1.4 = 현재, 1.6 = 더 넓게, 1.2 = 더 좁게 */
+  /* [본문 줄 간격] 글자 크기의 배수. 1.4 = 현재, 1.6 = 더 넓게 */
   --manual-line-height: 1.6;
+  /* [부제목 줄 간격] 큰 제목(h2)이 여러 줄일 때. 본문 행간과 별도로 적용 */
+  --manual-heading-line-height: 1.4;
+  /* [소제목 줄 간격] h4와 문단 안의 굵은 소제목이 여러 줄일 때 */
+  --manual-subheading-line-height: 1.4;
+  /* [본문 문단 ↔ 다음 문단] p·목록 아래 여백 */
+  --manual-paragraph-gap: 10px;
+  /* [부제목 ↔ 첫 소제목] 큰 제목(h2) 아래 여백 */
+  --manual-heading-gap: 16px;
+  /* [소제목 ↔ 설명 본문] h4·문단 안의 굵은 소제목 아래 여백 */
+  --manual-subheading-gap: 0px;
+  /* [소제목 묶음 ↔ 다음 소제목 묶음] 소제목과 설명 한 묶음 아래 여백 */
+  --manual-subsection-gap: 24px;
+  /* [목록 항목 ↔ 다음 항목] 번호·불릿 목록의 항목 아래 여백 */
+  --manual-list-item-gap: 6px;
   /* [자간] 글자 사이 간격. 음수 = 좁게, 0 = 기본, 양수 = 넓게 */
   --manual-letter-spacing: -0.01em;
   /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
@@ -152,7 +166,7 @@ body[data-page="manual"] .footer-handle {
   font-size: var(--manual-heading-size);
   font-weight: var(--manual-heading-weight);
   -webkit-text-stroke: var(--manual-en-heading-stroke) currentColor;
-  line-height: inherit;
+  line-height: var(--manual-heading-line-height);
   text-align: left;
 }
 
@@ -161,7 +175,7 @@ body[data-page="manual"] .footer-handle {
 }
 
 .manual-rail {
-  margin-bottom: 16px;
+  margin-bottom: var(--manual-heading-gap);
   text-align: left;
 }
 
@@ -173,7 +187,7 @@ body[data-page="manual"] .footer-handle {
   font-weight: var(--manual-heading-weight);
   /* 부제목만 살짝 더 굵게 표시합니다. */
   -webkit-text-stroke: 0.15px currentColor;
-  line-height: var(--manual-line-height);
+  line-height: var(--manual-heading-line-height);
   word-break: keep-all;
 }
 
@@ -211,25 +225,39 @@ body[data-page="manual"] .footer-handle {
 .manual-subsection {
   /* 열 균형은 내용 분량에 맞추되 소제목과 본문 사이에서는 나누지 않습니다. */
   break-inside: avoid-column;
-  margin-bottom: 24px;
+  margin-bottom: var(--manual-subsection-gap);
 }
 
 .manual-subsection:last-child {
   margin-bottom: 0;
 }
 
+/* 마지막 문단 여백이 묶음 간격에 더해지지 않도록, 두 설정을 분리합니다. */
+.manual-subsection > :last-child {
+  margin-bottom: 0;
+}
+
 .manual-chapter-copy h4 {
   break-after: avoid;
-  margin: 0;
+  margin: 0 0 var(--manual-subheading-gap);
   font: inherit;
   font-size: var(--manual-subheading-size);
   font-weight: 700;
+  line-height: var(--manual-subheading-line-height);
   text-align: left;
 }
 
 .manual-label {
+  display: block;
+  margin-bottom: var(--manual-subheading-gap);
   font-size: var(--manual-subheading-size);
   font-weight: 700;
+  line-height: var(--manual-subheading-line-height);
+}
+
+/* HTML의 <br>은 유지하고, 화면의 줄바꿈과 간격은 위 블록에서 관리합니다. */
+.manual-label + br {
+  display: none;
 }
 
 .manual-language-section[lang="en"] .manual-rail h2,
@@ -254,7 +282,7 @@ body[data-page="manual"] .footer-handle {
 .manual-chapter-copy p,
 .manual-chapter-copy ol,
 .manual-chapter-copy ul {
-  margin: 0 0 10px;
+  margin: 0 0 var(--manual-paragraph-gap);
   font: inherit;
   orphans: 3;
   widows: 3;
@@ -267,7 +295,7 @@ body[data-page="manual"] .footer-handle {
 
 .manual-chapter-copy li {
   font-size: var(--manual-body-size);
-  margin-bottom: 6px;
+  margin-bottom: var(--manual-list-item-gap);
 }
 
 /* 목록의 1. 2. 3. 숫자도 본문과 같은 13px로 맞춥니다. */
@@ -337,7 +365,7 @@ body[data-page="manual"] .site-end-copy {
   }
 
   .manual-rail {
-    margin-bottom: 16px;
+    margin-bottom: var(--manual-heading-gap);
   }
 
   .manual-rail h2 {

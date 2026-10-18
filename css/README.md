@@ -34,7 +34,14 @@
 | 본문 / 소제목 / 부제목 크기 | `--manual-body-size: 13px`, `--manual-subheading-size: 13px`, `--manual-heading-size: 16px` |
 | 본문 / 부제목 굵기 | `--manual-body-weight: 600`, `--manual-heading-weight: 800` (소제목 700) |
 | 영문 추가 굵기 | `--manual-en-body-stroke: 0.2px`, `--manual-en-subheading-stroke: 0.25px`, `--manual-en-heading-stroke: 0.4px` |
-| 행간 | `--manual-line-height` (커질수록 넓게) |
+| 본문 줄 간격 | `--manual-line-height` (배수, 예: `1.4`) |
+| 부제목 줄 간격 | `--manual-heading-line-height` (배수) |
+| 소제목 줄 간격 | `--manual-subheading-line-height` (배수) |
+| 본문 문단 사이 | `--manual-paragraph-gap` (px) |
+| 부제목과 첫 소제목 사이 | `--manual-heading-gap` (px) |
+| 소제목과 설명 본문 사이 | `--manual-subheading-gap` (px, `h4`와 문단 안 소제목 모두 적용) |
+| 소제목·설명 묶음 사이 | `--manual-subsection-gap` (px) |
+| 목록 항목 사이 | `--manual-list-item-gap` (px) |
 | 자간 | `--manual-letter-spacing` (현재 -0.01em, 음수는 좁게 / 양수는 넓게) |
 | 배경 로고 한 개의 고정 너비 | `--manual-logo-size` (현재 460px, 본문·화면 너비와 무관) |
 | 전체 배경 너비 | `--manual-logo-width` (로고 크기 × 가로 개수, 기본 920px) |
