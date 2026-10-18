@@ -2,7 +2,7 @@
   메뉴얼 편집 레이아웃
   - 공통 왼쪽 목차 / 화면 중앙의 1열 본문 / 옅은 로고 반복 배경
   - 소제목과 해당 본문을 한 묶음으로 배치
-  - 본문 최소 12px, 단어 단위 줄바꿈
+  - 본문 13px / 부제목 16px, 단어 단위 줄바꿈
   - 메뉴 색상과 마우스 오버 효과는 css/common.css에서 공통 관리
 */
 body[data-page="manual"],
@@ -21,7 +21,9 @@ body[data-page="manual"] .footer-handle {
 .manual-page {
   --manual-sidebar-offset: clamp(210px, 15vw, 290px);
   --manual-column-gap: clamp(24px, 1.8vw, 36px);
-  --manual-body-size: clamp(12px, 0.73vw, 14px);
+  /* [글자 크기] PC·모바일 공통: 본문 13px, 부제목 16px */
+  --manual-body-size: 13px;
+  --manual-heading-size: 16px;
   /* [본문 굵기] 600 = 세미볼드. 제목·소제목은 기존 700을 사용합니다. */
   --manual-body-weight: 600;
   /* [중앙 본문 너비] 최대 860px. 좁은 화면에서는 왼쪽 목차와 겹치지 않게 줄어듭니다. */
@@ -120,7 +122,7 @@ body[data-page="manual"] .footer-handle {
 .manual-intro::before {
   display: block;
   margin-bottom: 8px;
-  font-size: inherit;
+  font-size: var(--manual-heading-size);
   font-weight: 700;
   line-height: inherit;
   text-align: left;
@@ -139,6 +141,7 @@ body[data-page="manual"] .footer-handle {
   max-width: 100%;
   margin: 0;
   font: inherit;
+  font-size: var(--manual-heading-size);
   font-weight: 700;
   line-height: 1.4;
   word-break: keep-all;
@@ -189,11 +192,13 @@ body[data-page="manual"] .footer-handle {
   break-after: avoid;
   margin: 0;
   font: inherit;
+  font-size: var(--manual-heading-size);
   font-weight: 700;
   text-align: left;
 }
 
 .manual-label {
+  font-size: var(--manual-heading-size);
   font-weight: 700;
 }
 
@@ -252,7 +257,6 @@ body[data-page="manual"] .site-end-copy {
   }
 
   .manual-page {
-    --manual-body-size: 14px;
     --manual-content-width: calc(100vw - 32px);
     --manual-logo-outset: 8px;
     --manual-logo-top: 0px;

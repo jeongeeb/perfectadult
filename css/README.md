@@ -30,6 +30,7 @@
 | 조정할 부분 | 수정할 값 |
 | --- | --- |
 | 중앙 본문 최대 너비 | `--manual-content-width` 안의 `860px` |
+| 본문 / 부제목 크기 | `--manual-body-size: 13px`, `--manual-heading-size: 16px` (PC·모바일 공통) |
 | 본문 글자 굵기 | `--manual-body-weight` (현재 600, 제목·소제목은 700) |
 | 본문 밖으로 확장되는 배경 여백 | `--manual-logo-outset` (좌우 각각 PC 30px, 모바일 8px) |
 | 배경 시작 위치 | `--manual-logo-top` (PC 108px, 모바일 0px) |
