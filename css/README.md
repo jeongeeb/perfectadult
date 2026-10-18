@@ -4,6 +4,7 @@
 - `product-cards.css`: 메인 상품 카드와 상세페이지 하단 상품 카드
 - `pages/home.css`: 메인페이지 소개와 상품 배치
 - `pages/product.css`: 제품 상세페이지, 도장, 설명, 구매 버튼과 팝업
+- `pages/product-description.css`: 설명글만 위아래로 움직이는 동작. `product.css` 뒤에 적용
 - `pages/archive.css`: 아카이브 중앙 이미지, 하단 설명, 이전·다음 미리보기
 - `pages/about.css`: 비교용 룩북의 왼쪽 이미지 목록과 오른쪽 뷰어·제품 컷
 - `pages/manual-reference.css`: 메뉴얼 문서 레이아웃과 최소 12px 본문
@@ -33,7 +34,7 @@
 PC 오프닝과 고정 설명 영역 해제 계산은 모바일에서 실행하지 않습니다.
 PC·모바일의 description은 설명 영역의 높이를 유지하고 `.detail-description-body`의 `translateY(-100%)` ↔ `translateY(0)`으로 글만 위아래로 움직입니다.
 상품명·가격·Product details 제목·구매 버튼과 하단 콘텐츠의 위치는 열고 닫아도 바뀌지 않습니다. 접힌 동안에도 설명 자리의 공간을 유지합니다.
-속도는 `.detail-description-body`의 `380ms`에서 조절합니다.
+동작과 속도는 `pages/product-description.css`의 `.detail-description-body`와 `380ms`에서 조절합니다. 이 파일은 `product.css` 다음에 불러와 일반 스타일 편집과 분리합니다.
 
 `header.css`는 이전 통합 파일이며 새 HTML에서는 사용하지 않습니다.
 
