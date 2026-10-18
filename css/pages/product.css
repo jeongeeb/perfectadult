@@ -785,20 +785,8 @@ body.modal-open {
     min-height: 0;
   }
 
-  body[data-page="detail"] .brand-title {
-    top: 20px;
-    left: 16px;
-  }
 
-  body[data-page="detail"] .brand-logo {
-    width: 140px;
-  }
 
-  body[data-page="detail"] .menu-panel {
-    top: 66px;
-    right: 16px;
-    height: 24px;
-  }
 
   .detail-layout {
     /* 상단 메뉴 높이만 비워두고, 이미지는 좌우 여백 없이 시작합니다. */

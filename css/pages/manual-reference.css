@@ -403,20 +403,8 @@ body[data-page="manual"] .site-end-copy {
 }
 
 @media (max-width: 760px) {
-  body[data-page="manual"] .brand-title {
-    top: 20px;
-    left: 16px;
-  }
 
-  body[data-page="manual"] .brand-logo {
-    width: 140px;
-  }
 
-  body[data-page="manual"] .menu-panel {
-    top: 66px;
-    right: 16px;
-    height: 24px;
-  }
 
   .manual-page {
     --manual-content-width: calc(100vw - 32px);

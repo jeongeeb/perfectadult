@@ -309,18 +309,6 @@ body[data-page="about"] .top-bar {
     --about-cut-width: 70px;
     --about-cut-height: 90px;
   }
-  body[data-page="about"] .brand-title {
-    top: 20px;
-    left: 16px;
-  }
-  body[data-page="about"] .brand-logo {
-    width: 140px;
-  }
-  body[data-page="about"] .menu-panel {
-    top: 66px;
-    right: 16px;
-    height: 24px;
-  }
   /* 모바일 목록 위치와 간격: 위 / 오른쪽 / 아래 / 왼쪽 */
   .about-look-list {
     padding: 16px 8px 20px 16px;

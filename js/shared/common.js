@@ -194,6 +194,7 @@ function headerMarkup() {
           <img class="brand-logo" src="assets/graphics/top-logo.webp" alt="聖人用品指針">
         </a>
       </h1>
+      ${navMarkup()}
       <button class="brand-toggle" type="button" aria-label="Toggle menu" aria-controls="site-navigation" aria-expanded="true">
         <img class="brand-mark" src="assets/product_mein/Menu bar.webp" alt="">
       </button>
@@ -284,7 +285,6 @@ function renderShell(content) {
   document.body.innerHTML = `
     <div class="site-frame">
       ${headerMarkup()}
-      ${navMarkup()}
       ${content}
       ${siteEndMarkup()}
     </div>

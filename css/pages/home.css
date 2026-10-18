@@ -38,13 +38,6 @@ body[data-page="shop"] .brand-title {
   display: none;
 }
 
-/* 메인페이지 입술 버튼도 실제 30px 바깥 여백선에 맞춥니다. */
-body[data-page="shop"] .brand-toggle {
-  top: 30px;
-  right: 30px;
-  left: auto;
-}
-
 body[data-page="shop"] .footer-handle {
   left: 30px;
   bottom: 30px;
@@ -56,7 +49,7 @@ body[data-page="shop"] .footer-handle {
   left: 50%;
   z-index: 32;
   display: block;
-  width: calc(100vw - 48px);
+  width: calc(100vw - 60px);
   transform: translateX(-50%);
   transform-origin: left top;
   transition:
@@ -67,9 +60,10 @@ body[data-page="shop"] .footer-handle {
 }
 
 .home-scroll-logo.is-small {
-  top: 30px;
-  left: 30px;
-  width: 190px;
+  /* 공통 헤더 행의 중심선에 맞춥니다. 334/2054는 로고 원본의 세로/가로 비율입니다. */
+  top: calc(var(--header-inset) + (var(--header-row-height) - var(--header-logo-width) * 334 / 2054) / 2);
+  left: var(--header-inset);
+  width: var(--header-logo-width);
   transform: none;
 }
 
@@ -289,14 +283,9 @@ body[data-page="shop"] .footer-handle {
 
   .home-scroll-logo {
     top: 22vw;
-    width: calc(100vw - 20px);
+    width: calc(100vw - 60px);
   }
 
-  .home-scroll-logo.is-small {
-    top: 16px;
-    left: 16px;
-    width: 108px;
-  }
 
   .home-intro {
     min-height: 100svh;

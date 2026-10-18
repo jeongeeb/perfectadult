@@ -325,21 +325,6 @@ body[data-page="archive"] {
   font-size: 11px;
 }
 @media (max-width: 760px) {
-  body[data-page="archive"] .top-bar {
-    height: 108px;
-  }
-  body[data-page="archive"] .brand-title {
-    top: 20px;
-    left: 16px;
-  }
-  body[data-page="archive"] .brand-logo {
-    width: 140px;
-  }
-  body[data-page="archive"] .menu-panel {
-    top: 66px;
-    right: 16px;
-    height: 24px;
-  }
   .archive-page {
     /* [5. 모바일 이미지 높이] 아래 변수는 PC 높이보다 우선합니다. 고정 예: 300px */
     --archive-image-height: max(120px, min(56svh, calc(100svh - 370px)));

@@ -97,27 +97,39 @@ textarea,
   background: var(--page);
 }
 
+/* [상단 공통 정렬] 바깥 여백 30px / 같은 행의 세로 중앙에 로고·메뉴·입술 배치 */
+:root {
+  --header-inset: 30px;
+  --header-row-height: 48px;
+  --header-logo-width: 190px;
+  --header-mark-width: 76px;
+  --header-control-gap: 22px;
+}
+
 .top-bar {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 30;
   width: 100vw;
-  height: 108px;
+  height: calc(var(--header-inset) * 2 + var(--header-row-height));
+  display: flex;
+  align-items: center;
+  gap: var(--header-control-gap);
+  padding: var(--header-inset);
   background: #fff;
 }
 
 .brand-toggle {
-  /* 입술 버튼 위치(top/right)와 크기(width/height)입니다. */
-  position: absolute;
-  top: 30px;
-  right: 30px;
+  /* 오른쪽 30px 여백은 .top-bar의 padding으로 맞춥니다. */
+  position: relative;
+  flex: 0 0 var(--header-mark-width);
   z-index: 33;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 76px;
-  height: 48px;
+  width: var(--header-mark-width);
+  height: var(--header-row-height);
   padding: 0;
   border: 0;
   background: transparent;
@@ -131,16 +143,17 @@ textarea,
 }
 
 .brand-title {
-  /* 왼쪽 한자 로고의 위치입니다. */
-  position: absolute;
-  top: 30px;
-  left: 30px;
+  /* 왼쪽 30px 여백. 높이가 다른 메뉴·입술도 이 로고와 세로 중심선이 같습니다. */
+  position: static;
+  flex: 0 1 var(--header-logo-width);
+  min-width: 0;
   display: flex;
   align-items: center;
   margin: 0;
 }
 
 .brand-home {
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -148,20 +161,21 @@ textarea,
 
 .brand-logo {
   display: block;
-  width: 190px;
+  width: var(--header-logo-width);
+  max-width: 100%;
   height: auto;
 }
 
 .menu-panel {
-  /* 메뉴 전체를 입술 왼쪽에 배치하는 영역입니다. */
-  position: fixed;
-  top: 30px;
-  right: 128px;
+  /* 로고와 같은 행 안에서 세로 중앙 정렬. 입술 왼쪽 간격은 --header-control-gap입니다. */
+  position: static;
+  flex: 0 0 auto;
+  margin-left: auto;
   z-index: 31;
   display: flex;
   align-items: center;
   width: auto;
-  height: 48px;
+  height: var(--header-row-height);
   padding: 0;
   background: transparent;
   transition:
@@ -340,16 +354,11 @@ textarea,
     line-height: 13px;
   }
 
-  .brand-toggle {
-    top: 14px;
-    right: 14px;
-    width: 54px;
-    height: 34px;
-  }
-
-  .menu-panel {
-    right: 82px;
-    height: 62px;
+  :root {
+    /* 모바일도 바깥 여백 30px. 좁은 화면은 로고 폭을 줄여 메뉴와 겹치지 않게 합니다. */
+    --header-logo-width: clamp(48px, calc(100vw - 280px), 140px);
+    --header-mark-width: 54px;
+    --header-control-gap: 8px;
   }
 
   .side-nav {
@@ -357,6 +366,6 @@ textarea,
   }
 
   .nav-primary-group {
-    gap: 14px;
+    gap: 6px;
   }
 }
