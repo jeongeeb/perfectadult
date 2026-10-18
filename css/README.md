@@ -4,7 +4,7 @@
 - `product-cards.css`: 메인 상품 카드와 상세페이지 하단 상품 카드
 - `pages/home.css`: 메인페이지 소개와 상품 배치
 - `pages/product.css`: 제품 상세페이지, 도장, 설명, 구매 버튼과 팝업
-- `pages/product-description.css`: 설명글만 위아래로 움직이는 동작. `product.css` 뒤에 적용
+- `pages/product-description.css`: 설명 영역 접기·펼치기 동작. `product.css` 뒤에 적용
 - `pages/product-stamp.css`: 도장 뒤의 노란빛. 2.8초 주기, 최대 불투명도 0.18, 3회 반복
 - `pages/archive.css`: 아카이브 중앙 이미지, 하단 설명, 이전·다음 미리보기
 - `pages/about.css`: 비교용 룩북의 왼쪽 이미지 목록과 오른쪽 뷰어·제품 컷
@@ -33,9 +33,9 @@
 설명 좌우 여백은 `.detail-actions`의 `padding`, 글자 크기는 `.detail-description-body`에서 조절합니다.
 모바일 도장 문구는 노란색 전체 화면 오버레이로 열립니다. 모든 제품의 문구를 실제 화면 너비·높이에 맞춰 자동 축소하며, 웹폰트·화면 회전·뷰포트 변화 후 다시 계산합니다.
 PC 오프닝과 고정 설명 영역 해제 계산은 모바일에서 실행하지 않습니다.
-PC·모바일의 description은 설명 영역의 높이를 유지하고 `.detail-description-body`의 `translateY(-100%)` ↔ `translateY(0)`으로 글만 위아래로 움직입니다.
-상품명·가격·Product details 제목·구매 버튼과 하단 콘텐츠의 위치는 열고 닫아도 바뀌지 않습니다. 접힌 동안에도 설명 자리의 공간을 유지합니다.
-동작과 속도는 `pages/product-description.css`의 `.detail-description-body`와 `380ms`에서 조절합니다. 이 파일은 `product.css` 다음에 불러와 일반 스타일 편집과 분리합니다.
+PC·모바일의 description은 닫을 때 설명 영역의 높이도 함께 줄어듭니다. PC 구매 영역은 전체 높이에 맞춰 세로 중앙 정렬되고, 모바일에서는 아래 버튼과 콘텐츠가 위로 이어집니다.
+동작과 속도는 `pages/product-description.css`의 `.detail-description-collapse`와 `380ms`에서 조절합니다. 이 파일은 `product.css` 다음에 불러옵니다.
+구매·장바구니 버튼 위 간격은 `pages/product.css`의 `.detail-product-details`에서 조절합니다. PC는 `margin-bottom: calc(80px * var(--stage-scale, 1))`의 80px, 모바일은 같은 선택자의 `margin-bottom: 32px`입니다. 숫자를 줄이면 버튼이 위로 올라갑니다.
 도장 배경빛은 `pages/product-stamp.css`의 `--stamp-glow-duration`, `--stamp-glow-opacity`, `--stamp-glow-repeats`에서 조절합니다.
 도장이 처음 화면에 보일 때만 시작하고, 누르거나 3회 반복이 끝나면 종료합니다. 이미지 자체의 위치·선명도는 바꾸지 않습니다.
 

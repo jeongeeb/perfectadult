@@ -453,6 +453,7 @@ body[data-page="detail"] .site-frame {
 .detail-product-details {
   width: 100%;
   min-height: 0;
+  /* [PC 구매·장바구니 버튼 위 간격] 80px를 줄이면 두 버튼이 위로 올라갑니다. */
   margin-bottom: calc(80px * var(--stage-scale, 1));
 }
 
@@ -892,6 +893,7 @@ body.modal-open {
 
   .detail-product-details {
     min-height: 0;
+    /* [모바일 구매·장바구니 버튼 위 간격] 32px를 줄이면 두 버튼이 위로 올라갑니다. */
     margin-bottom: 32px;
   }
 
