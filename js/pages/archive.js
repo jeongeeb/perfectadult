@@ -1,11 +1,12 @@
 /* 제품 메인 이미지 갤러리. 화살표·휠·터치로 한 제품씩 중앙에 맞춰 이동합니다. */
 function archiveCaptionMarkup(product) {
   const productIndex = products.indexOf(product);
+  const summary = product.summary.replace(/^수행\s*규약\s*[:：]?\s*/, "");
   return `
     <p class="archive-project-number">${formatProductNumber(product, productIndex)} / ${product.name}</p>
     <h2>${productDisplayName(product)}</h2>
     <p class="archive-project-price">${product.price}</p>
-    <p class="archive-project-summary">${product.summary}</p>`;
+    <p class="archive-project-summary">${summary}</p>`;
 }
 
 function archiveProjectEntry(product, index) {

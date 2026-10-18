@@ -248,6 +248,8 @@ body[data-page="archive"] {
   margin: 0 auto;
   font-size: 12px;
   line-height: 1.4;
+  /* 이미지와 분리된 설명 영역에도 중앙 정렬을 직접 적용합니다. */
+  text-align: center;
   word-break: keep-all;
 }
 .archive-project-info p,
