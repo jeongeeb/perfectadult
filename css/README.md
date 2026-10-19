@@ -172,8 +172,25 @@ PC 첫 소개문의 위쪽 여백을 제거해 왼쪽 메뉴와 같은 128px 높
 
 ## Archive 제품별 이미지 조정
 
-아카이브에서는 가격을 표시하지 않습니다. `pages/archive.css`의 `.archive-project-info` 안
+아카이브에서는 가격을 표시하지 않습니다. `pages/archive.css` 위쪽 `.archive-page` 안
 `--archive-caption-offset`이 가격 한 줄 높이만큼 번호·제품명·설명을 아래로 맞춥니다.
+
+글 조절은 같은 `.archive-page`의 `[아카이브 글 조절]` 변수에 모여 있습니다. 기본값은 기존 크기·굵기·간격을 유지합니다.
+
+| 조정할 글 | 크기 | 굵기 | 자간 |
+| --- | --- | --- | --- |
+| 제품 번호 | `--archive-number-size` | `--archive-number-weight` | `--archive-number-letter-spacing` |
+| 강령명 | `--archive-name-size` | `--archive-name-weight` | `--archive-name-letter-spacing` |
+| 제품명 | `--archive-title-size` | `--archive-title-weight` | `--archive-title-letter-spacing` |
+| 설명 | `--archive-summary-size` | `--archive-summary-weight` | `--archive-summary-letter-spacing` |
+
+줄 간격은 첫 줄 `--archive-label-line-height`, 제품명 `--archive-title-line-height`, 설명 `--archive-summary-line-height`입니다.
+번호·강령명과 제품명 사이는 `--archive-label-gap`, 제품명과 설명 사이는 `--archive-summary-gap`입니다.
+설명 가로 너비는 `--archive-text-width`, 이미지와 글 사이는 `--archive-caption-gap`으로 조절합니다.
+모바일 크기는 같은 설정 묶음의 `--archive-*-mobile-size` 값을 바꿉니다. 굵기·행간·자간은 PC와 함께 사용합니다.
+특정 제품만 바꾸려면 파일의 `[특정 제품 글만 다르게 조절할 때]` 예시를 사용합니다. 일반 목록과 고정 설명 양쪽에 같은 제품 id가 있어 동일하게 적용됩니다.
+모든 설정은 아카이브 제품 글에만 적용하며 다른 페이지·공통 메뉴에는 영향을 주지 않습니다.
+
 자동 전환 간격은 `js/pages/archive.js`의 `AUTOPLAY_DELAY = 3000`에서 조절합니다. 3000ms = 3초입니다.
 마지막 제품 다음에는 1번으로 순환하며, 수동 조작 후에는 새 제품을 3초 보여줍니다.
 하단 설명 영역·숨겨진 탭·낮은 화면의 일반 목록·모션 줄이기 설정에서는 자동 전환을 멈춥니다.

@@ -10,6 +10,7 @@
   7. 옆 이미지 간격·크기·투명도: js/pages/archive.js의 update 함수
   8. 이미지 교체: js/shared/data.js의 products에서 해당 제품의 image 경로
      이 경로는 다른 페이지의 제품 메인 이미지에도 공통 적용됩니다.
+  9. 글자 크기·굵기·간격: 바로 아래 .archive-page의 [아카이브 글 조절] 변수
 
   단위: px = 고정 크기, vw = 화면 너비의 1%, svh = 작은 뷰포트 높이의 1%.
 */
@@ -32,6 +33,50 @@ body[data-page="archive"] {
   --archive-image-height: max(160px, min(64svh, calc(100svh - 350px)));
   /* [4. 이미지와 고정 설명 사이 간격] */
   --archive-caption-gap: 50px;
+
+  /* ===== [아카이브 글 조절] 숫자만 바꾸세요. 다른 페이지에는 영향을 주지 않습니다. =====
+     size = 글자 크기(px), weight = 굵기(400 보통 / 700 굵게),
+     line-height = 줄 간격(배수), letter-spacing = 자간(em).
+     영문은 Arial Narrow 유지. 영문 굵기는 400 / 700에서 차이가 확실합니다. */
+
+  /* [1. 제품 번호] 예: #No.01 */
+  --archive-number-size: 11px;
+  --archive-number-weight: 400;
+  --archive-number-letter-spacing: 0em;
+
+  /* [2. 강령명] 예: 面安維持 | 면안유지 */
+  --archive-name-size: 11px;
+  --archive-name-weight: 400;
+  --archive-name-letter-spacing: 0em;
+  --archive-label-line-height: 1.4; /* 번호·강령명이 있는 첫 줄의 줄 간격 */
+
+  /* [3. 제품명] 예: 평정심 유지용 안구 장치 */
+  --archive-title-size: 15px;
+  --archive-title-weight: 600;
+  --archive-title-line-height: 1.4;
+  --archive-title-letter-spacing: 0em;
+
+  /* [4. 설명 본문] 제품명 아래의 긴 설명 */
+  --archive-summary-size: 12px;
+  --archive-summary-weight: 400;
+  --archive-summary-line-height: 1.4;
+  --archive-summary-letter-spacing: 0em;
+
+  /* [글 사이 간격 / 전체 너비·위치] */
+  --archive-label-gap: 5px; /* 번호·강령명 ↔ 제품명 */
+  --archive-summary-gap: 10px; /* 제품명 ↔ 설명 */
+  --archive-text-width: 520px; /* 설명 글 전체 최대 가로 너비 */
+  --archive-text-min-height: 118px; /* 제품 전환 시 공통으로 확보할 글 영역 높이 */
+  --archive-caption-offset: calc(var(--archive-summary-size) * 1.4 + 3px); /* 글 전체 아래 이동. 양수 = 아래 */
+
+  /* [모바일 크기·간격] 760px 이하. 굵기·행간·자간은 위 설정을 함께 사용합니다. */
+  --archive-number-mobile-size: 11px;
+  --archive-name-mobile-size: 11px;
+  --archive-title-mobile-size: 14px;
+  --archive-summary-mobile-size: 11px;
+  --archive-summary-mobile-gap: 8px;
+  --archive-text-mobile-min-height: 132px;
+
   color: #262626;
   font-family: var(--en-font);
 }
@@ -243,15 +288,13 @@ body[data-page="archive"] {
 }
 
 .archive-project-info {
-  /* [설명 아래 이동] 삭제한 가격 한 줄(행간 1.4 + 위 여백 3px)만큼 설명 전체를 내립니다.
-     더 내리려면 이 값을 키우세요. PC·모바일에서 현재 글자 크기를 기준으로 계산합니다. */
-  --archive-caption-offset: calc(1em * 1.4 + 3px);
-  width: min(100%, 520px);
-  min-height: 118px;
+  /* 글 설정은 파일 위쪽 .archive-page의 [아카이브 글 조절]에서 수정합니다. */
+  width: min(100%, var(--archive-text-width));
+  min-height: var(--archive-text-min-height);
   margin: 0 auto;
   padding-top: var(--archive-caption-offset);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: var(--archive-summary-size);
+  line-height: var(--archive-summary-line-height);
   /* 이미지와 분리된 설명 영역에도 중앙 정렬을 직접 적용합니다. */
   text-align: center;
   word-break: keep-all;
@@ -260,19 +303,44 @@ body[data-page="archive"] {
 .archive-project-info h2 {
   margin: 0;
 }
-.archive-project-number {
-  margin-bottom: 5px !important;
+.archive-project-info .archive-project-number {
+  margin-bottom: var(--archive-label-gap);
   color: #777;
-  font-size: 11px;
+  font-size: var(--archive-number-size);
+  font-weight: var(--archive-number-weight);
+  line-height: var(--archive-label-line-height);
+}
+.archive-item-number {
+  font-size: var(--archive-number-size);
+  font-weight: var(--archive-number-weight);
+  letter-spacing: var(--archive-number-letter-spacing);
+}
+.archive-item-name {
+  font-size: var(--archive-name-size);
+  font-weight: var(--archive-name-weight);
+  letter-spacing: var(--archive-name-letter-spacing);
 }
 .archive-project-info h2 {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--archive-title-size);
+  font-weight: var(--archive-title-weight);
+  line-height: var(--archive-title-line-height);
+  letter-spacing: var(--archive-title-letter-spacing);
 }
-.archive-project-summary {
-  margin-top: 10px !important;
+.archive-project-info .archive-project-summary {
+  margin-top: var(--archive-summary-gap);
   color: #666;
+  font-size: var(--archive-summary-size);
+  font-weight: var(--archive-summary-weight);
+  line-height: var(--archive-summary-line-height);
+  letter-spacing: var(--archive-summary-letter-spacing);
 }
+/* [특정 제품 글만 다르게 조절할 때] 아래 예시의 주석을 풀고 제품 id를 바꾸세요.
+   id는 js/shared/data.js에서 확인합니다. 번호·강령명·제품명·설명 변수 모두 덮어쓸 수 있습니다.
+   .archive-project-info[data-product-id="stoic-monocle"] {
+     --archive-title-size: 18px;
+     --archive-summary-weight: 500;
+   }
+*/
 .archive-controls {
   position: absolute;
   inset: 0;
@@ -330,6 +398,13 @@ body[data-page="archive"] {
     /* [5. 모바일 이미지 높이] 아래 변수는 PC 높이보다 우선합니다. 고정 예: 300px */
     --archive-image-height: max(120px, min(56svh, calc(100svh - 370px)));
     --archive-caption-gap: 14px;
+    /* 자동 연결. 모바일 값을 바꾸려면 위쪽 [모바일 크기·간격]을 수정합니다. */
+    --archive-number-size: var(--archive-number-mobile-size);
+    --archive-name-size: var(--archive-name-mobile-size);
+    --archive-title-size: var(--archive-title-mobile-size);
+    --archive-summary-size: var(--archive-summary-mobile-size);
+    --archive-summary-gap: var(--archive-summary-mobile-gap);
+    --archive-text-min-height: var(--archive-text-mobile-min-height);
   }
   .is-enhanced .archive-gallery {
     /* [모바일 위치] inset 순서: 위 / 좌우 / 아래. PC와 같은 방식으로 조절합니다. */
@@ -339,16 +414,6 @@ body[data-page="archive"] {
   .is-enhanced .archive-captions {
     /* [모바일 이미지 영역 너비] width의 vw 숫자는 화면 너비에 대한 백분율입니다. */
     width: 76vw;
-  }
-  .archive-project-info {
-    min-height: 132px;
-    font-size: 11px;
-  }
-  .archive-project-info h2 {
-    font-size: 14px;
-  }
-  .archive-project-summary {
-    margin-top: 8px !important;
   }
   .archive-position {
     bottom: 25px;

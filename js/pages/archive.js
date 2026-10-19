@@ -3,7 +3,7 @@ function archiveCaptionMarkup(product) {
   const productIndex = products.indexOf(product);
   const summary = product.summary.replace(/^수행\s*규약\s*[:：]?\s*/, "");
   return `
-    <p class="archive-project-number">${formatProductNumber(product, productIndex)} / ${product.name}</p>
+    <p class="archive-project-number"><span class="archive-item-number">${formatProductNumber(product, productIndex)}</span> / <span class="archive-item-name">${product.name}</span></p>
     <h2>${productDisplayName(product)}</h2>
     <p class="archive-project-summary">${summary}</p>`;
 }
@@ -16,7 +16,7 @@ function archiveProjectEntry(product, index) {
         <figure class="archive-image-wrap">
           <img class="archive-main-image" src="${versionMainImage(product.image)}" alt="${productDisplayName(product)} 제품 메인 이미지" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
         </figure>
-        <div class="archive-project-info">${archiveCaptionMarkup(product)}</div>
+        <div class="archive-project-info" data-product-id="${product.id}">${archiveCaptionMarkup(product)}</div>
       </a>
     </article>`;
 }
@@ -38,7 +38,7 @@ function renderArchive() {
           <div class="archive-composition">
             <div class="archive-images">${archiveProducts.map(archiveProjectEntry).join("")}</div>
             <div class="archive-captions">
-              ${archiveProducts.map((product) => `<a class="archive-project-info" href="product.html?id=${product.id}" aria-hidden="true" tabindex="-1">${archiveCaptionMarkup(product)}</a>`).join("")}
+              ${archiveProducts.map((product) => `<a class="archive-project-info" data-product-id="${product.id}" href="product.html?id=${product.id}" aria-hidden="true" tabindex="-1">${archiveCaptionMarkup(product)}</a>`).join("")}
             </div>
           </div>
         </div>
