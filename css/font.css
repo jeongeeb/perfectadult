@@ -58,7 +58,7 @@
 /* 현재 사이트 글자만 포함한 동일 원본의 웹용 파일. 큰 제품명은 가상 Bold를 사용하지 않습니다. */
 @font-face {
   font-family: "Perfect Display";
-  src: url("../assets/fonts/web/SM3GyeonchulMyeongjo-Display.woff2") format("woff2");
+  src: url("../assets/fonts/web/SM3GyeonchulMyeongjo-Display.woff2?v=20261021-safari-fonts-2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -67,42 +67,42 @@
 /* 구형 Safari에서 가변 폰트의 기본 Thin 축으로 표시되지 않도록 굵기를 고정합니다. */
 @font-face {
   font-family: "Perfect Noto KR";
-  src: url("../assets/fonts/web/NotoSansKR-400.woff2") format("woff2");
+  src: url("../assets/fonts/web/NotoSansKR-400.woff2?v=20261021-safari-fonts-2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "Perfect Noto KR";
-  src: url("../assets/fonts/web/NotoSansKR-500.woff2") format("woff2");
+  src: url("../assets/fonts/web/NotoSansKR-500.woff2?v=20261021-safari-fonts-2") format("woff2");
   font-style: normal;
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: "Perfect Noto KR";
-  src: url("../assets/fonts/web/NotoSansKR-600.woff2") format("woff2");
+  src: url("../assets/fonts/web/NotoSansKR-600.woff2?v=20261021-safari-fonts-2") format("woff2");
   font-style: normal;
   font-weight: 600;
   font-display: swap;
 }
 @font-face {
   font-family: "Perfect Noto KR";
-  src: url("../assets/fonts/web/NotoSansKR-700.woff2") format("woff2");
+  src: url("../assets/fonts/web/NotoSansKR-700.woff2?v=20261021-safari-fonts-2") format("woff2");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
   font-family: "Perfect Noto KR";
-  src: url("../assets/fonts/web/NotoSansKR-800.woff2") format("woff2");
+  src: url("../assets/fonts/web/NotoSansKR-800.woff2?v=20261021-safari-fonts-2") format("woff2");
   font-style: normal;
   font-weight: 800;
   font-display: swap;
 }
 @font-face {
   font-family: "Perfect Noto KR";
-  src: url("../assets/fonts/web/NotoSansKR-900.woff2") format("woff2");
+  src: url("../assets/fonts/web/NotoSansKR-900.woff2?v=20261021-safari-fonts-2") format("woff2");
   font-style: normal;
   font-weight: 900;
   font-display: swap;

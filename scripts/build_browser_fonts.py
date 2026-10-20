@@ -42,10 +42,25 @@ def main():
     codepoints = site_codepoints()
     noto = subset_font(FONTS / "NotoSansKR-Variable.ttf", codepoints)
     for weight in (400, 500, 600, 700, 800, 900):
-        font = instantiateVariableFont(deepcopy(noto), {"wght": weight}, inplace=True)
+        font = instantiateVariableFont(deepcopy(noto), {"wght": weight}, inplace=True, updateFontNames=True)
         font.flavor = "woff2"
         font.save(OUTPUT / f"NotoSansKR-{weight}.woff2")
     display = subset_font(FONTS / "SM3GyeonchulMyeongjo-Regular.otf", codepoints)
+    # Keep the subset distinct from the full original in CoreText's font cache.
+    names = {
+        1: "Perfect Display", 2: "Regular", 3: "PerfectDisplay-Regular-Web",
+        4: "Perfect Display Regular", 6: "PerfectDisplay-Regular",
+        16: "Perfect Display", 17: "Regular",
+    }
+    display["name"].names = [record for record in display["name"].names if record.nameID not in names]
+    for name_id, value in names.items():
+        display["name"].setName(value, name_id, 3, 1, 0x409)
+        display["name"].setName(value, name_id, 1, 0, 0)
+    display["OS/2"].usWeightClass = 400
+    cff = display["CFF "].cff
+    cff.fontNames = ["PerfectDisplay-Regular"]
+    cff.topDictIndex[0].FamilyName = "Perfect Display"
+    cff.topDictIndex[0].FullName = "Perfect Display Regular"
     display.flavor = "woff2"
     display.save(OUTPUT / "SM3GyeonchulMyeongjo-Display.woff2")
     for path in sorted(OUTPUT.glob("*.woff2")):
