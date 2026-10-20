@@ -53,7 +53,7 @@ function renderShop() {
         <div class="shop-grid">${tiles}</div>
       </section>
       <section class="people-section" id="people-views" aria-label="Perfect adult model views">
-        <img class="people-image" src="${versionMainImage(homeIntro.peopleImage)}" alt="Perfect adult model views">
+        <img class="people-image" src="${versionMainImage(homeIntro.peopleImage)}" alt="Perfect adult model views" loading="lazy" decoding="async">
       </section>
     </main>`);
   prepareProductHoverImages();

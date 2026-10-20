@@ -15,7 +15,8 @@ const DETAIL_OPENING_VISIBLE_TIME = 1200;
 const DETAIL_OPENING_FADE_TIME = 500;
 
 // 메인 이미지를 같은 파일명으로 교체했는데 이전 이미지가 보이면 이 숫자를 1씩 올리세요.
-const MAIN_IMAGE_VERSION = "20261020-safari13-2";
+const MAIN_IMAGE_VERSION = "20261020-all-pages-4";
+let pageScrollFrame = 0;
 
 // Safari 13은 WebP 자체를 지원하지 않습니다. 이 버전은 실패를 기다리지 않고 원본을 요청합니다.
 function prefersOriginalImages() {
@@ -78,6 +79,48 @@ function replaceElementChildren(element, ...children) {
   children.forEach((child) => fragment.appendChild(child));
   while (element.firstChild) element.removeChild(element.firstChild);
   element.appendChild(fragment);
+}
+
+// 구형 Safari의 지연 로딩과 갤러리의 다음 이미지 사전 로딩을 같은 경로로 처리합니다.
+function preloadImage(image) {
+  image.loading = "eager";
+  const src = image.getAttribute("data-deferred-src");
+  if (!src) return;
+  image.removeAttribute("data-deferred-src");
+  image.src = src;
+}
+
+// Safari 13은 native smooth scroll이 없습니다. 최신 브라우저는 native 동작을 유지합니다.
+function scrollPageTo(top, behavior = "smooth") {
+  window.cancelAnimationFrame(pageScrollFrame);
+  pageScrollFrame = 0;
+  const maximum = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  const target = Math.max(0, Math.min(maximum, top));
+  const setPosition = (position) => {
+    const style = document.documentElement.style;
+    const previous = style.scrollBehavior;
+    style.scrollBehavior = "auto";
+    window.scrollTo(window.scrollX, position);
+    style.scrollBehavior = previous;
+  };
+  if (behavior !== "smooth" || Math.abs(target - window.scrollY) < 1 ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    setPosition(target);
+    return;
+  }
+  if (window.CSS && window.CSS.supports("scroll-behavior", "smooth")) {
+    window.scrollTo({ top: target, behavior: "smooth" });
+    return;
+  }
+  const origin = window.scrollY;
+  const started = performance.now();
+  const animate = (now) => {
+    const progress = Math.min(1, (now - started) / 420);
+    setPosition(origin + (target - origin) * (1 - (1 - progress) ** 3));
+    if (progress < 1) pageScrollFrame = window.requestAnimationFrame(animate);
+    else pageScrollFrame = 0;
+  };
+  pageScrollFrame = window.requestAnimationFrame(animate);
 }
 
 function versionMainImage(src) {
@@ -170,7 +213,7 @@ function productTilesMarkup(items = products) {
         return `
     <article class="product-tile" data-slot="${productIndex + 1}">
       <a class="product-link" href="product.html?id=${product.id}" aria-label="${productDisplayName(product)} 상세페이지">
-        <img class="product-image" src="${versionMainImage(product.image)}" alt="${productDisplayName(product)}">
+        <img class="product-image" src="${versionMainImage(product.image)}" alt="${productDisplayName(product)}" loading="lazy" decoding="async">
         <img class="product-hover-image" alt="" aria-hidden="true" data-hover-candidates="${hoverImageCandidates(productIndex).map(versionMainImage).join("|")}">
       </a>
       <p class="product-number">${formatProductNumber(product, productIndex)}</p>
@@ -191,25 +234,42 @@ function prepareProductHoverImages() {
 
     const candidates = hoverImage.dataset.hoverCandidates.split("|");
     let hoverTimer;
-
-    findFirstImage(candidates, (hoverSrc) => {
-      hoverImage.src = hoverSrc;
-      tile.classList.add("has-hover-image");
-    });
-
-    link.addEventListener("mouseenter", () => {
+    let loading = false;
+    let wantsModel = false;
+    let delayElapsed = false;
+    const reveal = () => {
+      if (wantsModel && delayElapsed && tile.classList.contains("has-hover-image")) tile.classList.add("is-model-visible");
+    };
+    const loadHover = () => {
+      if (loading || tile.classList.contains("has-hover-image")) return;
+      loading = true;
+      findFirstImage(candidates, (hoverSrc) => {
+        hoverImage.src = hoverSrc;
+        tile.classList.add("has-hover-image");
+        reveal();
+      }, () => { loading = false; });
+    };
+    // PNG 원본을 쓰는 Safari 13은 착용컷 16장을 처음부터 모두 요청하지 않습니다.
+    if (!prefersOriginalImages()) loadHover();
+    const enter = () => {
+      wantsModel = true;
+      delayElapsed = false;
       clearTimeout(hoverTimer);
+      loadHover();
       hoverTimer = setTimeout(() => {
-        if (tile.classList.contains("has-hover-image")) {
-          tile.classList.add("is-model-visible");
-        }
+        delayElapsed = true;
+        reveal();
       }, PRODUCT_HOVER_DELAY);
-    });
-
-    link.addEventListener("mouseleave", () => {
+    };
+    const leave = () => {
+      wantsModel = false;
       clearTimeout(hoverTimer);
       tile.classList.remove("is-model-visible");
-    });
+    };
+    link.addEventListener("mouseenter", enter);
+    link.addEventListener("focus", enter);
+    link.addEventListener("mouseleave", leave);
+    link.addEventListener("blur", leave);
   });
 }
 
@@ -331,12 +391,10 @@ function bindFooterMagneticScroll() {
       isLocked = true;
       const maxScroll =
         document.documentElement.scrollHeight - window.innerHeight;
-      window.scrollTo({
-        top: Math.min(siteEnd.offsetTop, maxScroll),
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      scrollPageTo(Math.min(siteEnd.offsetTop, maxScroll),
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
           ? "auto"
-          : "smooth",
-      });
+          : "smooth");
       window.setTimeout(() => {
         isLocked = false;
       }, 520);
@@ -360,13 +418,29 @@ function renderShell(content) {
     // template 안의 이미지는 요청되지 않으므로, 정적 로고·도장도 삽입 전에 원본 경로로 바꿉니다.
     const template = document.createElement("template");
     template.innerHTML = markup;
+    const deferred = [];
     template.content.querySelectorAll("img[src]").forEach((image) => {
       const original = imageFallbackURL(image.getAttribute("src"));
       if (original) image.setAttribute("src", original);
+      if (image.getAttribute("loading") === "lazy" && "IntersectionObserver" in window) {
+        image.setAttribute("data-deferred-src", image.getAttribute("src"));
+        image.removeAttribute("src");
+        deferred.push(image);
+      }
     });
     document.documentElement.classList.add("image-format-fallback");
     document.body.textContent = "";
     document.body.appendChild(template.content);
+    if (deferred.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          preloadImage(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: "400px 0px" });
+      deferred.forEach((image) => observer.observe(image));
+    }
   } else document.body.innerHTML = markup;
 
   bindSiteEndVisibility();

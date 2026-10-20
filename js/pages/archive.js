@@ -22,6 +22,7 @@ function archiveProjectEntry(product, index) {
 }
 
 function renderArchive() {
+  document.documentElement.classList.add("archive-scroll");
   const archiveProducts = products;
   renderShell(`
     <aside class="page-side-index archive-filter" aria-label="Archive contents">
@@ -162,7 +163,7 @@ function bindArchiveGallery() {
     });
     // 다음 이미지가 중앙에 오기 전에 미리 읽습니다.
     [-1, 0, 1, 2].forEach((offset) => {
-      cards[normalize(current + offset)].querySelector("img").loading = "eager";
+      preloadImage(cards[normalize(current + offset)].querySelector("img"));
     });
     previous.disabled = cards.length < 2;
     next.disabled = cards.length < 2;
@@ -197,7 +198,7 @@ function bindArchiveGallery() {
     if ((crossesBoundary || wasWrapping) && !reducedMotion.matches) {
       // 경계에서는 옆 한 장만 애니메이션한 뒤 실제 페이지 스크롤 위치를 즉시 맞춥니다.
       // 1→16 이동 때문에 중간 15개 제품이 한꺼번에 지나가지 않도록 합니다.
-      window.scrollTo({ top: window.scrollY, behavior: "instant" });
+      scrollPageTo(window.scrollY, "instant");
       wrapProgress = from;
       const started = performance.now();
       const animate = (now) => {
@@ -208,14 +209,14 @@ function bindArchiveGallery() {
         else {
           wrapFrame = 0;
           wrapProgress = null;
-          window.scrollTo({ top: scrollTarget, behavior: "instant" });
+          scrollPageTo(scrollTarget, "instant");
           finishNavigation();
         }
       };
       wrapFrame = window.requestAnimationFrame(animate);
       return;
     }
-    window.scrollTo({ top: scrollTarget, behavior: reducedMotion.matches || crossesBoundary ? "instant" : "smooth" });
+    scrollPageTo(scrollTarget, reducedMotion.matches || crossesBoundary ? "instant" : "smooth");
     if (Math.abs(window.scrollY - scrollTarget) < 1) finishNavigation();
     else navigationTimer = window.setTimeout(finishNavigation, 1200);
   };
@@ -308,7 +309,8 @@ function bindArchiveGallery() {
     if (event.key in directions) {
       event.preventDefault();
       if ((event.key === "ArrowDown" || event.key === "PageDown") && targetIndex === cards.length - 1) {
-        document.getElementById("project-footer")?.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth" });
+        const footer = document.getElementById("project-footer");
+        if (footer) scrollPageTo(footer.getBoundingClientRect().top + window.scrollY, reducedMotion.matches ? "instant" : "smooth");
         return;
       }
       goTo(targetIndex + directions[event.key]);

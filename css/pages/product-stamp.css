@@ -1,12 +1,12 @@
 /* [도장 클릭 유도] PC·모바일 공통. 도장 이미지에는 효과를 적용하지 않습니다. */
 .detail-info-toggle {
   /* 주기 / 최대 불투명도 / 반복 횟수는 아래 세 값으로 조절합니다. */
-  --stamp-glow-duration: 2.8s;
-  --stamp-glow-opacity: 0.18;
+  --stamp-glow-duration: 2.3s;
+  --stamp-glow-opacity: 0.9;
   --stamp-glow-repeats: 3;
   /* [외곽 불빛 색상 / 퍼짐] 투명한 도장 모양을 따라 빛을 만듭니다. */
   --stamp-glow-color: #ffff00;
-  --stamp-glow-blur: 8px;
+  --stamp-glow-blur: 12px;
   isolation: isolate;
 }
 
@@ -27,8 +27,9 @@
   inset: 0;
   background-color: var(--stamp-glow-color);
   /* 도장 원본과 동일한 크기·정렬로 외곽을 맞춥니다. */
-  -webkit-mask: url("../../assets/graphics/stamp_red.webp") center / contain no-repeat;
-  mask: url("../../assets/graphics/stamp_red.webp") center / contain no-repeat;
+  -webkit-mask: url("../../assets/display/stamp_red.webp") center / contain
+    no-repeat;
+  mask: url("../../assets/display/stamp_red.webp") center / contain no-repeat;
   mask-mode: alpha;
 }
 
@@ -38,8 +39,13 @@
 }
 
 @keyframes stamp-attention-glow {
-  0%, 100% { opacity: 0; }
-  50% { opacity: var(--stamp-glow-opacity); }
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: var(--stamp-glow-opacity);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

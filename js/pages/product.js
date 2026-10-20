@@ -448,8 +448,8 @@ function renderDetail() {
       ${fallbackGallery}
       <button class="detail-info-toggle" type="button" aria-label="강령 문구 보기" aria-controls="detail-info-overlay" aria-expanded="false">
         <span class="detail-stamp-glow" aria-hidden="true"></span>
-        <img class="detail-info-stamp detail-info-stamp-red" src="assets/graphics/stamp_red.webp" alt="">
-        <img class="detail-info-stamp detail-info-stamp-gray" src="assets/graphics/stamp_gray.webp" alt="">
+        <img class="detail-info-stamp detail-info-stamp-red" src="assets/display/stamp_red.webp" alt="">
+        <img class="detail-info-stamp detail-info-stamp-gray" src="assets/display/stamp_gray.webp" alt="">
       </button>
       ${productQuoteMarkup(product, productIndex)}
       <div class="detail-actions">

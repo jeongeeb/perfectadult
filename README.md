@@ -2,12 +2,19 @@
 
 사이트에 표시하는 이미지는 WebP를 사용합니다. PNG/JPEG 원본은 편집용으로 보관하며
 브라우저에서는 같은 이름의 `.webp` 파일을 불러옵니다.
-WebP 디코딩에 실패하는 macOS Safari 등에서는 해당 이미지의 PNG/JPEG 원본으로 자동 전환합니다.
+WebP 디코딩에 실패하는 macOS Safari 등에서는 PNG/JPEG 대체 파일로 자동 전환합니다.
 Safari 13은 처음부터 PNG/JPEG를 요청해 실패한 WebP 이미지가 보이는 시간을 없앱니다.
 이미지를 추가한 뒤 `python3 scripts/build_image_fallbacks.py`로 대체 경로 목록도 갱신합니다.
 `css/browser-compat.css`는 구형 브라우저의 화면 높이·이미지 비율 배치를 보완합니다.
 Safari 13에서 지원하지 않는 `inset`·논리 여백 단축 속성은 물리 방향 속성으로 보완하며,
 메뉴얼의 노드 재배치는 `replaceElementChildren` 호환 함수를 사용합니다.
+아카이브 전환·하단 이동은 `scrollPageTo`를 통해 구형 Safari에서도 부드럽게 이동합니다.
+Safari 13에서는 화면 밖의 지연 로딩 이미지와 착용컷을 한꺼번에 내려받지 않고,
+화면 접근·갤러리 사전 로딩·마우스/키보드 포커스에 맞춰 요청합니다.
+대체 파일은 `assets/compat/`에 생성됩니다. 긴 상품 설명 이미지는 해상도를 유지하고,
+인물 사진은 페이지와 같은 흰 배경의 JPEG, 겹쳐지는 제품 컷은 투명 PNG로 제공합니다.
+도장은 별도의 512px WebP/PNG를 `assets/display/`에 생성해 PC·모바일에서 공통 사용합니다.
+원본 파일은 수정하지 않습니다. 메뉴얼 배경 SVG도 Safari 13이 읽을 수 있는 PNG를 내장합니다.
 
 원본 이미지를 추가하거나 교체한 뒤 Python 3와 Pillow가 설치된 환경에서 실행합니다.
 

@@ -19,6 +19,28 @@
   .manual-section,
   .manual-bilingual { margin-left: auto; margin-right: auto; }
 
+  /* 이미지 버튼은 Safari 기본 버튼의 내부 여백·윤곽을 제거합니다. */
+  .brand-toggle,
+  .about-look-thumbnail,
+  .about-viewer-controls button,
+  .book-slide,
+  .book-controls button,
+  .archive-controls button,
+  .detail-info-toggle { -webkit-appearance: none; }
+
+  .purchase-quantity-row dd { gap: 0; }
+  .purchase-quantity-row dd > * + * { margin-left: calc(10px * var(--stage-scale, 1)); }
+
+  .about-look-thumbnail:focus,
+  .about-product-cut:focus,
+  .about-viewer-controls button:focus,
+  .book-slide:focus,
+  .book-controls button:focus,
+  .archive-controls button:focus,
+  .archive-project-link:focus,
+  .side-nav a:focus,
+  .page-side-nav a:focus { outline: 1px solid currentColor; outline-offset: 4px; }
+
   /* :is와 :focus-visible도 지원하지 않는 세대이므로 메뉴의 기본 스타일은 일반 선택자로 적용합니다. */
   .site-frame .side-nav a,
   .site-frame .manual-side-nav a,
@@ -37,6 +59,20 @@
     .site-frame .manual-side-nav a:hover,
     .site-frame .archive-section-nav a:hover,
     .site-frame .collection-index a:hover { opacity: 0; }
+    .detail-info-toggle:hover .detail-info-stamp {
+      filter: grayscale(1) brightness(0.82) blur(calc(3px * var(--stage-scale, 1)));
+    }
+    .detail-info-toggle:not(.is-open):hover .detail-info-stamp-red,
+    .detail-info-toggle.is-open:hover .detail-info-stamp-gray {
+      opacity: 0.52;
+      transform: scale(0.97);
+    }
+  }
+  @media (min-width: 1001px) {
+    .about-viewer-footer,
+    .about-list-heading { gap: 0; }
+    .about-viewer-controls,
+    .about-list-heading > * + * { margin-left: 16px; }
   }
   @media (max-width: 760px) {
     .is-enhanced .archive-gallery { top: 154px; right: 0; bottom: 70px; left: 0; }
@@ -48,6 +84,9 @@
     .detail-actions,
     .detail-actions.is-released,
     .detail-related-products { top: auto; right: auto; bottom: auto; left: auto; }
+    .page-side-nav { gap: 0; margin: -4px -9px; }
+    .site-frame .page-side-nav > *,
+    .site-frame .page-side-nav > a { margin: 4px 9px; }
   }
   @media (max-height: 560px) {
     .is-enhanced .archive-gallery { top: auto; right: auto; bottom: auto; left: auto; }
@@ -95,7 +134,7 @@
   .nav-primary-group { gap: 0; }
   .menu-panel { padding-left: var(--header-control-gap); }
   .brand-toggle { margin-left: var(--header-control-gap); }
-  .nav-primary-group > a + a { margin-left: 20px; }
+  .site-frame .nav-primary-group > a + a { margin-left: 20px; }
 
   @media (max-width: 760px) {
     .intro-hero-image-pair-front,
@@ -103,7 +142,7 @@
     .intro-hero-image-pair::before { content: ""; display: block; }
     .intro-hero-image-pair-front::before { padding-top: 134.704112%; }
     .intro-hero-image-pair-back::before { padding-top: 136.077236%; }
-    .nav-primary-group > a + a { margin-left: 6px; }
+    .site-frame .nav-primary-group > a + a { margin-left: 6px; }
   }
   @media (max-width: 360px) {
     .nav-primary-group > a { margin-top: 4px; margin-bottom: 4px; }
@@ -112,6 +151,27 @@
 
 /* WebP 디코딩 실패가 확인된 브라우저에서는 도장 빛의 마스크도 원본 PNG를 사용합니다. */
 .image-format-fallback .detail-stamp-glow::before {
-  -webkit-mask-image: url("../assets/graphics/stamp_red.png");
-  mask-image: url("../assets/graphics/stamp_red.png");
+  -webkit-mask-image: url("../assets/display/stamp_red.png");
+  mask-image: url("../assets/display/stamp_red.png");
+}
+
+/* SVG 안의 로고도 PNG를 내장합니다. Safari 13이 읽지 못하는 WebP를 포함하지 않습니다. */
+.manual-logo-tile {
+  -webkit-mask-image: url("../assets/graphics/manual-logo-tile.svg?v=20261020-all-pages-4");
+  mask-image: url("../assets/graphics/manual-logo-tile.svg?v=20261020-all-pages-4");
+}
+.image-format-fallback .manual-logo-background { z-index: 0; }
+
+/* 제품 이동은 archive.js가 담당합니다. 브라우저의 문서 스냅과 중복되지 않게 합니다. */
+html.archive-scroll { scroll-snap-type: none; }
+
+/* Safari 13에서는 WebP 커서 대신 동일한 PNG 커서를 사용합니다. */
+html.image-format-fallback,
+.image-format-fallback body,
+.image-format-fallback body * {
+  cursor: url("../assets/graphics/mouse-cursor-large.png") 16 10, auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

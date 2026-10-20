@@ -94,7 +94,7 @@ function bindBookGallery() {
     slides.forEach((slide, slideIndex) => { slide.hidden = slideIndex !== current; });
     position.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     caption.textContent = bookPublication.slides[current].caption || "";
-    slides[(current + 1) % slides.length].querySelector("img").loading = "eager";
+    preloadImage(slides[(current + 1) % slides.length].querySelector("img"));
     if (moveFocus) slides[current].focus({ preventScroll: true });
   };
   // 스와이프 뒤에 발생하는 터치 click이 같은 이미지를 한 번 더 넘기지 않게 합니다.
