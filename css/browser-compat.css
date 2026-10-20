@@ -1,0 +1,62 @@
+/* Safari 호환 처리. 최신 기능을 지원하는 브라우저의 배치는 그대로 유지합니다. */
+@supports not (height: 100svh) {
+  .page-side-index { max-height: calc(100vh - 152px); }
+  .about-page { height: calc(100vh - 108px); }
+  .about-viewer-controls button { top: calc(50vh - 108px); }
+  .archive-page { --archive-image-height: max(160px, min(64vh, calc(100vh - 350px))); }
+  .archive-page.is-enhanced { height: calc(100vh + var(--archive-steps) * 85vh); }
+  .archive-stage { min-height: 100vh; }
+  .is-enhanced .archive-stage { height: 100vh; }
+  body[data-page="book"] .site-frame,
+  .book-page { min-height: 100vh; }
+  .book-page { --book-image-height: clamp(260px, 65vh, 820px); }
+
+  @media (max-width: 760px) {
+    .page-side-index { max-height: none; }
+    .home-intro { min-height: 100vh; }
+    .archive-page { --archive-image-height: max(120px, min(56vh, calc(100vh - 370px))); }
+    .book-page { --book-image-height: clamp(240px, 53vh, 600px); }
+    .detail-info-overlay,
+    .detail-info-overlay.is-long-quote { height: 100vh; }
+    .purchase-dialog { max-height: calc(100vh - 32px); }
+  }
+  @media (max-height: 560px) {
+    .archive-page.is-enhanced,
+    .is-enhanced .archive-stage { height: auto; }
+    .archive-image-wrap { height: 65vh; }
+  }
+}
+
+/* aspect-ratio를 지원하지 않는 Safari에서도 절대 배치 이미지의 부모 크기를 확보합니다. */
+@supports not (aspect-ratio: 1 / 1) {
+  .intro-hero-image-pair-front { width: calc(min(calc(500px * var(--stage-scale, 1)), 60vh) * 997 / 1343); }
+  .intro-hero-image-pair-back { width: calc(min(calc(500px * var(--stage-scale, 1)), 60vh) * 984 / 1339); }
+  .about-look-thumbnail::before { content: ""; display: block; padding-top: 133.333333%; }
+  .book-image-window::before { content: ""; display: block; padding-top: calc(100% / var(--book-image-ratio)); }
+  .book-image-window img { position: absolute; left: 0; top: 0; }
+
+  /* 같은 세대의 Safari에서 Flex gap이 없더라도 상단 메뉴 간격을 확보합니다. */
+  .top-bar,
+  .nav-primary-group { gap: 0; }
+  .menu-panel { padding-left: var(--header-control-gap); }
+  .brand-toggle { margin-left: var(--header-control-gap); }
+  .nav-primary-group > a + a { margin-left: 20px; }
+
+  @media (max-width: 760px) {
+    .intro-hero-image-pair-front,
+    .intro-hero-image-pair-back { width: 100%; }
+    .intro-hero-image-pair::before { content: ""; display: block; }
+    .intro-hero-image-pair-front::before { padding-top: 134.704112%; }
+    .intro-hero-image-pair-back::before { padding-top: 136.077236%; }
+    .nav-primary-group > a + a { margin-left: 6px; }
+  }
+  @media (max-width: 360px) {
+    .nav-primary-group > a { margin-top: 4px; margin-bottom: 4px; }
+  }
+}
+
+/* WebP 디코딩 실패가 확인된 브라우저에서는 도장 빛의 마스크도 원본 PNG를 사용합니다. */
+.image-format-fallback .detail-stamp-glow::before {
+  -webkit-mask-image: url("../assets/graphics/stamp_red.png");
+  mask-image: url("../assets/graphics/stamp_red.png");
+}

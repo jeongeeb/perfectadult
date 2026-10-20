@@ -2,6 +2,9 @@
 
 사이트에 표시하는 이미지는 WebP를 사용합니다. PNG/JPEG 원본은 편집용으로 보관하며
 브라우저에서는 같은 이름의 `.webp` 파일을 불러옵니다.
+WebP 디코딩에 실패하는 macOS Safari 등에서는 해당 이미지의 PNG/JPEG 원본으로 자동 전환합니다.
+이미지를 추가한 뒤 `python3 scripts/build_image_fallbacks.py`로 대체 경로 목록도 갱신합니다.
+`css/browser-compat.css`는 구형 브라우저의 화면 높이·이미지 비율 배치를 보완합니다.
 
 원본 이미지를 추가하거나 교체한 뒤 Python 3와 Pillow가 설치된 환경에서 실행합니다.
 

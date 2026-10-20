@@ -85,7 +85,7 @@ function bindStampAttention(stamp) {
   stamp.addEventListener("animationend", (event) => {
     if (event.animationName === "stamp-attention-glow") stop();
   });
-  reducedMotion.addEventListener("change", (event) => {
+  listenToMediaQueryChange(reducedMotion, (event) => {
     if (event.matches) stop();
   });
   if ("IntersectionObserver" in window) {

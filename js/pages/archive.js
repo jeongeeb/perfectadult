@@ -334,8 +334,8 @@ function bindArchiveGallery() {
   window.addEventListener("resize", refreshGallery);
   window.addEventListener("pageshow", refreshGallery);
   document.addEventListener("visibilitychange", restartAutoplay);
-  reducedMotion.addEventListener("change", refreshGallery);
-  compact.addEventListener("change", refreshGallery);
+  listenToMediaQueryChange(reducedMotion, refreshGallery);
+  listenToMediaQueryChange(compact, refreshGallery);
   update();
   restartAutoplay();
 }

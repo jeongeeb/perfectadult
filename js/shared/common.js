@@ -15,7 +15,53 @@ const DETAIL_OPENING_VISIBLE_TIME = 1200;
 const DETAIL_OPENING_FADE_TIME = 500;
 
 // 메인 이미지를 같은 파일명으로 교체했는데 이전 이미지가 보이면 이 숫자를 1씩 올리세요.
-const MAIN_IMAGE_VERSION = "20261017-webp-1";
+const MAIN_IMAGE_VERSION = "20261020-safari-1";
+
+// 구형 macOS Safari에서 WebP를 읽지 못할 때만 원본 PNG/JPEG로 전환합니다.
+function imageFallbackURL(src) {
+  if (typeof IMAGE_FALLBACKS === "undefined") return null;
+  const base = new URL("./", document.baseURI);
+  const url = new URL(src, base);
+  if (url.origin !== base.origin || !url.pathname.startsWith(base.pathname)) return null;
+  const path = decodeURIComponent(url.pathname.slice(base.pathname.length));
+  const original = IMAGE_FALLBACKS[path];
+  if (!original) return null;
+  const fallback = new URL(original, base);
+  fallback.search = url.search;
+  return fallback.href;
+}
+
+function loadImageWithFallback(image, src, onLoad, onError) {
+  let triedFallback = false;
+  image.onload = onLoad;
+  image.onerror = () => {
+    const fallback = imageFallbackURL(src);
+    if (!triedFallback && fallback) {
+      triedFallback = true;
+      document.documentElement.classList.add("image-format-fallback");
+      image.src = fallback;
+    } else if (onError) onError();
+  };
+  image.src = src;
+}
+
+// 마크업으로 생성된 이미지도 처리합니다. 대체 이미지까지 실패하면 재시도하지 않습니다.
+window.addEventListener("error", (event) => {
+  const image = event.target;
+  if (!image || image.tagName !== "IMG") return;
+  const failed = image.currentSrc || image.src;
+  const fallback = imageFallbackURL(failed);
+  if (!fallback || image.dataset.fallbackFor === failed) return;
+  image.dataset.fallbackFor = failed;
+  document.documentElement.classList.add("image-format-fallback");
+  image.src = fallback;
+}, true);
+
+// Safari 13/14의 MediaQueryList는 addListener만 제공할 수 있습니다.
+function listenToMediaQueryChange(query, listener) {
+  if (typeof query.addEventListener === "function") query.addEventListener("change", listener);
+  else query.addListener(listener);
+}
 
 function versionMainImage(src) {
   const separator = src.includes("?") ? "&" : "?";
@@ -93,9 +139,9 @@ function findFirstImage(candidates, onFound, onMissing) {
   }
 
   const probe = new Image();
-  probe.onload = () => onFound(candidate, probe);
-  probe.onerror = () => findFirstImage(rest, onFound, onMissing);
-  probe.src = candidate;
+  loadImageWithFallback(probe, candidate,
+    () => onFound(probe.src, probe),
+    () => findFirstImage(rest, onFound, onMissing));
 }
 
 function productTilesMarkup(items = products) {

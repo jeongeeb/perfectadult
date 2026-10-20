@@ -11,6 +11,7 @@
 - `pages/manual-reference.css`: 메뉴얼 문서 레이아웃과 최소 12px 본문
 - `pages/book.css`: 지침서 책 이미지 뷰어와 이미지 아래 설명
 - `font.css`: 폰트 등록과 공통 색상 변수
+- `browser-compat.css`: 구형 Safari의 화면 높이·이미지 비율·도장 마스크 호환 처리 (페이지 CSS 뒤에 적용)
 
 ## 상단 로고·메뉴·입술 정렬
 

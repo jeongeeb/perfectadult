@@ -289,7 +289,7 @@ function buildManualBilingualLayout() {
       layout.replaceChildren(...rows);
     }
   };
-  narrow.addEventListener("change", updateLanguageOrder);
+  listenToMediaQueryChange(narrow, updateLanguageOrder);
   updateLanguageOrder();
 }
 

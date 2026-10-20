@@ -130,12 +130,8 @@ function bindAboutLookbook() {
       viewer.setAttribute("aria-busy", "false");
       status.textContent = "이미지를 불러오지 못했습니다. 다시 선택해 주세요.";
     };
-    pending.onload = commit;
-    pendingProduct.onload = commit;
-    pending.onerror = fail;
-    pendingProduct.onerror = fail;
-    pending.src = versionMainImage(look.src);
-    pendingProduct.src = versionMainImage(look.product.image);
+    loadImageWithFallback(pending, versionMainImage(look.src), commit, fail);
+    loadImageWithFallback(pendingProduct, versionMainImage(look.product.image), commit, fail);
   };
 
   thumbnails.forEach((thumbnail, index) => {

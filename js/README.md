@@ -2,6 +2,7 @@
 
 - `shared/data.js`: 제품명, 가격, 설명, 이미지 경로, 컬렉션 데이터
 - `shared/common.js`: 공통 헤더, 메뉴, 화면 크기와 이미지 로딩 기능
+- `shared/image-fallbacks.js`: WebP 디코딩 실패 시 사용하는 원본 이미지 경로 목록 (스크립트로 자동 생성)
 - `pages/home.js`: 메인페이지 출력과 상품 마우스 오버
 - `pages/product.js`: 상세페이지 출력, 도장 설명, 구매 팝업
 - `pages/archive.js`: 제품 메인 이미지 갤러리, 한 제품씩 휠·터치 전환과 중앙 정렬
