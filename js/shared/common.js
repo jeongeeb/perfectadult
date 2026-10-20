@@ -15,7 +15,14 @@ const DETAIL_OPENING_VISIBLE_TIME = 1200;
 const DETAIL_OPENING_FADE_TIME = 500;
 
 // 메인 이미지를 같은 파일명으로 교체했는데 이전 이미지가 보이면 이 숫자를 1씩 올리세요.
-const MAIN_IMAGE_VERSION = "20261020-safari-1";
+const MAIN_IMAGE_VERSION = "20261020-safari13-2";
+
+// Safari 13은 WebP 자체를 지원하지 않습니다. 이 버전은 실패를 기다리지 않고 원본을 요청합니다.
+function prefersOriginalImages() {
+  const userAgent = window.navigator.userAgent;
+  const safari = userAgent.match(/Version\/(\d+)(?:\.\d+)*.*Safari\//);
+  return Boolean(safari && Number(safari[1]) < 14 && !/Chrome|Chromium|CriOS|Edg|OPR|FxiOS/.test(userAgent));
+}
 
 // 구형 macOS Safari에서 WebP를 읽지 못할 때만 원본 PNG/JPEG로 전환합니다.
 function imageFallbackURL(src) {
@@ -32,7 +39,9 @@ function imageFallbackURL(src) {
 }
 
 function loadImageWithFallback(image, src, onLoad, onError) {
-  let triedFallback = false;
+  const original = prefersOriginalImages() ? imageFallbackURL(src) : null;
+  let triedFallback = Boolean(original);
+  if (original) document.documentElement.classList.add("image-format-fallback");
   image.onload = onLoad;
   image.onerror = () => {
     const fallback = imageFallbackURL(src);
@@ -42,7 +51,7 @@ function loadImageWithFallback(image, src, onLoad, onError) {
       image.src = fallback;
     } else if (onError) onError();
   };
-  image.src = src;
+  image.src = original || src;
 }
 
 // 마크업으로 생성된 이미지도 처리합니다. 대체 이미지까지 실패하면 재시도하지 않습니다.
@@ -63,9 +72,18 @@ function listenToMediaQueryChange(query, listener) {
   else query.addListener(listener);
 }
 
+// Element.replaceChildren는 Safari 13에 없습니다. 노드를 먼저 옮겨 내용과 이벤트를 보존합니다.
+function replaceElementChildren(element, ...children) {
+  const fragment = document.createDocumentFragment();
+  children.forEach((child) => fragment.appendChild(child));
+  while (element.firstChild) element.removeChild(element.firstChild);
+  element.appendChild(fragment);
+}
+
 function versionMainImage(src) {
   const separator = src.includes("?") ? "&" : "?";
-  return `${src}${separator}v=${MAIN_IMAGE_VERSION}`;
+  const versioned = `${src}${separator}v=${MAIN_IMAGE_VERSION}`;
+  return prefersOriginalImages() ? imageFallbackURL(versioned) || versioned : versioned;
 }
 
 function fitToMonitor() {
@@ -330,13 +348,26 @@ function bindFooterMagneticScroll() {
 function renderShell(content) {
   // 모든 페이지는 메뉴가 보이는 상태로 시작하고, 입술 버튼으로 숨깁니다.
   document.body.classList.remove("menus-hidden");
-  document.body.innerHTML = `
+  const markup = `
     <div class="site-frame">
       ${headerMarkup()}
       ${content}
       ${siteEndMarkup()}
     </div>
     <p class="footer-handle">@from.perfect adult</p>`;
+
+  if (prefersOriginalImages()) {
+    // template 안의 이미지는 요청되지 않으므로, 정적 로고·도장도 삽입 전에 원본 경로로 바꿉니다.
+    const template = document.createElement("template");
+    template.innerHTML = markup;
+    template.content.querySelectorAll("img[src]").forEach((image) => {
+      const original = imageFallbackURL(image.getAttribute("src"));
+      if (original) image.setAttribute("src", original);
+    });
+    document.documentElement.classList.add("image-format-fallback");
+    document.body.textContent = "";
+    document.body.appendChild(template.content);
+  } else document.body.innerHTML = markup;
 
   bindSiteEndVisibility();
   bindFooterMagneticScroll();

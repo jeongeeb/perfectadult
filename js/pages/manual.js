@@ -283,10 +283,10 @@ function buildManualBilingualLayout() {
         stream.append(...cells);
         return stream;
       });
-      layout.replaceChildren(...streams);
+      replaceElementChildren(layout, ...streams);
     } else {
       rows.forEach((row, index) => row.append(englishCells[index], koreanCells[index]));
-      layout.replaceChildren(...rows);
+      replaceElementChildren(layout, ...rows);
     }
   };
   listenToMediaQueryChange(narrow, updateLanguageOrder);
@@ -325,7 +325,7 @@ function bindManualLogoBackground() {
       tile.className = "manual-logo-tile";
       tiles.append(tile);
     }
-    background.replaceChildren(tiles);
+    replaceElementChildren(background, tiles);
   };
 
   updateTiles();
@@ -392,7 +392,7 @@ function buildManualEditorialGrid() {
         group.append(element);
       });
 
-      body.replaceChildren(groups);
+      replaceElementChildren(body, groups);
     });
   });
 }

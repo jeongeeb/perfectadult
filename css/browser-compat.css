@@ -1,4 +1,59 @@
 /* Safari 호환 처리. 최신 기능을 지원하는 브라우저의 배치는 그대로 유지합니다. */
+/* Safari 13은 inset 단축 속성을 무시합니다. 모든 모서리를 기존 top/right/bottom/left로 지정합니다. */
+@supports not (inset: 0) {
+  .intro-hero-image,
+  .about-look-thumbnail img,
+  .book-slide,
+  .archive-controls,
+  .detail-opening,
+  .detail-info-stamp,
+  .detail-info-overlay,
+  .purchase-modal,
+  .purchase-backdrop,
+  .detail-stamp-glow,
+  .detail-stamp-glow::before { top: 0; right: 0; bottom: 0; left: 0; }
+
+  .is-enhanced .archive-gallery { top: 150px; right: 0; bottom: 74px; left: 0; }
+  .manual-hero,
+  .manual-intro,
+  .manual-section,
+  .manual-bilingual { margin-left: auto; margin-right: auto; }
+
+  /* :is와 :focus-visible도 지원하지 않는 세대이므로 메뉴의 기본 스타일은 일반 선택자로 적용합니다. */
+  .site-frame .side-nav a,
+  .site-frame .manual-side-nav a,
+  .site-frame .archive-section-nav a,
+  .site-frame .collection-index a {
+    display: block;
+    margin: 0;
+    color: #000;
+    opacity: 1;
+    white-space: nowrap;
+    transition: opacity 180ms ease;
+  }
+  .site-frame .page-side-nav a { white-space: normal; }
+  @media (hover: hover) and (pointer: fine) {
+    .site-frame .side-nav a:hover,
+    .site-frame .manual-side-nav a:hover,
+    .site-frame .archive-section-nav a:hover,
+    .site-frame .collection-index a:hover { opacity: 0; }
+  }
+  @media (max-width: 760px) {
+    .is-enhanced .archive-gallery { top: 154px; right: 0; bottom: 70px; left: 0; }
+    .book-slide { padding-left: 36px; padding-right: 36px; }
+    .detail-gallery,
+    .detail-gallery-scroll,
+    .detail-info-toggle,
+    .detail-info-toggle.is-released,
+    .detail-actions,
+    .detail-actions.is-released,
+    .detail-related-products { top: auto; right: auto; bottom: auto; left: auto; }
+  }
+  @media (max-height: 560px) {
+    .is-enhanced .archive-gallery { top: auto; right: auto; bottom: auto; left: auto; }
+  }
+}
+
 @supports not (height: 100svh) {
   .page-side-index { max-height: calc(100vh - 152px); }
   .about-page { height: calc(100vh - 108px); }
