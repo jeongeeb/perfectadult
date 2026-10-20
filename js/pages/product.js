@@ -24,13 +24,22 @@ function prepareDetailOpening() {
     opening.classList.add("has-opening-graphic");
   });
 
-  window.setTimeout(() => {
-    opening.classList.add("is-hiding");
-  }, DETAIL_OPENING_VISIBLE_TIME);
-
-  window.setTimeout(() => {
-    opening.remove();
-  }, DETAIL_OPENING_VISIBLE_TIME + DETAIL_OPENING_FADE_TIME);
+  let started = false;
+  let fontTimeout;
+  const start = () => {
+    if (started) return;
+    started = true;
+    window.clearTimeout(fontTimeout);
+    opening.classList.remove("is-font-pending");
+    window.setTimeout(() => opening.classList.add("is-hiding"), DETAIL_OPENING_VISIBLE_TIME);
+    window.setTimeout(() => opening.remove(), DETAIL_OPENING_VISIBLE_TIME + DETAIL_OPENING_FADE_TIME);
+  };
+  if (document.fonts && typeof document.fonts.load === "function") {
+    opening.classList.add("is-font-pending");
+    fontTimeout = window.setTimeout(start, 3000);
+    const title = opening.querySelector(".detail-opening-title");
+    document.fonts.load('400 16px "Perfect Display"', title.textContent).then(start, start);
+  } else start();
 }
 
 function bindDetailInfoToggle() {

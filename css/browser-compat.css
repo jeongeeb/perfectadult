@@ -3,7 +3,6 @@
 @supports not (inset: 0) {
   .intro-hero-image,
   .about-look-thumbnail img,
-  .book-slide,
   .archive-controls,
   .detail-opening,
   .detail-info-stamp,
@@ -23,8 +22,6 @@
   .brand-toggle,
   .about-look-thumbnail,
   .about-viewer-controls button,
-  .book-slide,
-  .book-controls button,
   .archive-controls button,
   .detail-info-toggle { -webkit-appearance: none; }
 
@@ -34,8 +31,6 @@
   .about-look-thumbnail:focus,
   .about-product-cut:focus,
   .about-viewer-controls button:focus,
-  .book-slide:focus,
-  .book-controls button:focus,
   .archive-controls button:focus,
   .archive-project-link:focus,
   .side-nav a:focus,
@@ -76,7 +71,6 @@
   }
   @media (max-width: 760px) {
     .is-enhanced .archive-gallery { top: 154px; right: 0; bottom: 70px; left: 0; }
-    .book-slide { padding-left: 36px; padding-right: 36px; }
     .detail-gallery,
     .detail-gallery-scroll,
     .detail-info-toggle,
@@ -101,15 +95,11 @@
   .archive-page.is-enhanced { height: calc(100vh + var(--archive-steps) * 85vh); }
   .archive-stage { min-height: 100vh; }
   .is-enhanced .archive-stage { height: 100vh; }
-  body[data-page="book"] .site-frame,
-  .book-page { min-height: 100vh; }
-  .book-page { --book-image-height: clamp(260px, 65vh, 820px); }
 
   @media (max-width: 760px) {
     .page-side-index { max-height: none; }
     .home-intro { min-height: 100vh; }
     .archive-page { --archive-image-height: max(120px, min(56vh, calc(100vh - 370px))); }
-    .book-page { --book-image-height: clamp(240px, 53vh, 600px); }
     .detail-info-overlay,
     .detail-info-overlay.is-long-quote { height: 100vh; }
     .purchase-dialog { max-height: calc(100vh - 32px); }
@@ -126,8 +116,6 @@
   .intro-hero-image-pair-front { width: calc(min(calc(500px * var(--stage-scale, 1)), 60vh) * 997 / 1343); }
   .intro-hero-image-pair-back { width: calc(min(calc(500px * var(--stage-scale, 1)), 60vh) * 984 / 1339); }
   .about-look-thumbnail::before { content: ""; display: block; padding-top: 133.333333%; }
-  .book-image-window::before { content: ""; display: block; padding-top: calc(100% / var(--book-image-ratio)); }
-  .book-image-window img { position: absolute; left: 0; top: 0; }
 
   /* 같은 세대의 Safari에서 Flex gap이 없더라도 상단 메뉴 간격을 확보합니다. */
   .top-bar,
@@ -143,9 +131,6 @@
     .intro-hero-image-pair-front::before { padding-top: 134.704112%; }
     .intro-hero-image-pair-back::before { padding-top: 136.077236%; }
     .site-frame .nav-primary-group > a + a { margin-left: 6px; }
-  }
-  @media (max-width: 360px) {
-    .nav-primary-group > a { margin-top: 4px; margin-bottom: 4px; }
   }
 }
 

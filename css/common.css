@@ -197,7 +197,7 @@ textarea,
 }
 
 .nav-primary-group {
-  /* Shop, Manual, Book, Archive, About 사이의 간격입니다. */
+  /* Shop, Manual, Archive, About 사이의 간격입니다. */
   display: flex;
   align-items: center;
   gap: 20px;
@@ -356,7 +356,7 @@ textarea,
 
   :root {
     /* 모바일도 바깥 여백 30px. 좁은 화면은 로고 폭을 줄여 메뉴와 겹치지 않게 합니다. */
-    --header-logo-width: clamp(48px, calc(100vw - 315px), 140px);
+    --header-logo-width: clamp(48px, calc(100vw - 280px), 140px);
     --header-mark-width: 54px;
     --header-control-gap: 8px;
   }
@@ -367,16 +367,5 @@ textarea,
 
   .nav-primary-group {
     gap: 6px;
-  }
-}
-
-/* Book 메뉴를 포함해도 30px 바깥 여백 안에 들어오도록 작은 휴대폰은 메뉴만 두 줄로 배치합니다.
-   메뉴 묶음의 세로 중앙은 로고·입술과 같은 헤더 행에 맞춰집니다. */
-@media (max-width: 360px) {
-  .nav-primary-group {
-    max-width: 132px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 8px 6px;
   }
 }

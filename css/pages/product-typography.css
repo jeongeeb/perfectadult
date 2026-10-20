@@ -1,0 +1,23 @@
+/* [상품 클릭 후 큰 글자 굵기]
+   명조 원본에는 Bold 파일이 없습니다. 브라우저의 가상 Bold 대신 같은 외곽선을 사용합니다.
+   opening-stroke = 진입 제품명 / quote-base-stroke = 도장 문구의 기본 굵기.
+   em은 글자 크기에 비례합니다. 값을 키우면 두꺼워집니다. */
+.detail-opening-title,
+.detail-info-overlay {
+  font-family: "Perfect Display", "SM3 Gyeonchul Myeongjo", "Noto Sans KR", serif;
+  font-weight: 400;
+  font-synthesis: none;
+}
+
+.detail-opening-title {
+  --detail-opening-stroke: 0.02em;
+  -webkit-text-stroke: var(--detail-opening-stroke) currentColor;
+}
+
+.detail-info-overlay {
+  --stamp-quote-base-stroke: 0.02em;
+  -webkit-text-stroke: calc(var(--stamp-quote-base-stroke) + var(--stamp-quote-stroke, 3px)) currentColor;
+}
+
+/* 서체가 준비되기 전 다른 글꼴이 잠깐 보이는 것을 막습니다. */
+.detail-opening.is-font-pending .detail-opening-title { visibility: hidden; }

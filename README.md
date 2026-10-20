@@ -12,7 +12,8 @@ Safari 13에서 지원하지 않는 `inset`·논리 여백 단축 속성은 물�
 Safari 13에서는 화면 밖의 지연 로딩 이미지와 착용컷을 한꺼번에 내려받지 않고,
 화면 접근·갤러리 사전 로딩·마우스/키보드 포커스에 맞춰 요청합니다.
 대체 파일은 `assets/compat/`에 생성됩니다. 긴 상품 설명 이미지는 해상도를 유지하고,
-인물 사진은 페이지와 같은 흰 배경의 JPEG, 겹쳐지는 제품 컷은 투명 PNG로 제공합니다.
+흰 배경 위의 인물 사진은 JPEG로 제공합니다. 노란 메인 배경의 인물과 겹쳐지는 제품 컷은
+투명 PNG를 사용합니다. 메인 인물에는 흰 배경을 합성하지 않습니다.
 도장은 별도의 512px WebP/PNG를 `assets/display/`에 생성해 PC·모바일에서 공통 사용합니다.
 원본 파일은 수정하지 않습니다. 메뉴얼 배경 SVG도 Safari 13이 읽을 수 있는 PNG를 내장합니다.
 
@@ -29,9 +30,8 @@ python3 scripts/convert_images.py
 About 페이지는 아카이브와 비교하기 위한 분할 룩북입니다. 왼쪽 썸네일을
 새로 만들려면 `python3 scripts/build_lookbook_thumbnails.py`를 실행합니다.
 
-Book 페이지는 `book.html`입니다. 기존 지침서 내지의 두 펼침면으로 미리 구성했습니다.
-GPT에서 완성한 책 이미지는 `assets/book/`에 저장하고 위 변환 스크립트로 WebP를 만듭니다.
-`js/pages/book.js` 맨 위 `bookPublication.slides`의 `src`를 새 `.webp` 경로로 바꾸고,
-기존 이미지 분리용 `crop`은 `"full"`로 변경하세요. 이미지 원본 비율은 자동 적용됩니다.
-순서·이미지별 설명도 같은 설정에서 바꿉니다. Book 배경색·이미지 높이·글자 설정은
-`css/pages/book.css`의 `.book-page` 변수에서 다른 페이지와 독립적으로 조절합니다.
+Safari 13의 한글은 기존 Noto Sans KR 원본에서 만든 고정 굵기 웹 폰트를 사용합니다.
+상품 오프닝·도장 문구는 브라우저 가상 Bold 대신 `css/pages/product-typography.css`에서
+외곽선 굵기를 조절합니다. 오프닝은 웹 폰트 준비 후 시작합니다.
+문구를 추가한 뒤 FontTools·Brotli가 설치된 Python에서 `python3 scripts/build_browser_fonts.py`를
+실행하면 사용 글자에 맞춰 `assets/fonts/web/` 파일이 갱신됩니다. 폰트 원본은 보존합니다.

@@ -79,9 +79,8 @@ def build_delivery(webp):
         transparent = image.mode in ("RGBA", "LA") and image.getchannel("A").getextrema()[0] < 255
         # Portraits only sit on white page/list backgrounds. JPEG is much
         # smaller there; overlapping product cutouts and graphics retain alpha.
-        white_photo = webp.parent.name in {"product_model", "lookbook-thumbnails", "basic person"} or (
-            webp.parent.name == "graphics" and webp.name.startswith("16_")
-        )
+        # The home hero graphics sit on YELLOW, so they must retain alpha.
+        white_photo = webp.parent.name in {"product_model", "lookbook-thumbnails", "basic person"}
         use_png = (transparent and not white_photo) or (
             webp.parent.name in {"graphics", "display"} and not white_photo
         )

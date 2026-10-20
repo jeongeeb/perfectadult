@@ -15,7 +15,7 @@ const DETAIL_OPENING_VISIBLE_TIME = 1200;
 const DETAIL_OPENING_FADE_TIME = 500;
 
 // 메인 이미지를 같은 파일명으로 교체했는데 이전 이미지가 보이면 이 숫자를 1씩 올리세요.
-const MAIN_IMAGE_VERSION = "20261020-all-pages-4";
+const MAIN_IMAGE_VERSION = "20261021-safari-fonts-1";
 let pageScrollFrame = 0;
 
 // Safari 13은 WebP 자체를 지원하지 않습니다. 이 버전은 실패를 기다리지 않고 원본을 요청합니다.
@@ -294,7 +294,6 @@ function navMarkup() {
     document.body.dataset.page === "shop" ||
     document.body.dataset.page === "detail";
   const isManual = document.body.dataset.page === "manual";
-  const isBook = document.body.dataset.page === "book";
   const isArchive = document.body.dataset.page === "archive";
   const isAbout = document.body.dataset.page === "about";
 
@@ -304,7 +303,6 @@ function navMarkup() {
         <span class="nav-primary-group">
           <a class="${isShop ? "active" : ""}" href="index.html"${isShop ? ' aria-current="page"' : ""}>Shop</a>
           <a class="${isManual ? "active" : ""}" href="manual.html"${isManual ? ' aria-current="page"' : ""}>Manual</a>
-          <a class="${isBook ? "active" : ""}" href="book.html"${isBook ? ' aria-current="page"' : ""}>Book</a>
           <a class="${isArchive ? "active" : ""}" href="archive.html"${isArchive ? ' aria-current="page"' : ""}>Archive</a>
           <a class="${isAbout ? "active" : ""}" href="about.html"${isAbout ? ' aria-current="page"' : ""}>About</a>
         </span>
