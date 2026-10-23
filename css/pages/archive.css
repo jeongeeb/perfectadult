@@ -66,7 +66,7 @@ body[data-page="archive"] {
   --archive-label-gap: 10px; /* 번호·강령명 ↔ 제품명 */
   --archive-summary-gap: 10px; /* 제품명 ↔ 설명 */
   --archive-text-width: 520px; /* 설명 글 전체 최대 가로 너비 */
-  --archive-text-min-height: 200px; /* 제품 전환 시 공통으로 확보할 글 영역 높이 */
+  --archive-text-min-height: 220px; /* 제품 전환 시 공통으로 확보할 글 영역 높이 */
   --archive-caption-offset: calc(
     var(--archive-summary-size) * 1.4 + 3px
   ); /* 글 전체 아래 이동. 양수 = 아래 */
