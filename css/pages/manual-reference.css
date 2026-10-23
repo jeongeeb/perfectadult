@@ -25,25 +25,25 @@ body[data-page="manual"] .footer-handle {
   /* [메뉴얼 마지막 빨간 도장] 크기 / 기울기 / 좌우 / 위아래 / 본문과의 간격 / 투명도 */
   --manual-end-stamp-width: 160px;
   --manual-end-stamp-angle: 10deg; /* 음수 = 왼쪽으로 기울임, 양수 = 오른쪽 */
-  --manual-end-stamp-x: 0px; /* 양수 = 오른쪽, 음수 = 왼쪽 */
-  --manual-end-stamp-y: -200px; /* 양수 = 아래, 음수 = 위 */
+  --manual-end-stamp-x: 20px; /* 양수 = 오른쪽, 음수 = 왼쪽 */
+  --manual-end-stamp-y: -250px; /* 양수 = 아래, 음수 = 위 */
   --manual-end-stamp-gap: 24px;
-  --manual-end-stamp-opacity: 0.4; /* 0 = 안 보임, 1 = 원본 진하기. 작을수록 투명 */
+  --manual-end-stamp-opacity: 0.8; /* 0 = 안 보임, 1 = 원본 진하기. 작을수록 투명 */
   /* [한글 크기] px 단위. 본문 / 소제목(h4·문단 안 굵은 제목) / 부제목(h2) */
   --manual-kr-body-size: 13px;
   --manual-kr-subheading-size: 13px;
-  --manual-kr-heading-size: 16px;
+  --manual-kr-heading-size: 17px;
   /* [한글 굵기] 100~900. 숫자가 클수록 두꺼워집니다. */
   --manual-kr-body-weight: 600;
   /* [한글 소제목 굵기] '기획 배경', '전통시대', '표준 어른의 기준' 등에 적용.
      400 = 보통 / 700 = 굵게 / 800~900 = 더 굵게. 본문·영어에는 영향을 주지 않습니다. */
-  --manual-kr-subheading-weight: 700;
+  --manual-kr-subheading-weight: 800;
   --manual-kr-heading-weight: 800;
 
   /* [영어 크기] 한글 설정과 독립적입니다. 서체는 Arial Narrow 유지 */
-  --manual-en-body-size: 13px;
-  --manual-en-subheading-size: 13px;
-  --manual-en-heading-size: 16px;
+  --manual-en-body-size: 14px;
+  --manual-en-subheading-size: 14px;
+  --manual-en-heading-size: 18px;
   /* [영어 굵기] 실제 폰트 파일은 400(Regular) / 700(Bold).
      600~800은 같은 Bold로 보일 수 있으므로, 추가 굵기는 아래 stroke로 조절합니다. */
   --manual-en-body-weight: 700;
@@ -61,15 +61,15 @@ body[data-page="manual"] .footer-handle {
   /* [영문 굵기 보강] Arial Narrow는 Regular/Bold만 있어 600~800이 같은 Bold로 보입니다.
      영문에는 Bold 파일을 명시하고 아래 외곽선으로 추가 굵기를 조절합니다.
      0px = 위에서 선택한 폰트의 원본 굵기, 숫자가 클수록 더 두껍게. */
-  --manual-en-body-stroke: 0.2px;
-  --manual-en-subheading-stroke: 0.25px;
-  --manual-en-heading-stroke: 0.4px;
+  --manual-en-body-stroke: 0px;
+  --manual-en-subheading-stroke: 0.8px;
+  --manual-en-heading-stroke: 0.8px;
   /* [본문 줄 간격] 글자 크기의 배수. 1.4 = 현재, 1.6 = 더 넓게 */
   --manual-line-height: 1.6;
   /* [부제목 줄 간격] 큰 제목(h2)이 여러 줄일 때. 본문 행간과 별도로 적용 */
-  --manual-heading-line-height: 1.4;
+  --manual-heading-line-height: 1;
   /* [소제목 줄 간격] h4와 문단 안의 굵은 소제목이 여러 줄일 때 */
-  --manual-subheading-line-height: 1.4;
+  --manual-subheading-line-height: 2;
   /* [본문 문단 ↔ 다음 문단] p·목록 아래 여백 */
   --manual-paragraph-gap: 10px;
   /* [부제목 ↔ 첫 소제목] 큰 제목(h2) 아래 여백 */
@@ -77,34 +77,41 @@ body[data-page="manual"] .footer-handle {
   /* [소제목 ↔ 설명 본문] h4·문단 안의 굵은 소제목 아래 여백 */
   --manual-subheading-gap: 0px;
   /* [소제목 묶음 ↔ 다음 소제목 묶음] 소제목과 설명 한 묶음 아래 여백 */
-  --manual-subsection-gap: 24px;
+  --manual-subsection-gap: 30px;
   /* [목록 항목 ↔ 다음 항목] 번호·불릿 목록의 항목 아래 여백 */
   --manual-list-item-gap: 6px;
   /* [자간] 글자 사이 간격. 음수 = 좁게, 0 = 기본, 양수 = 넓게 */
   --manual-letter-spacing: -0.01em;
   /* [2단 본문 전체 너비] 영어·한글 두 열을 합친 너비. 왼쪽 목차 영역은 비워둡니다. */
   --manual-content-width: min(
-    860px,
+    900px,
     calc(100vw - 60px - var(--manual-sidebar-offset) * 2)
   );
   /* [배경 로고 색상] HEX 색상을 입력합니다. 예: #000000 검정, #ff0000 빨강, #2255ff 파랑 */
   --manual-logo-color: #000000;
   /* [배경 로고 진하기] 위 색상에 적용되는 불투명도. 0 = 안 보임, 1 = 원래 색 */
-  --manual-logo-opacity: 0.1;
+  --manual-logo-opacity: 0.09;
   /* [배경 로고 한 개의 고정 너비] 본문·화면 너비와 무관합니다. 예: 500px = 더 크게 */
-  --manual-logo-size: 480px;
+  --manual-logo-size: 320px;
   /* [배경 로고 가로 간격] 음수 = 좁게(-15px), 0px = 원본, 양수 = 넓게(20px). 로고 크기는 유지 */
-  --manual-logo-gap-x: 0px;
+  --manual-logo-gap-x: 20px;
   /* [배경 로고 세로 간격] 음수 = 좁게(-15px), 양수 = 넓게(20px). 반드시 px 단위 사용 */
   --manual-logo-gap-y: 0px;
   /* [가로 개수] 기본 2개. 전체 배경 너비는 로고 크기 × 개수 + 열 사이 간격입니다. */
-  --manual-logo-columns: 2;
+  --manual-logo-columns: 3;
   /* [자동 계산] 음수 간격도 로고 사이의 이동 거리로 적용합니다. 아래 값은 그대로 두세요. */
   --manual-logo-height: calc(var(--manual-logo-size) * 420 / 1440);
-  --manual-logo-step-x: max(1px, calc(var(--manual-logo-size) + var(--manual-logo-gap-x)));
-  --manual-logo-step-y: max(1px, calc(var(--manual-logo-height) + var(--manual-logo-gap-y)));
+  --manual-logo-step-x: max(
+    1px,
+    calc(var(--manual-logo-size) + var(--manual-logo-gap-x))
+  );
+  --manual-logo-step-y: max(
+    1px,
+    calc(var(--manual-logo-height) + var(--manual-logo-gap-y))
+  );
   --manual-logo-width: calc(
-    var(--manual-logo-step-x) * (var(--manual-logo-columns) - 1) + var(--manual-logo-size)
+    var(--manual-logo-step-x) * (var(--manual-logo-columns) - 1) +
+      var(--manual-logo-size)
   );
   /* [배경 좌우 위치] 화면 중앙 기준. 양수 = 오른쪽, 음수 = 왼쪽 */
   --manual-logo-x: 0px;
@@ -138,7 +145,10 @@ body[data-page="manual"] .footer-handle {
   z-index: -1;
   display: grid;
   /* grid gap은 음수를 지원하지 않아, 로고의 실제 크기와 반복 이동 거리를 분리합니다. */
-  grid-template-columns: repeat(var(--manual-logo-columns), var(--manual-logo-step-x));
+  grid-template-columns: repeat(
+    var(--manual-logo-columns),
+    var(--manual-logo-step-x)
+  );
   grid-auto-rows: var(--manual-logo-step-y);
   gap: 0;
   align-content: start;
@@ -436,9 +446,6 @@ body[data-page="manual"] .site-end-copy {
 }
 
 @media (max-width: 760px) {
-
-
-
   .manual-page {
     --manual-content-width: calc(100vw - 32px);
     --manual-logo-top: 0px;

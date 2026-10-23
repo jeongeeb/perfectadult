@@ -40,34 +40,36 @@ body[data-page="archive"] {
      영문은 Arial Narrow 유지. 영문 굵기는 400 / 700에서 차이가 확실합니다. */
 
   /* [1. 제품 번호] 예: #No.01 */
-  --archive-number-size: 11px;
+  --archive-number-size: 15px;
   --archive-number-weight: 400;
   --archive-number-letter-spacing: 0em;
 
   /* [2. 강령명] 예: 面安維持 | 면안유지 */
-  --archive-name-size: 11px;
+  --archive-name-size: 14px;
   --archive-name-weight: 400;
   --archive-name-letter-spacing: 0em;
   --archive-label-line-height: 1.4; /* 번호·강령명이 있는 첫 줄의 줄 간격 */
 
   /* [3. 제품명] 예: 평정심 유지용 안구 장치 */
-  --archive-title-size: 15px;
+  --archive-title-size: 22px;
   --archive-title-weight: 600;
   --archive-title-line-height: 1.4;
   --archive-title-letter-spacing: 0em;
 
   /* [4. 설명 본문] 제품명 아래의 긴 설명 */
-  --archive-summary-size: 12px;
+  --archive-summary-size: 14px;
   --archive-summary-weight: 400;
   --archive-summary-line-height: 1.4;
   --archive-summary-letter-spacing: 0em;
 
   /* [글 사이 간격 / 전체 너비·위치] */
-  --archive-label-gap: 5px; /* 번호·강령명 ↔ 제품명 */
+  --archive-label-gap: 10px; /* 번호·강령명 ↔ 제품명 */
   --archive-summary-gap: 10px; /* 제품명 ↔ 설명 */
   --archive-text-width: 520px; /* 설명 글 전체 최대 가로 너비 */
-  --archive-text-min-height: 118px; /* 제품 전환 시 공통으로 확보할 글 영역 높이 */
-  --archive-caption-offset: calc(var(--archive-summary-size) * 1.4 + 3px); /* 글 전체 아래 이동. 양수 = 아래 */
+  --archive-text-min-height: 200px; /* 제품 전환 시 공통으로 확보할 글 영역 높이 */
+  --archive-caption-offset: calc(
+    var(--archive-summary-size) * 1.4 + 3px
+  ); /* 글 전체 아래 이동. 양수 = 아래 */
 
   /* [모바일 크기·간격] 760px 이하. 굵기·행간·자간은 위 설정을 함께 사용합니다. */
   --archive-number-mobile-size: 11px;
@@ -125,7 +127,9 @@ body[data-page="archive"] {
   margin-bottom: var(--archive-caption-gap);
 }
 /* 설명을 이미지 이동 영역 밖에 배치하여 좌우 이동이나 축소 없이 투명도만 바꿉니다. */
-.archive-captions { display: none; }
+.archive-captions {
+  display: none;
+}
 .is-enhanced .archive-captions {
   display: grid;
   width: min(54vw, 720px);
@@ -137,8 +141,12 @@ body[data-page="archive"] {
   opacity: 0;
   visibility: hidden;
 }
-.is-enhanced .archive-captions > .archive-project-info[aria-hidden="false"] { pointer-events: auto; }
-.is-enhanced .archive-project .archive-project-info { display: none; }
+.is-enhanced .archive-captions > .archive-project-info[aria-hidden="false"] {
+  pointer-events: auto;
+}
+.is-enhanced .archive-project .archive-project-info {
+  display: none;
+}
 .archive-project {
   /* [2. 이미지 영역 너비 / PC] width를 수정합니다. 예: min(60vw, 900px).
      min(화면 비례 너비, 최대 너비)이며 원본 비율에 따라 높이 제한도 함께 영향을 줍니다. */
@@ -166,7 +174,9 @@ body[data-page="archive"] {
   height: var(--archive-image-height);
   margin: 0 0 var(--archive-caption-gap);
 }
-.is-enhanced .archive-project .archive-image-wrap { margin: 0; }
+.is-enhanced .archive-project .archive-image-wrap {
+  margin: 0;
+}
 .archive-main-image {
   /* object-fit: contain은 원본 비율을 유지하며 지정한 영역 안에 이미지 전체를 표시합니다. */
   display: block;
@@ -362,10 +372,21 @@ body[data-page="archive"] {
   background: transparent;
   pointer-events: auto;
 }
-.archive-previous { left: 30px; }
-.archive-next { right: 30px; }
-.archive-controls button img { display: block; width: 24px; height: 36px; pointer-events: none; }
-.archive-previous img { transform: rotate(180deg); }
+.archive-previous {
+  left: 30px;
+}
+.archive-next {
+  right: 30px;
+}
+.archive-controls button img {
+  display: block;
+  width: 24px;
+  height: 36px;
+  pointer-events: none;
+}
+.archive-previous img {
+  transform: rotate(180deg);
+}
 .archive-controls button:disabled {
   opacity: 0.2;
 }
@@ -437,10 +458,20 @@ body[data-page="archive"] {
     inset: auto;
     padding: 170px 20px 80px;
   }
-  .is-enhanced .archive-composition { position: static; transform: none; }
-  .is-enhanced .archive-images { height: auto; margin: 0; }
-  .is-enhanced .archive-captions { display: none; }
-  .is-enhanced .archive-project .archive-project-info { display: block; }
+  .is-enhanced .archive-composition {
+    position: static;
+    transform: none;
+  }
+  .is-enhanced .archive-images {
+    height: auto;
+    margin: 0;
+  }
+  .is-enhanced .archive-captions {
+    display: none;
+  }
+  .is-enhanced .archive-project .archive-project-info {
+    display: block;
+  }
   .is-enhanced .archive-project {
     position: relative;
     top: auto;
@@ -456,7 +487,9 @@ body[data-page="archive"] {
     /* [6. 높이가 낮은 화면의 이미지 높이] 일반 목록에서는 아래 height가 우선합니다. */
     height: 65svh;
   }
-  .is-enhanced .archive-project .archive-image-wrap { margin-bottom: var(--archive-caption-gap); }
+  .is-enhanced .archive-project .archive-image-wrap {
+    margin-bottom: var(--archive-caption-gap);
+  }
   .archive-controls,
   .archive-scroll-hint {
     display: none;

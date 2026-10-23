@@ -103,7 +103,7 @@ textarea,
   --header-row-height: 48px;
   --header-logo-width: 190px;
   --header-mark-width: 76px;
-  --header-control-gap: 22px;
+  --header-control-gap: 40px;
 }
 
 .top-bar {
@@ -200,7 +200,7 @@ textarea,
   /* Shop, Manual, Archive, About 사이의 간격입니다. */
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
 }
 
 .nav-primary-group {
@@ -231,7 +231,9 @@ textarea,
   gap: 3px;
 }
 
-.site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a {
+.site-frame
+  :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index)
+  a {
   display: block;
   margin: 0;
   color: #000;
@@ -251,19 +253,25 @@ textarea,
 
 /* 투명하게 사라져 모든 페이지의 실제 배경색에 자연스럽게 섞입니다. */
 @media (hover: hover) and (pointer: fine) {
-  .site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a:hover {
+  .site-frame
+    :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index)
+    a:hover {
     opacity: 0;
   }
 }
 
-.site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a:focus-visible {
+.site-frame
+  :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index)
+  a:focus-visible {
   opacity: 1;
   outline: 1px solid currentColor;
   outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-frame :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index) a {
+  .site-frame
+    :is(.side-nav, .manual-side-nav, .archive-section-nav, .collection-index)
+    a {
     transition: none;
   }
 }
