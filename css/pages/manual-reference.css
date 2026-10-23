@@ -90,7 +90,7 @@ body[data-page="manual"] .footer-handle {
   /* [배경 로고 색상] HEX 색상을 입력합니다. 예: #000000 검정, #ff0000 빨강, #2255ff 파랑 */
   --manual-logo-color: #000000;
   /* [배경 로고 진하기] 위 색상에 적용되는 불투명도. 0 = 안 보임, 1 = 원래 색 */
-  --manual-logo-opacity: 0.09;
+  --manual-logo-opacity: 0.05;
   /* [배경 로고 한 개의 고정 너비] 본문·화면 너비와 무관합니다. 예: 500px = 더 크게 */
   --manual-logo-size: 320px;
   /* [배경 로고 가로 간격] 음수 = 좁게(-15px), 0px = 원본, 양수 = 넓게(20px). 로고 크기는 유지 */
